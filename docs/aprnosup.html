@@ -277,19 +277,19 @@ window.Quarto = {
   <li><a href="#ejemplos-de-métricas" id="toc-ejemplos-de-métricas" class="nav-link" data-scroll-target="#ejemplos-de-métricas"><span class="header-section-number">5.1.2</span> <strong>Ejemplos de métricas</strong></a></li>
   </ul></li>
   <li><a href="#parámetros-de-un-modelo-de-ml" id="toc-parámetros-de-un-modelo-de-ml" class="nav-link" data-scroll-target="#parámetros-de-un-modelo-de-ml"><span class="header-section-number">5.2</span> Parámetros de un modelo de ML</a></li>
-  <li><a href="#clustering-no-jerárquico" id="toc-clustering-no-jerárquico" class="nav-link" data-scroll-target="#clustering-no-jerárquico"><span class="header-section-number">5.5</span> Clustering no jerárquico</a>
+  <li><a href="#clustering-no-jerárquico" id="toc-clustering-no-jerárquico" class="nav-link" data-scroll-target="#clustering-no-jerárquico"><span class="header-section-number">5.3</span> Clustering no jerárquico</a>
   <ul class="collapse">
-  <li><a href="#k-medias" id="toc-k-medias" class="nav-link" data-scroll-target="#k-medias"><span class="header-section-number">5.5.1</span> <span class="math inline">\(k\)</span>-medias</a></li>
-  <li><a href="#k-medias-en-r" id="toc-k-medias-en-r" class="nav-link" data-scroll-target="#k-medias-en-r"><span class="header-section-number">5.7.1</span> <span class="math inline">\(k\)</span>-medias en R</a></li>
-  <li><a href="#número-óptimo-de-clústeres" id="toc-número-óptimo-de-clústeres" class="nav-link" data-scroll-target="#número-óptimo-de-clústeres"><span class="header-section-number">5.7.2</span> Número óptimo de clústeres</a></li>
+  <li><a href="#k-medias" id="toc-k-medias" class="nav-link" data-scroll-target="#k-medias"><span class="header-section-number">5.3.1</span> <span class="math inline">\(k\)</span>-medias</a></li>
+  <li><a href="#k-medias-en-r" id="toc-k-medias-en-r" class="nav-link" data-scroll-target="#k-medias-en-r"><span class="header-section-number">5.3.2</span> <span class="math inline">\(k\)</span>-medias en R</a></li>
+  <li><a href="#número-óptimo-de-clústeres" id="toc-número-óptimo-de-clústeres" class="nav-link" data-scroll-target="#número-óptimo-de-clústeres"><span class="header-section-number">5.3.3</span> Número óptimo de clústeres</a></li>
   </ul></li>
-  <li><a href="#cluster-jerárquico" id="toc-cluster-jerárquico" class="nav-link" data-scroll-target="#cluster-jerárquico"><span class="header-section-number">5.8</span> Cluster Jerárquico</a>
+  <li><a href="#cluster-jerárquico" id="toc-cluster-jerárquico" class="nav-link" data-scroll-target="#cluster-jerárquico"><span class="header-section-number">5.4</span> Cluster Jerárquico</a>
   <ul class="collapse">
-  <li><a href="#cluster-jerárquico-aglomerativo" id="toc-cluster-jerárquico-aglomerativo" class="nav-link" data-scroll-target="#cluster-jerárquico-aglomerativo"><span class="header-section-number">5.8.1</span> Cluster jerárquico aglomerativo</a></li>
-  <li><a href="#cluster-jerárquico-divisivo" id="toc-cluster-jerárquico-divisivo" class="nav-link" data-scroll-target="#cluster-jerárquico-divisivo"><span class="header-section-number">5.8.2</span> Cluster jerárquico divisivo</a></li>
-  <li><a href="#cluster-jerárquico-en-r" id="toc-cluster-jerárquico-en-r" class="nav-link" data-scroll-target="#cluster-jerárquico-en-r"><span class="header-section-number">5.8.3</span> Cluster jerárquico en R</a></li>
+  <li><a href="#cluster-jerárquico-aglomerativo" id="toc-cluster-jerárquico-aglomerativo" class="nav-link" data-scroll-target="#cluster-jerárquico-aglomerativo"><span class="header-section-number">5.4.1</span> Cluster jerárquico aglomerativo</a></li>
+  <li><a href="#cluster-jerárquico-divisivo" id="toc-cluster-jerárquico-divisivo" class="nav-link" data-scroll-target="#cluster-jerárquico-divisivo"><span class="header-section-number">5.4.2</span> Cluster jerárquico divisivo</a></li>
+  <li><a href="#cluster-jerárquico-en-r" id="toc-cluster-jerárquico-en-r" class="nav-link" data-scroll-target="#cluster-jerárquico-en-r"><span class="header-section-number">5.4.3</span> Cluster jerárquico en R</a></li>
   </ul></li>
-  <li><a href="#mapas-auto-organizados" id="toc-mapas-auto-organizados" class="nav-link" data-scroll-target="#mapas-auto-organizados"><span class="header-section-number">5.9</span> Mapas auto-organizados</a></li>
+  <li><a href="#mapas-auto-organizados" id="toc-mapas-auto-organizados" class="nav-link" data-scroll-target="#mapas-auto-organizados"><span class="header-section-number">5.5</span> Mapas auto-organizados</a></li>
   </ul>
 </nav>
     </div>
@@ -514,10 +514,9 @@ Parámetros del modelo
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<section id="parámetros-del-modelo" class="level2 callout-body-container callout-body" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="parámetros-del-modelo"><span class="header-section-number">5.3</span> Parámetros del modelo</h2>
+<div class="callout-body-container callout-body">
 <p>Estos son los componentes internos del modelo que definen su estructura y su capacidad para representar relaciones en los datos. Por ejemplo, en una red neuronal, los pesos y sesgos en las capas de neuronas son parámetros del modelo. En una regresión lineal, los coeficientes son parámetros del modelo.</p>
-</section>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Hiperparámetros del modelo">
@@ -531,16 +530,15 @@ Hiperparámetros del modelo
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<section id="hiperpárametros-del-modelo" class="level2 callout-body-container callout-body" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="hiperpárametros-del-modelo"><span class="header-section-number">5.4</span> Hiperpárametros del modelo</h2>
+<div class="callout-body-container callout-body">
 <p>A diferencia de los parámetros del modelo, los <strong>hiperparámetros</strong> son valores que se establecen antes del proceso de entrenamiento y controlan aspectos más generales del modelo. Ejemplos de hiperparámetros incluyen la tasa de aprendizaje, la cantidad de capas ocultas en una red neuronal, el valor <span class="math inline">\(k\)</span> en el modelo de <span class="math inline">\(k\)</span> vecinos, la profundidad de un árbol de decisión, etc. Los hiperparámetros afectan cómo se ajustan los parámetros del modelo durante el entrenamiento.</p>
-</section>
+</div>
 </div>
 </div>
 <p>El proceso de ajuste de parámetros y hiperparámetros se realiza mediante la iteración y la experimentación para encontrar la combinación adecuada que permita al modelo aprender de manera efectiva y generalizar bien a datos nuevos. Esto se conoce como ajuste de hiperparámetros o búsqueda de hiperparámetros y es una parte crítica del desarrollo de modelos exitosos de ML.</p>
 </section>
-<section id="clustering-no-jerárquico" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="clustering-no-jerárquico"><span class="header-section-number">5.5</span> Clustering no jerárquico</h2>
+<section id="clustering-no-jerárquico" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="clustering-no-jerárquico"><span class="header-section-number">5.3</span> Clustering no jerárquico</h2>
 <p>El clustering no jerárquico es una técnica de agrupamiento que tiene como objetivo asignar cada observación a un grupo o cluster en función de su desemejanza con el resto de elementos del conjunto de datos. A diferencia del clustering jerárquico, en el que los clusters se construyen de manera progresiva fusionando o dividiendo grupos, en el clustering no jerárquico se parte de una asignación inicial y se optimiza iterativamente.</p>
 <p>Para aplicar este método, es necesario especificar de antemano el número de clusters <span class="math inline">\(K\)</span>, asegurando que este valor sea menor que el número total de observaciones (<span class="math inline">\(K &lt; n\)</span>). Cada cluster se etiqueta con un entero <span class="math inline">\(k \in {1, \dots, K}\)</span> y cada observación <span class="math inline">\(i \in {1, \dots, n}\)</span> se asigna de forma exclusiva a uno de los clusters.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Por amor al conocimiento">
@@ -596,8 +594,8 @@ B(S) = \sum_{k=1}^{K} \sum_{S(i)=k}  \sum_{S(i')\neq k, i'\neq i} d(x_i,x_{i'})
 </ol>
 <p>Dependiendo del algoritmo utilizado, la forma en que se actualizan las asignaciones y los criterios de convergencia pueden variar. Algunos de los métodos más comunes incluyen <span class="math inline">\(k\)</span>-means, <span class="math inline">\(k\)</span>-medoids y clustering basado en densidad, cada uno con sus propias ventajas y desventajas según la naturaleza de los datos.</p>
 <p>En conclusión, el clustering no jerárquico es una herramienta fundamental en el análisis de datos, permitiendo descubrir estructuras y patrones sin requerir una estructura predefinida. Su aplicación efectiva y resultados dependerá de la correcta elección del número de clusters, la métrica de distancia y el algoritmo de clustering aplicado.</p>
-<section id="k-medias" class="level3" data-number="5.5.1">
-<h3 data-number="5.5.1" class="anchored"><span class="header-section-number">5.5.1</span> <span class="math inline">\(k\)</span>-medias</h3>
+<section id="k-medias" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="k-medias"><span class="header-section-number">5.3.1</span> <span class="math inline">\(k\)</span>-medias</h3>
 <p>El algoritmo de las <span class="math inline">\(k\)</span> medias es el algoritmo de ML no supervisado más utilizado para agrupar un conjunto de observaciones en un conjunto de <span class="math inline">\(k\)</span> grupos o clústeres, donde <span class="math inline">\(k\)</span> representa el número de grupos pre-especificados por el científico de datos. Diremos que <span class="math inline">\(k\)</span> es un valor del modelo de ML y que su valor ha de ser fijado (o aprendido) a lo largo del proceso de aprendizaje.</p>
 <p>La idea básica consiste en definir clústeres de manera que se reduzca al máximo la variabilidad total dentro del clúster (llamada <em>within-cluster variation</em>):</p>
 <p><span class="math display">\[ W(S) = \sum_{k=1}^{K}\sum_{\mathbf{x}_i \in S_k} (\mathbf{x}_i - \mathbf{c}_k)^{2}\]</span></p>
@@ -647,10 +645,9 @@ Ventajas
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
-<section id="ventajas" class="level2 callout-body-container callout-body" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="ventajas"><span class="header-section-number">5.6</span> Ventajas</h2>
+<div class="callout-body-container callout-body">
 <p>Las principales ventajas del algoritmo de las <span class="math inline">\(k\)</span>-medias son su <strong>sencillez</strong> y su <strong>escalabilidad</strong> (aplicable con facilidad a grandes conjuntos de datos).</p>
-</section>
+</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Desventajas">
@@ -664,10 +661,9 @@ Desventajas
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
-<section id="desventajas" class="level2 callout-body-container callout-body" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="desventajas"><span class="header-section-number">5.7</span> Desventajas</h2>
+<div class="callout-body-container callout-body">
 <p>Las principales desventajas son la necesidad de elegir <span class="math inline">\(k\)</span> manualmente y la alta <strong>dependencia</strong> de los valores iniciales, las medias con las que comienza el algoritmo. Para evitar esta última desventaja se suele replicar el algoritmo varias veces con distintas inicializaciones. Además, los centroides pueden verse fuertemente influidos por <strong>valores atípicos</strong>.</p>
-</section>
+</div>
 </div>
 </div>
 <p>Para solventar esta última desventaja, en ocasiones, se usan de <strong>medoides</strong> en lugar de centroides. Estos medoides, al contrario de los centroides, son obligatoriamente observaciones de la muestra. Es decir, no elegimos medias aleatorias, sino observaciones reales recogidas en la base de datos.</p>
@@ -681,8 +677,8 @@ Desventajas
 <p>Los clústeres están representados por su medoide, entendiendo éste como un punto de referencia</p>
 <p>Estos algoritmos son <strong>no-jerárquicos</strong>, pues una observación puede cambiar de clúster durante la ejecución del mismo. Dos observaciones cualesquiera pueden pertenecer al mismo o a diferente grupo en diferentes iteraciones del algoritmo.</p>
 </section>
-<section id="k-medias-en-r" class="level3" data-number="5.7.1">
-<h3 data-number="5.7.1" class="anchored" data-anchor-id="k-medias-en-r"><span class="header-section-number">5.7.1</span> <span class="math inline">\(k\)</span>-medias en R</h3>
+<section id="k-medias-en-r" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="k-medias-en-r"><span class="header-section-number">5.3.2</span> <span class="math inline">\(k\)</span>-medias en R</h3>
 <p>Para ilustrar el funcionamiento del algoritmo de las <span class="math inline">\(k-medias\)</span> en R, vamos a emplear datos reales de partidos de tenis femenino (WTA). En este caso, cada observación corresponde a un partido, y las variables describen características básicas de las jugadoras implicadas. El objetivo del análisis no es predecir un resultado, sino explorar si existen perfiles diferenciados de partidos en función de estas variables.</p>
 <p>Trabajaremos con las siguientes variables cuantitativas:</p>
 <ul>
@@ -789,16 +785,16 @@ Desventajas
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(k2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ cluster     : int [1:300] 2 1 2 2 1 2 1 2 1 2 ...
- $ centers     : num [1:2, 1:8] -0.0946 0.0103 -0.1527 -0.1245 -0.1472 ...
+ $ cluster     : int [1:300] 1 2 1 2 2 1 2 1 1 2 ...
+ $ centers     : num [1:2, 1:8] -0.017 0.2666 0.1444 -0.1493 -0.0583 ...
   ..- attr(*, "dimnames")=List of 2
   .. ..$ : chr [1:2] "1" "2"
   .. ..$ : chr [1:8] "winner_rank" "loser_rank" "winner_age" "loser_age" ...
- $ totss       : num 2308
- $ withinss    : num [1:2] 1183 730
- $ tot.withinss: num 1913
- $ betweenss   : num 395
- $ size        : int [1:2] 175 125
+ $ totss       : num 2400
+ $ withinss    : num [1:2] 1037 1011
+ $ tot.withinss: num 2047
+ $ betweenss   : num 353
+ $ size        : int [1:2] 178 122
  $ iter        : int 1
  $ ifault      : int 0
  - attr(*, "class")= chr "kmeans"</code></pre>
@@ -821,30 +817,30 @@ Tarea
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>k2 </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>K-means clustering with 2 clusters of sizes 175, 125
+<pre><code>K-means clustering with 2 clusters of sizes 178, 122
 
 Cluster means:
-  winner_rank loser_rank winner_age   loser_age winner_rank_points
-1 -0.09459493 -0.1527497 -0.1471959 -0.16154098          0.1422593
-2  0.01025417 -0.1245499  0.2423445  0.08910299         -0.1166699
+  winner_rank loser_rank  winner_age  loser_age winner_rank_points
+1 -0.01703742  0.1443779 -0.05828689 0.02949860        -0.02999927
+2  0.26663784 -0.1492814  0.17461529 0.09792729        -0.14803331
   loser_rank_points   w_1stWon   l_1stWon
-1       0.170616385 -0.6679593 -0.6214672
-2      -0.003970181  0.9480216  0.9546795
+1        -0.2103818 -0.5980146 -0.5921638
+2         0.3493643  0.8796614  0.8712083
 
 Clustering vector:
-  [1] 2 1 2 2 1 2 1 2 1 2 1 2 1 1 1 1 1 2 2 2 1 1 1 1 2 2 2 1 2 1 2 1 1 1 2 2 2
- [38] 1 2 1 1 2 1 1 1 2 1 1 1 1 2 1 1 2 2 1 1 2 2 2 2 1 1 2 1 2 2 2 1 1 2 2 1 1
- [75] 2 1 2 1 1 2 1 1 2 2 1 1 2 2 2 1 2 1 1 1 2 2 1 1 1 2 1 1 1 1 1 1 1 1 2 2 1
-[112] 1 1 1 1 1 1 1 1 1 1 1 2 2 2 1 2 1 1 2 1 1 2 1 1 2 1 2 1 2 1 2 1 2 2 2 1 2
-[149] 2 2 1 1 2 1 2 1 1 1 1 1 2 1 2 1 1 2 1 2 2 1 2 1 1 1 1 1 1 2 2 1 2 2 1 1 1
-[186] 2 1 2 2 1 2 2 2 2 1 1 1 1 1 2 1 2 2 1 1 2 2 1 2 1 2 2 1 1 2 1 2 1 2 2 2 1
-[223] 2 2 1 1 1 1 1 2 1 1 2 1 1 1 2 1 1 1 1 2 1 1 2 1 2 2 1 1 1 1 1 2 1 1 1 2 2
-[260] 2 2 2 1 1 2 2 1 1 2 1 2 2 1 1 1 1 2 1 1 2 2 2 1 1 2 1 2 1 1 2 2 1 1 2 1 1
+  [1] 1 2 1 2 2 1 2 1 1 2 1 2 1 1 1 1 2 2 2 2 1 2 1 2 1 1 1 2 2 2 2 1 2 1 1 1 1
+ [38] 1 2 2 1 2 1 2 1 2 2 1 2 1 1 1 1 1 1 1 2 2 2 1 1 1 1 1 1 1 2 2 2 1 1 1 1 2
+ [75] 2 2 1 1 2 2 1 1 1 1 1 2 2 2 1 2 1 2 2 1 1 1 1 1 1 1 2 1 1 1 1 1 2 1 1 2 1
+[112] 2 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 2 1 1 2 1 2 2 1 2 2 2 1 2 1 1 1 2 1 2 1
+[149] 1 1 1 2 2 1 1 2 2 2 1 1 1 2 2 2 1 2 1 1 2 1 2 1 1 2 1 2 1 2 2 2 1 2 1 2 1
+[186] 1 1 2 1 2 2 1 2 1 1 2 1 1 2 1 2 1 2 1 2 1 1 1 2 2 1 2 2 1 1 2 2 1 1 1 1 2
+[223] 1 1 2 2 1 2 1 1 1 1 2 1 2 1 2 2 1 1 1 1 2 1 1 1 2 2 1 1 2 1 2 2 2 2 1 2 1
+[260] 2 2 2 1 1 1 2 1 1 1 2 2 1 1 1 2 1 2 2 1 2 1 2 2 2 2 2 1 1 1 1 1 2 1 1 1 1
 [297] 1 1 1 1
 
 Within cluster sum of squares by cluster:
-[1] 1182.8931  730.3236
- (between_SS / total_SS =  17.1 %)
+[1] 1036.652 1010.724
+ (between_SS / total_SS =  14.7 %)
 
 Available components:
 
@@ -891,8 +887,8 @@ Tarea
 </ul>
 <p>Este tipo de análisis resulta especialmente útil como paso previo a tareas más complejas, como la segmentación de jugadoras, el análisis de estilos de juego o la construcción de modelos supervisados.</p>
 </section>
-<section id="número-óptimo-de-clústeres" class="level3" data-number="5.7.2">
-<h3 data-number="5.7.2" class="anchored" data-anchor-id="número-óptimo-de-clústeres"><span class="header-section-number">5.7.2</span> Número óptimo de clústeres</h3>
+<section id="número-óptimo-de-clústeres" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="número-óptimo-de-clústeres"><span class="header-section-number">5.3.3</span> Número óptimo de clústeres</h3>
 <p>Como hemos comentado anteriormente, en numerosas ocasiones el número óptimo de clústeres de un problema no supervisado lo establece el dominio de aplicación, o más concretamente nuestra necesidad de comunicar los resultados y que estos tengan sentido y sean lo más explicables posibles.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -978,9 +974,9 @@ Nombrar los grupos
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_silhouette</span>(sil)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  cluster size ave.sil.width
-1       1   33          0.07
-2       2  109          0.14
-3       3  158          0.25</code></pre>
+1       1  163          0.21
+2       2   23         -0.03
+3       3  114          0.15</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1014,16 +1010,16 @@ clusGap(x = df_scaled2, FUNcluster = kmeans, K.max = 10, B = 50, nstart = 25)
 B=50 simulated reference sets, k = 1..10; spaceH0="scaledPCA"
  --&gt; Number of clusters (method 'firstmax'): 1
           logW   E.logW       gap      SE.sim
- [1,] 5.610133 6.316750 0.7066173 0.010377207
- [2,] 5.505946 6.203101 0.6971553 0.010022724
- [3,] 5.436490 6.140161 0.7036713 0.010325501
- [4,] 5.385118 6.089913 0.7047942 0.010192019
- [5,] 5.335603 6.050160 0.7145577 0.010138984
- [6,] 5.295725 6.014819 0.7190949 0.010134833
- [7,] 5.248451 5.984414 0.7359622 0.010115564
- [8,] 5.216971 5.957133 0.7401621 0.009631836
- [9,] 5.190172 5.932992 0.7428203 0.009402324
-[10,] 5.161018 5.911239 0.7502209 0.009817541</code></pre>
+ [1,] 5.609254 6.514412 0.9051581 0.012889396
+ [2,] 5.517014 6.380632 0.8636170 0.010670603
+ [3,] 5.449267 6.300392 0.8511242 0.010218405
+ [4,] 5.404869 6.237161 0.8322924 0.009850572
+ [5,] 5.352124 6.187439 0.8353150 0.009987448
+ [6,] 5.297457 6.145854 0.8483968 0.010091446
+ [7,] 5.252858 6.113348 0.8604897 0.010367260
+ [8,] 5.217406 6.085771 0.8683657 0.010087062
+ [9,] 5.181165 6.063511 0.8823466 0.009811481
+[10,] 5.165770 6.043687 0.8779171 0.009809079</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_gap_stat</span>(gap_stat)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1093,17 +1089,16 @@ Tarea
  
 ******************************************************************* 
 * Among all indices:                                                
-* 5 proposed 2 as the best number of clusters 
-* 6 proposed 3 as the best number of clusters 
-* 2 proposed 5 as the best number of clusters 
-* 6 proposed 6 as the best number of clusters 
-* 1 proposed 7 as the best number of clusters 
-* 1 proposed 9 as the best number of clusters 
-* 2 proposed 10 as the best number of clusters 
+* 4 proposed 2 as the best number of clusters 
+* 3 proposed 3 as the best number of clusters 
+* 8 proposed 4 as the best number of clusters 
+* 1 proposed 5 as the best number of clusters 
+* 1 proposed 6 as the best number of clusters 
+* 6 proposed 10 as the best number of clusters 
 
                    ***** Conclusion *****                            
  
-* According to the majority rule, the best number of clusters is  3 
+* According to the majority rule, the best number of clusters is  4 
  
  
 ******************************************************************* </code></pre>
@@ -1119,7 +1114,7 @@ Tarea
 <div class="cell-output cell-output-stdout">
 <pre><code># Method Agreement Procedure:
 
-The choice of 2 clusters is supported by 6 (21.43%) methods out of 28 (Silhouette, Ch, Duda, Pseudot2, Beale, Mcclain).</code></pre>
+The choice of 4 clusters is supported by 7 (23.33%) methods out of 30 (Ch, Scott, Marriot, Tracew, Friedman, PtBiserial, Dunn).</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(n_clust)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1142,9 +1137,9 @@ The choice of 2 clusters is supported by 6 (21.43%) methods out of 28 (Silhouett
 <pre><code># A tibble: 3 × 9
   Cluster winner_rank loser_rank winner_age loser_age winner_rank_points
     &lt;int&gt;       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;              &lt;dbl&gt;
-1       1     -0.708      -0.377    -0.561    -0.0684              2.36 
-2       2      0.0519     -0.116     0.178     0.139              -0.211
-3       3      0.0153     -0.109     0.0232   -0.190              -0.283
+1       1     -0.104     -0.0706    -0.0767  0.0655              0.00675
+2       2      2.29       2.57       0.490   0.281              -0.491  
+3       3     -0.0547    -0.351      0.107   0.000561           -0.116  
 # ℹ 3 more variables: loser_rank_points &lt;dbl&gt;, w_1stWon &lt;dbl&gt;, l_1stWon &lt;dbl&gt;</code></pre>
 </div>
 </div>
@@ -1180,15 +1175,15 @@ Tarea
 </div>
 </section>
 </section>
-<section id="cluster-jerárquico" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="cluster-jerárquico"><span class="header-section-number">5.8</span> Cluster Jerárquico</h2>
+<section id="cluster-jerárquico" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="cluster-jerárquico"><span class="header-section-number">5.4</span> Cluster Jerárquico</h2>
 <p>Las técnicas de agrupamiento jerárquico generan una clasificación iterativa de clústeres anidados mediante la unión o la separación de clústeres creados en etapas anteriores. Existen dos alternativas posibles:</p>
 <ul>
 <li><p><strong>Aglomerativos</strong>: en la versión aglomerativa, cada observación comienza siendo un clúster, y en cada iteración se unen en un único clúster los dos clústeres más similares, hasta alcanzar una situación final en la que todos las observaciones pertenecen a un único clúster. Esta versión se conoce como <strong>AGNES</strong> (“Agglomerative Nesting”).</p></li>
 <li><p><strong>Divisivos</strong>: en la versión divisiva, todas las observaciones comienzan en un único clúster y las divisiones se realizan de forma recursiva, a medida que se desciende en la jerarquía, terminando cada observación formando un único clúster individual. Esta versión se conoce como <strong>DIANA</strong> (“Divise Analysis”).</p></li>
 </ul>
-<section id="cluster-jerárquico-aglomerativo" class="level3" data-number="5.8.1">
-<h3 data-number="5.8.1" class="anchored" data-anchor-id="cluster-jerárquico-aglomerativo"><span class="header-section-number">5.8.1</span> Cluster jerárquico aglomerativo</h3>
+<section id="cluster-jerárquico-aglomerativo" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="cluster-jerárquico-aglomerativo"><span class="header-section-number">5.4.1</span> Cluster jerárquico aglomerativo</h3>
 <p>El clustering aglomerativo comienza con <span class="math inline">\(n\)</span> conglomerados (uno por cada dato) y, en cada paso, va fusionando los 2 grupos más similares hasta que hay un único grupo que contiene al total de datos.</p>
 <p><strong>Algoritmo</strong></p>
 <ol type="1">
@@ -1294,8 +1289,8 @@ Para recordar
 </div>
 </div>
 </section>
-<section id="cluster-jerárquico-divisivo" class="level3" data-number="5.8.2">
-<h3 data-number="5.8.2" class="anchored" data-anchor-id="cluster-jerárquico-divisivo"><span class="header-section-number">5.8.2</span> Cluster jerárquico divisivo</h3>
+<section id="cluster-jerárquico-divisivo" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="cluster-jerárquico-divisivo"><span class="header-section-number">5.4.2</span> Cluster jerárquico divisivo</h3>
 <p>El clustering jerárquico divisivo es una estrategia de agrupamiento que sigue un enfoque descendente: comienza con todos los datos en un solo conglomerado y, a través de divisiones sucesivas, va creando subgrupos más pequeños hasta alcanzar un criterio de parada predefinido. Una de las técnicas más conocidas es el algorimo DIANA:</p>
 <ul>
 <li><p>Comienza con todos los datos en un único cluster y, recursivamente, divide cada cluster en 2 cluster hijo.</p></li>
@@ -1309,8 +1304,8 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 </ul>
 <p>Hay otras alternativas para realizar clustering jerárquico divisivo. Por ejemplo, bisecting <span class="math inline">\(k\)</span>-means que divide el cluster de mayor diámetro en 2 cluster hijos haciendo uso de las <span class="math inline">\(k\)</span>-medias o los <span class="math inline">\(k\)</span>-medoides.</p>
 </section>
-<section id="cluster-jerárquico-en-r" class="level3" data-number="5.8.3">
-<h3 data-number="5.8.3" class="anchored" data-anchor-id="cluster-jerárquico-en-r"><span class="header-section-number">5.8.3</span> Cluster jerárquico en R</h3>
+<section id="cluster-jerárquico-en-r" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="cluster-jerárquico-en-r"><span class="header-section-number">5.4.3</span> Cluster jerárquico en R</h3>
 <p>Existen diferentes funciones disponibles en R para calcular el clustering jerárquico. Las funciones más utilizadas son:</p>
 <ul>
 <li><code>hclust</code> [en el paquete <code>stats</code>] y <code>agnes</code> [en el paquete <code>cluster</code>] para el clustering jerárquico aglomerativo</li>
@@ -1322,7 +1317,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>hc2<span class="sc">$</span>ac</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8908784</code></pre>
+<pre><code>[1] 0.9092942</code></pre>
 </div>
 </div>
 <p>El <strong>coeficiente aglomerativo</strong> mide la cantidad de estructura de agrupamiento encontrada (los valores más cercanos a <span class="math inline">\(1\)</span> sugieren una fuerte estructura de agrupamiento).</p>
@@ -1340,7 +1335,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(m, ac)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  average    single  complete      ward 
-0.8498240 0.7175544 0.8908784 0.9465550 </code></pre>
+0.8736034 0.7977364 0.9092942 0.9464965 </code></pre>
 </div>
 </div>
 <p>En ocasiones se emplea una representación gráfica en forma de árbol llamada <strong>dendrograma</strong> que ilustra las agrupaciones derivadas de la aplicación de una técnica de agrupamiento jerárquico. En el eje de ordenadas se presenta la distancia a la que se unen los diferentes clústeres. Las observaciones aparecen en el eje de abscisas.</p>
@@ -1384,7 +1379,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Coeficiente de división; cantidad de estructura de agrupación encontrada</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>hc4<span class="sc">$</span>dc</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8767046</code></pre>
+<pre><code>[1] 0.9004656</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8514345</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1436,7 +1431,7 @@ Atención
 <div class="cell-output cell-output-stdout">
 <pre><code>sub_grp
   1   2   3   4 
- 57 172  45  26 </code></pre>
+180  86  13  21 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualización</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(<span class="fu">list</span>(<span class="at">data=</span>df_scaled2,<span class="at">cluster=</span>sub_grp))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1502,13 +1497,27 @@ Atención
 </div>
 </div>
 </div>
-<p>En el ejemplo propuesto, elegir <span class="math inline">\(4\)</span> como número óptimo parece una buena elección. Sin embargo, y como pasaba en los métodos no jerárquicos, métodos alternativos pueden llevarnos a soluciones alternativas.</p>
+<p>En el ejemplo propuesto, elegir <span class="math inline">\(3\)</span> como número óptimo parece una buena elección. Sin embargo, y como pasaba en los métodos no jerárquicos, métodos alternativos pueden llevarnos a soluciones alternativas.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#fviz_nbclust(df, FUN = hcut, method = "silhouette")</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(df_scaled2, <span class="at">FUN =</span> hcut, <span class="at">method =</span> <span class="st">"silhouette"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aprnosup_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#gap_stat &lt;- clusGap(df, FUN = hcut, nstart = 25, K.max = 10, B = 50)</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co">#fviz_gap_stat(gap_stat)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>gap_stat <span class="ot">&lt;-</span> <span class="fu">clusGap</span>(df_scaled2, <span class="at">FUN =</span> hcut, <span class="at">nstart =</span> <span class="dv">25</span>, <span class="at">K.max =</span> <span class="dv">10</span>, <span class="at">B =</span> <span class="dv">50</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_gap_stat</span>(gap_stat)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aprnosup_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Ventajas del clustering jerárquico">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
@@ -1559,8 +1568,8 @@ Desventajas del clustering jerárquico
 </div>
 </section>
 </section>
-<section id="mapas-auto-organizados" class="level2" data-number="5.9">
-<h2 data-number="5.9" class="anchored" data-anchor-id="mapas-auto-organizados"><span class="header-section-number">5.9</span> Mapas auto-organizados</h2>
+<section id="mapas-auto-organizados" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="mapas-auto-organizados"><span class="header-section-number">5.5</span> Mapas auto-organizados</h2>
 <p>Los Mapas Auto-organizados de Kohonen (SOM por sus siglas en inglés, “<em>Self-Organizing Maps</em>”) no solo son una poderosa herramienta para la <strong>reducción de la dimensión</strong>, sino que también son ampliamente utilizados como algoritmo de clustering. Aunque la reducción de la dimensión es una de sus aplicaciones más destacadas, los SOM también tienen la capacidad de agrupar datos de manera efectiva.</p>
 <p>El proceso de clustering con SOM implica organizar datos en grupos o clusters de manera que los elementos dentro de un mismo grupo sean similares entre sí en función de ciertas características. Un SOM consiste en una malla de neuronas organizadas en una estructura topológica bidimensional, usualmente una cuadrícula rectangular o hexagonal. Cada neurona tiene un vector de pesos asociado, de la misma dimensión que los datos de entrada.</p>
 <p>Sea un conjunto de datos de entrada <span class="math inline">\(\mathbf{X} \in \mathbb{R}^p\)</span>, el SOM está compuesto por una malla bidimensional de <span class="math inline">\(K\)</span> neuronas o prototipos. Cada neurona está “definida” por un vector de pesos <span class="math inline">\(\mathbf{w}_j \in \mathbb{R}^p\)</span>, donde <span class="math inline">\(j\)</span> es el índice de la neurona en la malla. Cada neurona representa una ubicación en el espacio SOM.</p>
@@ -1678,24 +1687,10 @@ Attaching package: 'kohonen'</code></pre>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caTools)</span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>bank <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">'https://raw.githubusercontent.com/rafiag/DTI2020/main/data/bank.csv'</span>)</span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2938</span>)</span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>sample<span class="ot">&lt;-</span><span class="fu">sample.split</span>(bank<span class="sc">$</span>deposit,<span class="at">SplitRatio=</span><span class="fl">0.5</span>)</span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>bank.train <span class="ot">&lt;-</span> <span class="fu">subset</span>(bank,sample<span class="sc">==</span><span class="cn">TRUE</span>)</span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>df<span class="ot">=</span> bank.train <span class="sc">%&gt;%</span> </span>
-<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(balance<span class="sc">&gt;</span><span class="dv">0</span> <span class="sc">&amp;</span> previous<span class="sc">&gt;</span><span class="dv">0</span> <span class="sc">&amp;</span> pdays<span class="sc">&gt;</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>( <span class="at">log.balance=</span><span class="fu">log</span>(balance),</span>
-<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">log.age=</span><span class="fu">log</span>(age),</span>
-<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">log.campaign=</span><span class="fu">log</span>(campaign),</span>
-<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">log.previous=</span><span class="fu">log</span>(previous),</span>
-<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">log.pdays =</span> <span class="fu">log</span>(pdays),</span>
-<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">log.duration=</span><span class="fu">log</span>(duration)) <span class="sc">%&gt;%</span></span>
-<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(log.balance,log.age,log.campaign,log.duration,log.previous,log.pdays,deposit)</span>
-<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>df.st <span class="ot">&lt;-</span> <span class="fu">scale</span>(df[,<span class="sc">-</span><span class="dv">7</span>])</span>
-<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a>df.som <span class="ot">&lt;-</span> kohonen<span class="sc">::</span><span class="fu">som</span>(<span class="fu">as.matrix</span>( df.st),<span class="fu">somgrid</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="st">"hexagonal"</span>))</span>
-<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-21"><a href="#cb58-21" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df.som)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>df.st <span class="ot">&lt;-</span> df_scaled2</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>df.som <span class="ot">&lt;-</span> kohonen<span class="sc">::</span><span class="fu">som</span>(<span class="fu">as.matrix</span>( df.st),<span class="fu">somgrid</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="st">"hexagonal"</span>))</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df.som)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "data"             "unit.classif"     "distances"        "grid"            
  [5] "codes"            "changes"          "alpha"            "radius"          
@@ -1707,39 +1702,59 @@ Attaching package: 'kohonen'</code></pre>
 <pre><code>SOM of size 4x4 with a hexagonal topology and a bubble neighbourhood function.
 The number of data layers is 1.
 Distance measure(s) used: sumofsquares.
-Training data included: 1284 objects.
-Mean distance to the closest unit in the map: 2.413.</code></pre>
+Training data included: 300 objects.
+Mean distance to the closest unit in the map: 2.824.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clustering</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df.som<span class="sc">$</span>unit.classif)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 13 10 10 10 15 15</code></pre>
+<pre><code>[1]  2 15  2 11 16  1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nombrar los clusters</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>df.som<span class="sc">$</span>codes</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-    log.balance     log.age log.campaign log.duration log.previous   log.pdays
-V1   -0.1665504 -0.17250915   1.65905689  -2.89127875   0.75321963  0.76228798
-V2   -0.5729971 -0.61916298   0.95649105   0.11360709  -0.61633860  0.53542329
-V3   -2.7626873 -0.09630617  -0.22481605  -0.01775780  -0.43449514  0.39037929
-V4   -0.2987460 -0.27867111  -0.48069577  -1.32194232  -0.32410665  0.60980323
-V5    0.1692260 -0.29513795   1.09413528   0.06622639   1.81798163 -0.19898689
-V6    0.2130609  0.79952586   1.92607192  -0.09957394   0.50713651  0.50409529
-V7   -0.9925584 -0.25999586   0.06297161   0.80969889   1.13448930  0.29828886
-V8   -0.5467391 -0.89454638  -0.75231500   0.05691503  -0.58716283 -0.44382395
-V9    0.8004058  1.45723263  -0.46626151   0.25742877   1.15260783 -0.18585464
-V10   0.8681725 -0.08718076   0.67816551   1.23176536  -0.35230246  0.09409626
-V11   0.6203543 -0.43508207  -0.81201086  -0.24560976   0.77187053 -0.66260374
-V12  -0.2636134 -0.53803480  -0.06677845  -0.28219715  -0.05178134 -4.61539128
-V13   0.2996683  1.38922194  -0.83068969   0.29947979  -0.50925213 -0.25212519
-V14   0.1516991  1.16041553   0.66077136  -0.28837446  -0.60162534  0.17447204
-V15   0.4713511 -0.37448390  -0.83870156   0.73106396  -0.63544758  0.79393509
-V16   0.6820996 -0.72646668   0.55768237  -0.42934114  -0.49679657 -0.42626768</code></pre>
+     winner_rank  loser_rank  winner_age   loser_age winner_rank_points
+V1  -0.002717471 -0.11191009 -0.96121516  1.08653214       -0.450097621
+V2   0.551130277 -0.08242684 -0.91014367 -0.62391182       -0.614781400
+V3   2.112893586  0.84630674  0.57675773 -0.47367812       -0.801397181
+V4   6.101070754 -0.24932234  0.66198533  0.28773081       -0.905872969
+V5   0.121997307  4.08261714  0.29649736  1.02799522       -0.158122668
+V6  -0.324777168 -0.01439636  0.30262255 -0.24007824       -0.045399847
+V7  -0.460300422 -0.13211709  0.28949848 -1.12480980        0.148769705
+V8   0.339309460  0.36141963 -0.81469663 -1.01910187       -0.584447089
+V9  -0.258739720  0.13832159  0.58385802  1.46049296       -0.009397473
+V10 -0.197267279 -0.34069627  1.43049450  0.06486114       -0.285505923
+V11 -0.348805044 -0.27065696  0.16845060  0.70165617       -0.084420367
+V12  0.484179739 -0.37722569 -1.09445160  0.37426863       -0.439556212
+V13 -0.725884357 -0.49442343 -0.45532611  0.02835826        2.023723768
+V14 -0.190473430 -0.67999901  0.85683490  0.34584389       -0.098563214
+V15 -0.261946405 -0.74499642  0.05010691  0.04038623       -0.020458946
+V16 -0.419077486 -0.26866757  0.44837639 -0.01155559        0.345244662
+    loser_rank_points     w_1stWon    l_1stWon
+V1        -0.21234864 -0.881112025 -0.74202004
+V2        -0.26254378 -0.733846023 -0.74341102
+V3        -0.45096737  0.384702203 -0.01651591
+V4         0.28200459  0.538568672  0.52285431
+V5        -0.92521265  0.282675505  0.09726915
+V6        -0.37927503 -0.661922714 -1.05552668
+V7        -0.18680979 -0.195912341 -0.16635891
+V8        -0.50857567  0.440149880  0.60599426
+V9        -0.36362894 -0.466313976 -0.38566141
+V10       -0.01177170  0.006499184 -0.07616920
+V11       -0.08612448  0.577802107  0.16158005
+V12        0.13983773  0.617713805  1.09247578
+V13        0.49185726 -0.791387249 -0.59717488
+V14        1.34510232 -1.075380461 -0.54946807
+V15        2.95673412  0.802207711  0.65759155
+V16       -0.13790795  1.630044200  1.74627312</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df.som, <span class="at">type=</span><span class="st">"codes"</span>)</span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df.som, <span class="at">type=</span><span class="st">"mapping"</span>, <span class="at">col =</span> <span class="fu">as.numeric</span>(<span class="fu">as.factor</span>(df<span class="sc">$</span>deposit))<span class="sc">+</span><span class="dv">1</span>, <span class="at">pch=</span><span class="dv">20</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Unknown or uninitialised column: `deposit`.</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1747,12 +1762,12 @@ V16   0.6820996 -0.72646668   0.55768237  -0.42934114  -0.49679657 -0.42626768</
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># versión supervisada</span></span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co"># kohmap &lt;- xyf(as.matrix(df.st), as.factor(df$deposit),grid = somgrid(4, 4, "hexagonal"), rlen=100)</span></span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(kohmap, type="codes", main = c("Codes X", "Codes Y"))</span></span>
-<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(kohmap, type="mapping",  col = as.numeric(as.factor(df$deposit))+1, pch=20)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># versión supervisada</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="co"># kohmap &lt;- xyf(as.matrix(df.st), as.factor(df$deposit),grid = somgrid(4, 4, "hexagonal"), rlen=100)</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(kohmap, type="codes", main = c("Codes X", "Codes Y"))</span></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a><span class="co">#plot(kohmap, type="mapping",  col = as.numeric(as.factor(df$deposit))+1, pch=20)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

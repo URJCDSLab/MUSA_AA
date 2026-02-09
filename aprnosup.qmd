@@ -198,13 +198,10 @@ Un parámetro es un valor que el algoritmo del modelo de ML ajusta durante el pr
 En ocasiones se diferencia entre dos tipos de parámetros en un modelo de ML:
 
 ::: {.callout-note collapse="true" title="Parámetros del modelo"}
-## Parámetros del modelo
-
 Estos son los componentes internos del modelo que definen su estructura y su capacidad para representar relaciones en los datos. Por ejemplo, en una red neuronal, los pesos y sesgos en las capas de neuronas son parámetros del modelo. En una regresión lineal, los coeficientes son parámetros del modelo.
 :::
 
 ::: {.callout-note collapse="true" title="Hiperparámetros del modelo"}
-## Hiperpárametros del modelo
 
 A diferencia de los parámetros del modelo, los **hiperparámetros** son valores que se establecen antes del proceso de entrenamiento y controlan aspectos más generales del modelo. Ejemplos de hiperparámetros incluyen la tasa de aprendizaje, la cantidad de capas ocultas en una red neuronal, el valor $k$ en el modelo de $k$ vecinos, la profundidad de un árbol de decisión, etc. Los hiperparámetros afectan cómo se ajustan los parámetros del modelo durante el entrenamiento.
 :::
@@ -328,13 +325,12 @@ Los clústeres están representados por su centroide, entendiendo éste como un 
 Despliega los paneles siguientes para averiguar las principales ventajas y desventajas de este modelo de ML.
 
 ::: {.callout-note collapse="true" title="Ventajas"}
-## Ventajas
 
 Las principales ventajas del algoritmo de las $k$-medias son su **sencillez** y su **escalabilidad** (aplicable con facilidad a grandes conjuntos de datos).
 :::
 
 ::: {.callout-note collapse="true" title="Desventajas"}
-## Desventajas
+
 
 Las principales desventajas son la necesidad de elegir $k$ manualmente y la alta **dependencia** de los valores iniciales, las medias con las que comienza el algoritmo. Para evitar esta última desventaja se suele replicar el algoritmo varias veces con distintas inicializaciones. Además, los centroides pueden verse fuertemente influidos por **valores atípicos**.
 :::
@@ -862,15 +858,15 @@ Tal y como hacíamos en el clustering no jerárquico, podemos aplicar métodos p
 fviz_nbclust(df, FUN = hcut, method = "wss")
 ```
 
-En el ejemplo propuesto, elegir $4$ como número óptimo parece una buena elección. Sin embargo, y como pasaba en los métodos no jerárquicos, métodos alternativos pueden llevarnos a soluciones alternativas.
+En el ejemplo propuesto, elegir $3$ como número óptimo parece una buena elección. Sin embargo, y como pasaba en los métodos no jerárquicos, métodos alternativos pueden llevarnos a soluciones alternativas.
 
 ```{r}
-#fviz_nbclust(df, FUN = hcut, method = "silhouette")
+fviz_nbclust(df_scaled2, FUN = hcut, method = "silhouette")
 ```
 
 ```{r}
-#gap_stat <- clusGap(df, FUN = hcut, nstart = 25, K.max = 10, B = 50)
-#fviz_gap_stat(gap_stat)
+gap_stat <- clusGap(df_scaled2, FUN = hcut, nstart = 25, K.max = 10, B = 50)
+fviz_gap_stat(gap_stat)
 ```
 
 ::: {.callout-note collapse="true" title="Ventajas del clustering jerárquico"}
@@ -1009,21 +1005,7 @@ library(kohonen)
 library(dplyr)
 library(caTools)
 
-bank = read.csv('https://raw.githubusercontent.com/rafiag/DTI2020/main/data/bank.csv')
-set.seed(2938)
-sample<-sample.split(bank$deposit,SplitRatio=0.5)
-bank.train <- subset(bank,sample==TRUE)
-df= bank.train %>% 
-      filter(balance>0 & previous>0 & pdays>0) %>% 
-      mutate( log.balance=log(balance),
-              log.age=log(age),
-              log.campaign=log(campaign),
-              log.previous=log(previous),
-              log.pdays = log(pdays),
-              log.duration=log(duration)) %>%
-      select(log.balance,log.age,log.campaign,log.duration,log.previous,log.pdays,deposit)
-
-df.st <- scale(df[,-7])
+df.st <- df_scaled2
 df.som <- kohonen::som(as.matrix( df.st),somgrid(4,4,"hexagonal"))
 
 names(df.som)
