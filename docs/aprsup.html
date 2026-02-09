@@ -2,21 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Aprendizaje Automático - 7&nbsp; Aprendizaje supervisado</title>
+<title>7&nbsp; Aprendizaje supervisado – Aprendizaje Automático</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -27,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -41,48 +47,20 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -96,8 +74,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -114,35 +91,72 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-23d6ac4f9a19bb637dc5af5d1e4747a8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sín resultados",
+    "search-no-results-text": "Sin resultados",
     "search-matching-documents-text": "documentos encontrados",
-    "search-copy-link-title": "Copiar el enlace en la busqueda",
-    "search-hide-matches-text": "Esconder resultados adicionales",
-    "search-more-match-text": "hay más resultados en este documento",
-    "search-more-matches-text": "más resultados en este documento",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
     "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Eviar"
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
-<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <script src="site_libs/viz-1.8.2/viz.js"></script>
 <link href="site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-<script src="site_libs/grViz-binding-1.0.10/grViz.js"></script>
+<script src="site_libs/grViz-binding-1.0.11/grViz.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -150,11 +164,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./aprsup.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -162,106 +181,119 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Aprendizaje Automático</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Buscar"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos</span></a>
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./eda.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis Exploratorio de Datos</span></a>
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis Exploratorio de Datos</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reddim.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Técnicas de reducción de la dimensionalidad</span></a>
+  <a href="./reddim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Técnicas de reducción de la dimensionalidad</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aprnosup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aprendizaje no supervisado</span></a>
+  <a href="./aprnosup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aprendizaje no supervisado</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./eval.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Medidas de rendimiento</span></a>
+  <a href="./eval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Medidas de rendimiento</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aprsup.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></a>
+  <a href="./aprsup.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reglas.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reglas de asociación</span></a>
+  <a href="./reglas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reglas de asociación</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nuevas.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nuevas tendencias</span></a>
+  <a href="./nuevas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nuevas tendencias</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./conclusiones.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conclusiones</span></a>
+  <a href="./conclusiones.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conclusiones</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografía</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliografía</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">Indice de contenidos</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#modelos-lineales" id="toc-modelos-lineales" class="nav-link active" data-scroll-target="#modelos-lineales"> <span class="header-section-number">7.1</span> Modelos lineales</a>
+  <li><a href="#modelos-lineales" id="toc-modelos-lineales" class="nav-link active" data-scroll-target="#modelos-lineales"><span class="header-section-number">7.1</span> Modelos lineales</a>
   <ul class="collapse">
-  <li><a href="#modelos-lineales-generalizados" id="toc-modelos-lineales-generalizados" class="nav-link" data-scroll-target="#modelos-lineales-generalizados"> <span class="header-section-number">7.1.1</span> Modelos lineales generalizados</a></li>
-  <li><a href="#regresión-logística" id="toc-regresión-logística" class="nav-link" data-scroll-target="#regresión-logística"> <span class="header-section-number">7.1.2</span> Regresión Logística</a></li>
-  <li><a href="#probabilidad-de-clase" id="toc-probabilidad-de-clase" class="nav-link" data-scroll-target="#probabilidad-de-clase"> <span class="header-section-number">7.1.3</span> Probabilidad de clase</a></li>
-  <li><a href="#análisis-discriminante-lineal" id="toc-análisis-discriminante-lineal" class="nav-link" data-scroll-target="#análisis-discriminante-lineal"> <span class="header-section-number">7.1.4</span> Análisis Discriminante Lineal</a></li>
+  <li><a href="#modelos-lineales-generalizados" id="toc-modelos-lineales-generalizados" class="nav-link" data-scroll-target="#modelos-lineales-generalizados"><span class="header-section-number">7.1.1</span> Modelos lineales generalizados</a></li>
+  <li><a href="#regresión-logística" id="toc-regresión-logística" class="nav-link" data-scroll-target="#regresión-logística"><span class="header-section-number">7.1.2</span> Regresión Logística</a></li>
+  <li><a href="#probabilidad-de-clase" id="toc-probabilidad-de-clase" class="nav-link" data-scroll-target="#probabilidad-de-clase"><span class="header-section-number">7.1.3</span> Probabilidad de clase</a></li>
+  <li><a href="#análisis-discriminante-lineal" id="toc-análisis-discriminante-lineal" class="nav-link" data-scroll-target="#análisis-discriminante-lineal"><span class="header-section-number">7.1.4</span> Análisis Discriminante Lineal</a></li>
   </ul></li>
-  <li><a href="#k-vecinos" id="toc-k-vecinos" class="nav-link" data-scroll-target="#k-vecinos"> <span class="header-section-number">7.2</span> k-Vecinos</a></li>
-  <li><a href="#grid-search" id="toc-grid-search" class="nav-link" data-scroll-target="#grid-search"> <span class="header-section-number">7.3</span> Grid search</a></li>
-  <li><a href="#árboles-de-decisión" id="toc-árboles-de-decisión" class="nav-link" data-scroll-target="#árboles-de-decisión"> <span class="header-section-number">7.4</span> Árboles de decisión</a></li>
-  <li><a href="#métodos-de-ensamblado" id="toc-métodos-de-ensamblado" class="nav-link" data-scroll-target="#métodos-de-ensamblado"> <span class="header-section-number">7.5</span> Métodos de ensamblado</a>
+  <li><a href="#k-vecinos" id="toc-k-vecinos" class="nav-link" data-scroll-target="#k-vecinos"><span class="header-section-number">8.3</span> k-Vecinos</a></li>
+  <li><a href="#grid-search" id="toc-grid-search" class="nav-link" data-scroll-target="#grid-search"><span class="header-section-number">8.6</span> Grid search</a></li>
+  <li><a href="#árboles-de-decisión" id="toc-árboles-de-decisión" class="nav-link" data-scroll-target="#árboles-de-decisión"><span class="header-section-number">8.7</span> Árboles de decisión</a></li>
+  <li><a href="#métodos-de-ensamblado" id="toc-métodos-de-ensamblado" class="nav-link" data-scroll-target="#métodos-de-ensamblado"><span class="header-section-number">8.9</span> Métodos de ensamblado</a>
   <ul class="collapse">
-  <li><a href="#bagging" id="toc-bagging" class="nav-link" data-scroll-target="#bagging"> <span class="header-section-number">7.5.1</span> Bagging</a></li>
-  <li><a href="#boosting" id="toc-boosting" class="nav-link" data-scroll-target="#boosting"> <span class="header-section-number">7.5.2</span> Boosting</a></li>
+  <li><a href="#bagging" id="toc-bagging" class="nav-link" data-scroll-target="#bagging"><span class="header-section-number">8.9.1</span> Bagging</a></li>
+  <li><a href="#boosting" id="toc-boosting" class="nav-link" data-scroll-target="#boosting"><span class="header-section-number">8.9.2</span> Boosting</a></li>
   </ul></li>
-  <li><a href="#naive-bayes" id="toc-naive-bayes" class="nav-link" data-scroll-target="#naive-bayes"> <span class="header-section-number">7.6</span> Naive Bayes</a></li>
-  <li><a href="#modelos-de-mezcla-de-gaussianas" id="toc-modelos-de-mezcla-de-gaussianas" class="nav-link" data-scroll-target="#modelos-de-mezcla-de-gaussianas"> <span class="header-section-number">7.7</span> Modelos de mezcla de Gaussianas</a></li>
-  <li><a href="#comparación-de-modelos" id="toc-comparación-de-modelos" class="nav-link" data-scroll-target="#comparación-de-modelos"> <span class="header-section-number">8</span> Comparación de modelos</a></li>
+  <li><a href="#naive-bayes" id="toc-naive-bayes" class="nav-link" data-scroll-target="#naive-bayes"><span class="header-section-number">8.10</span> Naive Bayes</a></li>
+  <li><a href="#modelos-de-mezcla-de-gaussianas" id="toc-modelos-de-mezcla-de-gaussianas" class="nav-link" data-scroll-target="#modelos-de-mezcla-de-gaussianas"><span class="header-section-number">8.11</span> Modelos de mezcla de Gaussianas</a></li>
+  <li><a href="#comparación-de-modelos" id="toc-comparación-de-modelos" class="nav-link" data-scroll-target="#comparación-de-modelos"><span class="header-section-number">9</span> Comparación de modelos</a></li>
   </ul>
 </nav>
     </div>
@@ -270,7 +302,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-aprsup" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></span></h1>
+<h1 class="title"><span id="sec-aprsup" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></span></h1>
 </div>
 
 
@@ -278,11 +310,14 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
+
 </header>
+
 
 <p>El aprendizaje automático supervisado es una disciplina fundamental en la ciencia de datos y la IA. En este enfoque, trabajamos con un conjunto de datos en el que conocemos la variable objetivo que deseamos predecir o clasificar. Esta variable objetivo contiene la información que queremos explicar o entender, y su comportamiento se basa en el resto de las variables o características del conjunto de datos. El objetivo principal del ML supervisado es desarrollar modelos que puedan capturar patrones y relaciones entre las variables con el fin de realizar predicciones precisas y clasificar observaciones.</p>
 <p>Uno de los aspectos más destacados del ML supervisado es su capacidad para resolver problemas de clasificación, donde se asignan observaciones a diferentes categorías o clases. Por ejemplo, podemos aplicar modelos de clasificación para predecir si un correo electrónico es spam o legítimo, si un paciente tiene una enfermedad específica o no, o si una transacción bancaria es fraudulenta o no.</p>
@@ -306,12 +341,12 @@ div.csl-indent {
 <p><span class="math display">\[\eta (x)=\beta_0+\beta_1x_1+\ldots+\beta_px_p. \]</span></p>
 <p>La <strong>función de enlace</strong> conecta la media de la variable respuesta con la combinación lineal de las características (el predictor lineal), lo que permite modelar relaciones no lineales y capturar la variabilidad de los datos. La elección de la función de enlace depende del tipo de problema que se esté abordando y puede incluir funciones como la logística para problemas de clasificación o la identidad para problemas de regresión.</p>
 <p>La <strong>estructura lineal</strong> implica que las características se ponderan por coeficientes, similar a los modelos lineales tradicionales, pero con la capacidad de ajustar relaciones no lineales y manejar múltiples predictores, incluyendo variables categóricas.</p>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Repaso
 </div>
 </div>
@@ -322,7 +357,7 @@ Repaso
 <p>Definimos una función de enlace que relaciona el valor esperado de la variable respuesta dadas las variables explicativas <span class="math inline">\(E(y|x)=\mu(x)\)</span>, con el predictor lineal:</p>
 <p><span class="math display">\[g(E(y|x))=\eta(x)\]</span></p>
 <p>La <strong>distribución de probabilidad</strong> (componente aleatoria) describe cómo se distribuyen los datos alrededor de la media y puede adaptarse a diferentes tipos de datos, como datos binarios, Poisson, binomiales o exponenciales, entre otros. Esto brinda flexibilidad para modelar una variedad de escenarios de datos. Por ejemplo, en el caso de la conocida <em>regresión lineal</em> se asume que la variable respuesta sigue una distribución <em>Normal</em>. Mediante la componente aleatoria determinamos cómo añadir el ruido o error aleatorio a la predicción que se obtiene de la función de enlace. La tabla siguiente, adaptada de <span class="citation" data-cites="agresti2015foundations">(<a href="references.html#ref-agresti2015foundations" role="doc-biblioref">Agresti 2015</a>)</span>, resume los GLM:</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 24%">
 <col style="width: 24%">
@@ -376,12 +411,12 @@ Repaso
 </tr>
 </tbody>
 </table>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Para recordar
 </div>
 </div>
@@ -393,12 +428,12 @@ Para recordar
 <section id="regresión-logística" class="level3" data-number="7.1.2">
 <h3 data-number="7.1.2" class="anchored" data-anchor-id="regresión-logística"><span class="header-section-number">7.1.2</span> Regresión Logística</h3>
 <p>El modelo de Regresión Logística es uno de los modelos lineales generalizados más empleado en la práctica por la facilidad en la interpretación de sus resultados. Es un modelo adecuado para modelar la relación entre una variable respuesta binaria (<span class="math inline">\(0\)</span> o <span class="math inline">\(1\)</span>) y un conjunto de variables explicativas cuantitativas y/o cualitativas.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Multiclase
 </div>
 </div>
@@ -414,7 +449,7 @@ Multiclase
 <p><span class="math display">\[\mu(x)=\frac{1}{1+exp(-\eta(x))}=\frac{1}{1+exp(-(\beta_0+\beta_1x_1+...+\beta_px_p))}\]</span></p>
 <p>Se emplean métodos de Máxima Verosimilitud para la estimación de los parámetros <span class="math inline">\(\beta_i, i=0,...,p\)</span>. Es posible realizar contrastes de hipótesis sobre dichos parámetros, tratando de eliminar del modelo las variables no significativas. Es decir, se contrasta si en los datos hay suficiente información contraria a la siguiente hipótesis nula, como para rechazarla: <span class="math display">\[H_o:\beta_i=0\]</span> La interpretación de los coeficientes se realiza mediante una razón de ventajas (“<em>odds ratio</em>” en inglés), tomando la exponencial de los estimadores de los parámetros del modelo.</p>
 <p>Con los parámetros estimados, y sus desviaciones típicas, podremos hacer selección de variables, quedándonos con las más significativas (aquellas con un <span class="math inline">\(p-valor\)</span> por debajo de un umbral).</p>
-<p>Vamos a trabajar con el ejemplo de los bancos que se estudió en el <a href="eda.html"><span>Capítulo&nbsp;3</span></a>. Como primera aproximación a la regresión logística, aplicamos un modelo con una única variable explicativa. En este caso elegimos la variable <code>housing</code>:</p>
+<p>Vamos a trabajar con el ejemplo de los bancos que se estudió en el <a href="eda.html" class="quarto-xref"><span>Capítulo 3</span></a>. Como primera aproximación a la regresión logística, aplicamos un modelo con una única variable explicativa. En este caso elegimos la variable <code>housing</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Lectura de datos</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -466,10 +501,6 @@ X-squared = 229.44, df = 1, p-value &lt; 2.2e-16</code></pre>
 Call:
 glm(formula = factor.deposit ~ housing, family = "binomial", 
     data = bank.train)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--1.3088  -0.9648  -0.9648   1.0515   1.4061  
 
 Coefficients:
             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -524,10 +555,6 @@ Call:
 glm(formula = factor.deposit ~ marital, family = "binomial", 
     data = bank.train)
 
-Deviance Residuals: 
-   Min      1Q  Median      3Q     Max  
--1.260  -1.076  -1.076   1.200   1.283  
-
 Coefficients:
                 Estimate Std. Error z value Pr(&gt;|z|)    
 (Intercept)     -0.24428    0.03575  -6.832 8.35e-12 ***
@@ -554,10 +581,6 @@ Number of Fisher Scoring iterations: 3</code></pre>
 Call:
 glm(formula = factor.deposit ~ education, family = "binomial", 
     data = bank.train)
-
-Deviance Residuals: 
-   Min      1Q  Median      3Q     Max  
--1.248  -1.106  -1.002   1.250   1.364  
 
 Coefficients:
                    Estimate Std. Error z value Pr(&gt;|z|)    
@@ -587,10 +610,6 @@ Call:
 glm(formula = factor.deposit ~ default, family = "binomial", 
     data = bank.train)
 
-Deviance Residuals: 
-   Min      1Q  Median      3Q     Max  
--1.144  -1.144  -1.144   1.211   1.382  
-
 Coefficients:
             Estimate Std. Error z value Pr(&gt;|z|)   
 (Intercept) -0.07800    0.02701  -2.887  0.00388 **
@@ -617,10 +636,6 @@ Call:
 glm(formula = factor.deposit ~ balance, family = "binomial", 
     data = bank.train)
 
-Deviance Residuals: 
-   Min      1Q  Median      3Q     Max  
--2.361  -1.118  -1.102   1.230   1.297  
-
 Coefficients:
               Estimate Std. Error z value Pr(&gt;|z|)    
 (Intercept) -1.667e-01  3.036e-02  -5.489 4.04e-08 ***
@@ -646,17 +661,17 @@ Number of Fisher Scoring iterations: 3</code></pre>
 </div>
 </div>
 <p>De este modo, la interpretación sería: los clientes con <span class="math inline">\(1000\)</span> dólares más en el salto incrementan su riesgo de depósito en <span class="math inline">\(1.06\)</span> respecto a los que tienen <span class="math inline">\(1000\)</span> dólares menos.</p>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Métodos Wrapper de selección de características
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>En el <a href="reddim.html"><span>Capítulo&nbsp;4</span></a> vimos algunas técnicas de reducción de la dimensión basadas en la selección de características de acuerdo con la calidad de las mismas. Esta calidad se evalua empleando algoritmos de ML.</p>
+<p>En el <a href="reddim.html" class="quarto-xref"><span>Capítulo 4</span></a> vimos algunas técnicas de reducción de la dimensión basadas en la selección de características de acuerdo con la calidad de las mismas. Esta calidad se evalua empleando algoritmos de ML.</p>
 </div>
 </div>
 <p>A continuación, ajustamos un modelo de regresión logística con todas las características significativas.</p>
@@ -668,10 +683,6 @@ Métodos Wrapper de selección de características
 Call:
 glm(formula = factor.deposit ~ housing + marital + education + 
     default + balance, family = "binomial", data = bank.train)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.2899  -1.0945  -0.8051   1.1219   1.6448  
 
 Coefficients:
                      Estimate Std. Error z value Pr(&gt;|z|)    
@@ -706,10 +717,6 @@ Call:
 glm(formula = factor.deposit ~ housing + marital + education + 
     balance, family = "binomial", data = bank.train)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.3057  -1.0920  -0.8049   1.1217   1.6233  
-
 Coefficients:
                      Estimate Std. Error z value Pr(&gt;|z|)    
 (Intercept)        -2.042e-01  8.377e-02  -2.438  0.01479 *  
@@ -741,7 +748,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>predicciones <span class="ot">&lt;-</span> <span class="fu">predict</span>(logit2, <span class="at">type=</span><span class="st">"response"</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(predicciones)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Y podemos emplear esas predicciones, con un umbral de decisión ($0.5$ en el ejemplo), para clasificar.</p>
@@ -779,7 +790,7 @@ Prediction   no  yes
                                           </code></pre>
 </div>
 </div>
-<p>En la salida tenemos algunas de las medidas de rendimiento estudiadas en el <a href="eval.html"><span>Capítulo&nbsp;6</span></a>. Sin embargo, no aparece el <span class="math inline">\(F_1-score\)</span>, media armónica de la Precisión y la Recuperación. En cualquier caso, es fácil de programar:</p>
+<p>En la salida tenemos algunas de las medidas de rendimiento estudiadas en el <a href="eval.html" class="quarto-xref"><span>Capítulo 6</span></a>. Sin embargo, no aparece el <span class="math inline">\(F_1-score\)</span>, media armónica de la Precisión y la Recuperación. En cualquier caso, es fácil de programar:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>clase.pred<span class="ot">=</span><span class="fu">ifelse</span>(predicciones<span class="sc">&gt;</span><span class="fl">0.5</span>,<span class="st">"yes"</span>,<span class="st">"no"</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -810,31 +821,35 @@ Prediction   no  yes
 </div>
 </div>
 <p>Vemos que el valor es muy similar al obtenido en entrenamiento. No estamos sobreajustando el modelo.</p>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tarea
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Dejamos como labor del estudiante la tarea de mejorar la capacidad predictiva del modelo. Puedes emplear algunas de las variables que no han sido consideradas y que puedes consultar en el <a href="eda.html"><span>Capítulo&nbsp;3</span></a>.</p>
+<p>Dejamos como labor del estudiante la tarea de mejorar la capacidad predictiva del modelo. Puedes emplear algunas de las variables que no han sido consideradas y que puedes consultar en el <a href="eda.html" class="quarto-xref"><span>Capítulo 3</span></a>.</p>
 </div>
 </div>
-<p>Podemos calcular la curva <em>ROC</em> presentada en el <a href="eval.html"><span>Capítulo&nbsp;6</span></a>.</p>
+<p>Podemos calcular la curva <em>ROC</em> presentada en el <a href="eval.html" class="quarto-xref"><span>Capítulo 6</span></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>roc_score<span class="ot">=</span><span class="fu">roc</span>(bank.test<span class="sc">$</span>deposit, predicciones,<span class="at">plot=</span><span class="cn">TRUE</span>,<span class="at">print.auc=</span><span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Y ahora, podemos plantear si este modelo es adecuado. Es decir ¿estamos satisfechos con el rendimiento del modelo? ¿Es suficientemente bueno?</p>
 </section>
 <section id="análisis-discriminante-lineal" class="level3" data-number="7.1.4">
-<h3 data-number="7.1.4" class="anchored" data-anchor-id="análisis-discriminante-lineal"><span class="header-section-number">7.1.4</span> Análisis Discriminante Lineal</h3>
+<h3 data-number="7.1.4" class="anchored"><span class="header-section-number">7.1.4</span> Análisis Discriminante Lineal</h3>
 <p>El <em>análisis discriminante lineal (Linear Discriminant Analysis, LDA)</em> <span class="citation" data-cites="hastie2009elements">(<a href="references.html#ref-hastie2009elements" role="doc-biblioref">Hastie et&nbsp;al. 2009</a>)</span>, <span class="citation" data-cites="murphy2012machine">(<a href="references.html#ref-murphy2012machine" role="doc-biblioref">Murphy 2012</a>)</span> es una técnica estadística de clasificación supervisada utilizada para encontrar una combinación lineal de variables que discrimine dos o más grupos. Se basa en la idea de modelar la distribución de cada clase y aplicar el criterio de Bayes para asignar nuevas observacones a una de ellas.Se trata de un algoritmo de <em>clasificación</em>, es decir, la variable objetivo <span class="math inline">\(Y\)</span> es categórica: <span class="math inline">\(Y \in \{1,\dots,C\}\)</span>.</p>
 <!--# El objetivo de LDA es construir una combinación lineal de las variables explicativas que mejor discrimina las clases. En base a dicho hiperplano separador se clasificarán las nuevas observaciones. -->
 <p>Supongamos que los datos de cada clase <span class="math inline">\(Y=c\)</span> siguen una distribución Normal multivariante:</p>
@@ -867,18 +882,19 @@ Tarea
 <li><p><span class="math inline">\(\widehat{\mu}_c\)</span> media muestral de los elementos de la clase <span class="math inline">\(c\)</span></p></li>
 <li><p><span class="math inline">\(\widehat{\Sigma}=\frac{1}{n-C}\sum_{c=1}^{C}\sum_{y_i = c}(\mathbf{x}_i - \widehat{\mu}_c)(\mathbf{x}_i - \widehat{\mu}_c)^{t}\)</span>. Se utilizan los datos de todas las clases para calcular la matriz de covarianzas: suma de las matrices de covarianza de cada clase, ponderadas según su tamaño muestral (MLE). Se resta el número total clases <span class="math inline">\(C\)</span> porque es el número de medias <span class="math inline">\(\widehat{\mu}_c\)</span> estimado.</p></li>
 </ul>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Visión geométrica del LDA">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Visión geométrica
+<div class="callout-title-container flex-fill">
+Visión geométrica del LDA
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Visión geométrica del LDA">
+<section id="visión-geométrica" class="level1 callout-body-container callout-body" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Visión geométrica</h1>
 <p>El Análisis Discriminante Lineal (LDA) sigue una filosofía similar al Análisis de Componentes Principales (PCA), pero con un objetivo distinto: en lugar de buscar la máxima variabilidad de los datos sin considerar etiquetas, LDA se centra en maximizar la separabilidad entre clases. Es decir, busca encontrar una proyección de los datos en una nueva dimensión en la que las clases queden lo más separadas posible.</p>
 <p>Una forma intuitiva de ver el LDA es como una proyección geométrica de los datos en una recta, donde la asignación de clase se realiza según la proximidad a las medias proyectadas de cada clase. Matemáticamente, se busca un vector de proyección <span class="math inline">\(\mathbf{w}\)</span> tal que los datos proyectados <span class="math inline">\(\mathbf{z}=\mathbf{w}^t\mathbf{x}\)</span> de distintas clases queden lo más separados posibles. <span class="math inline">\(\mathbf{z}_i\)</span> representa la coordenada del punto <span class="math inline">\(\mathbf{x}_i\)</span> en la nueva dimensión reducida. ¿Te recuerda a PCA? En efecto, en ambos casos se realiza una transformación lineal de los datos. Sin embargo, mientras que en PCA se maximizan las varianzas de los datos proyectados, en LDA se maximiza la separación entre clases y se minimiza la dispersión dentro de cada clase.</p>
 <p>Para encontrar el nuevo eje de proyección, LDA busca maximizar la distancia entre las medias de las clases y minimizar la dispersión dentro de cada una de ellas. En el caso binario, definimos las medias de cada clase como: <span class="math display">\[\mu_{0} = \frac{1}{n_{0}} \sum_{i:Y_{i}=0} \mathbf{x}_i\]</span> y <span class="math display">\[\mu_{1} = \frac{1}{n_{1}} \sum_{i:Y_{i}=1} \mathbf{x}_i\]</span> denotando <span class="math inline">\(i:Y_{i}=0\)</span> aquellas observaciones <span class="math inline">\(i\)</span> que son de la clase <span class="math inline">\(0\)</span>, es decir, <span class="math inline">\(Y_i=0\)</span> y siendo <span class="math inline">\(n_0\)</span> y <span class="math inline">\(n_1\)</span> los tamaños de las clases <span class="math inline">\(0\)</span> y <span class="math inline">\(1\)</span>, respectivamente.</p>
@@ -921,7 +937,11 @@ Attaching package: 'MASS'</code></pre>
 <span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>x1, df<span class="sc">$</span>x2, <span class="at">col =</span> df<span class="sc">$</span>class, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">xlab =</span> <span class="st">"Variable 1"</span>, <span class="at">ylab =</span> <span class="st">"Variable 2"</span>, <span class="at">main =</span> <span class="st">"Datos Originales"</span>)</span>
 <span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">levels</span>(df<span class="sc">$</span>class), <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">levels</span>(df<span class="sc">$</span>class)), <span class="at">pch =</span> <span class="dv">19</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LDA</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>lda_model <span class="ot">&lt;-</span> <span class="fu">lda</span>(class <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> df)</span>
@@ -950,66 +970,72 @@ Attaching package: 'MASS'</code></pre>
 <span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Proyección de PCA"</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
 <span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">levels</span>(df<span class="sc">$</span>class), <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">levels</span>(df<span class="sc">$</span>class)), <span class="at">pch =</span> <span class="dv">19</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 </div>
 </div>
-</div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Ventajas">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Ventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Ventajas">
+<section id="ventajas" class="level2 callout-body-container callout-body" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="ventajas"><span class="header-section-number">8.1</span> Ventajas</h2>
 <ul>
 <li><p><strong>Simple y rápido</strong></p></li>
 <li><p><strong>Eficiente cuando se cumple las hipótesis</strong></p></li>
 <li><p><strong>Clasificación de observaciones en grupos determinados</strong>. LDA se utiliza comúnmente para clasificar observaciones en grupos predeterminados, lo que facilita la interpretación y la toma de decisiones.</p></li>
 <li><p><strong>Combinación de información para la frontera de decisión</strong>. Al considerar la información combinada de varias variables, LDA puede capturar patrones que podrían no ser evidentes al analizar cada variable por separado</p></li>
 </ul>
+</section>
 </div>
 </div>
-</div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Desventajas">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Desventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Desventajas">
+<section id="desventajas" class="level2 callout-body-container callout-body" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="desventajas"><span class="header-section-number">8.2</span> Desventajas</h2>
 <ul>
 <li><p><strong>Asume normalidad y homocedasticidad</strong>. LDA puede ser sensible a la falta de normalidad en las variables y a la diferente variabilidad en las mismas.</p></li>
 <li><p><strong>Sensible a outliers</strong>. LDA puede ser sensible a la presencia de valores atípicos en los datos, lo que puede afectar negativamente la calidad del modelo.</p></li>
 <li><p><strong>Es un clasificador lineal</strong>.Como su nombre indica, LDA es lineal y puede no funcionar bien en situaciones donde la relación entre las variables predictoras y la variable dependiente es no lineal.</p></li>
 <li><p><strong>Requiere cierto tamaño de muestra</strong>. Para obtener resultados confiables, LDA requiere un tamaño de muestra adecuado en cada grupo, y puede no funcionar bien con tamaños de muestra desequilibrados</p></li>
 </ul>
-</div>
+</section>
 </div>
 </div>
 </section>
 </section>
-<section id="k-vecinos" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="k-vecinos"><span class="header-section-number">7.2</span> k-Vecinos</h2>
+<section id="k-vecinos" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="k-vecinos"><span class="header-section-number">8.3</span> k-Vecinos</h2>
 <p>El método de los <span class="math inline">\(k\)</span> vecinos más cercanos (<span class="math inline">\(k-NN\)</span>), abreviatura de “k nearest neighbors” en inglés, se cuenta entre los enfoques más simples y ampliamente utilizados en el campo del ML. Este método se basa en la noción de similitud (o distancia) entre observaciones.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Para recordar
 </div>
 </div>
@@ -1027,42 +1053,44 @@ Para recordar
 </ul>
 <p>En los ejemplos siguientes, se podrá observar que es habitual realizar pruebas con diferentes configuraciones de parámetros para identificar cuáles son los más apropiados. El principio fundamental del algoritmo implica obtener los <span class="math inline">\(k\)</span> vecinos más cercanos para cada observación en la muestra de datos. En un problema de clasificación, el algoritmo devolverá la clase que predomina entre los <span class="math inline">\(k\)</span> vecinos, es decir, la moda de la variable objetivo. En cambio, en un problema de regresión, el algoritmo proporcionará la media de la variable respuesta de los <span class="math inline">\(k\)</span> vecinos más cercanos.</p>
 <p>Para determinar el valor óptimo de <span class="math inline">\(k\)</span> en función de los datos, ejecutamos el algoritmo <span class="math inline">\(k-NN\)</span> múltiples veces, utilizando distintos valores de <span class="math inline">\(k\)</span>, y seleccionamos aquel valor que minimice la tasa de errores, al mismo tiempo que preserva la capacidad del algoritmo para realizar predicciones precisas en datos no vistos previamente. Es importante destacar que valores muy bajos de <span class="math inline">\(k\)</span> pueden generar inestabilidad en el algoritmo, mientras que valores extremadamente altos de <span class="math inline">\(k\)</span> pueden aumentar el error en las predicciones. En este proceso, se busca el equilibrio adecuado que optimice el rendimiento del algoritmo en cada situación.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Ventajas">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Ventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Ventajas">
+<section id="ventajas-1" class="level2 callout-body-container callout-body" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="ventajas-1"><span class="header-section-number">8.4</span> Ventajas</h2>
 <ul>
 <li><p><strong>Sencillez y facilidad de implementación</strong>: Es uno de los algoritmos más sencillos y fáciles de entender en ML. No requiere suposiciones complejas o entrenamientos prolongados.</p></li>
 <li><p><strong>Versatilidad</strong>: Se puede aplicar tanto a problemas de clasificación como de regresión.</p></li>
 <li><p><strong>No paramétrico</strong>: A diferencia de algunos algoritmos que asumen una distribución específica de los datos, <span class="math inline">\(k-NN\)</span> no hace suposiciones sobre la forma de los datos, lo que lo hace adecuado para una amplia gama de situaciones.</p></li>
-<li><p><strong>Adaptabilidad a datos cambiantes</strong>: Puede adaptarse a cambios en los datos sin necesidad de volver a entrenar el modelo por completo, lo que lo hace útil en escenarios de datos en constante evolución. Ver <a href="nuevas.html"><span>Capítulo&nbsp;9</span></a>.</p></li>
+<li><p><strong>Adaptabilidad a datos cambiantes</strong>: Puede adaptarse a cambios en los datos sin necesidad de volver a entrenar el modelo por completo, lo que lo hace útil en escenarios de datos en constante evolución. Ver <a href="nuevas.html" class="quarto-xref"><span>Capítulo 9</span></a>.</p></li>
 <li><p><strong>Interpretabilidad</strong>: Las predicciones de k-NN se basan en la observación de datos cercanos, lo que facilita la interpretación de las decisiones del modelo.</p></li>
 <li><p><strong>Robustez frente al ruido</strong>: Puede manejar datos con ruido, que no se adaptan a la distribución de la mayoría de los datos, sin un gran impacto en su rendimiento.</p></li>
 <li><p><strong>Facilidad para multiclases</strong>: Es aplicable a problemas de clasificación con múltiples clases sin necesidad de modificaciones significativas.</p></li>
 </ul>
+</section>
 </div>
 </div>
-</div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Desventajas">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Desventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Desventajas">
+<section id="desventajas-1" class="level2 callout-body-container callout-body" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="desventajas-1"><span class="header-section-number">8.5</span> Desventajas</h2>
 <ul>
 <li><p><strong>Sensibilidad a la elección de</strong> <span class="math inline">\(k\)</span>: La elección del parámetro que determina el número de vecinos puede ser crítica. Un valor demasiado pequeño puede hacer que el modelo sea sensible al ruido en los datos y cause sobreajuste, mientras que un valor demasiado grande puede hacer que el modelo sea demasiado suave y cause subajuste.</p></li>
 <li><p><strong>Sensibilidad a la elección de la métrica de distancia</strong>: La elección de la métrica de distancia es crucial y puede tener un impacto significativo en el rendimiento del algoritmo. No existe una métrica única que funcione para todos los problemas, y la elección de la métrica adecuada puede ser un desafío. Es muy probable que el científico de datos deba programar la métrica más adecuada para cada caso particular.</p></li>
@@ -1070,7 +1098,7 @@ Desventajas
 <li><p><strong>Incapacidad para capturar relaciones complejas</strong>: <span class="math inline">\(k-NN\)</span> es un algoritmo simple que no puede capturar relaciones complejas entre las características, como lo harían modelos más avanzados. No es adecuado para problemas con patrones no lineales.</p></li>
 <li><p><strong>Problemas en datos desbalanceados</strong>: En problemas de clasificación con clases desequilibradas, donde una clase tiene muchas más muestras que otra, <span class="math inline">\(k-NN\)</span> tiende a sesgarse hacia la clase mayoritaria y puede no detectar bien la clase minoritaria.</p></li>
 </ul>
-</div>
+</section>
 </div>
 </div>
 <p>Aplicamos el algoritmo a nuestro problema de los datos bancarios.</p>
@@ -1111,7 +1139,11 @@ The final value used for the model was k = 9.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.knn)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Según el gráfico anterior, podríamos elegir el mejor valor de <span class="math inline">\(k\)</span>, si bien puede observarse pocas diferencias entre las diferentes opciones.</p>
@@ -1155,12 +1187,12 @@ Prediction  no yes
                                           </code></pre>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tarea
 </div>
 </div>
@@ -1169,17 +1201,17 @@ Tarea
 </div>
 </div>
 </section>
-<section id="grid-search" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="grid-search"><span class="header-section-number">7.3</span> Grid search</h2>
-<p>La “<em>grid search</em>” (búsqueda en cuadrícula) es una técnica comúnmente utilizada en ML para encontrar los <strong>mejores hiperparámetros</strong> para un modelo. Tal y como vimos en el <a href="aprnosup.html"><span>Capítulo&nbsp;5</span></a>, los hiperparámetros son configuraciones que no se aprenden del conjunto de datos, sino que se establecen antes de entrenar el modelo. Estos hiperparámetros pueden incluir aspectos como la tasa de aprendizaje, la profundidad máxima de un árbol de decisión, el número de vecinos en el algoritmo de <span class="math inline">\(k-NN\)</span> y otros ajustes que afectan cómo se entrena y se ajusta el modelo.</p>
+<section id="grid-search" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="grid-search"><span class="header-section-number">8.6</span> Grid search</h2>
+<p>La “<em>grid search</em>” (búsqueda en cuadrícula) es una técnica comúnmente utilizada en ML para encontrar los <strong>mejores hiperparámetros</strong> para un modelo. Tal y como vimos en el <a href="aprnosup.html" class="quarto-xref"><span>Capítulo 5</span></a>, los hiperparámetros son configuraciones que no se aprenden del conjunto de datos, sino que se establecen antes de entrenar el modelo. Estos hiperparámetros pueden incluir aspectos como la tasa de aprendizaje, la profundidad máxima de un árbol de decisión, el número de vecinos en el algoritmo de <span class="math inline">\(k-NN\)</span> y otros ajustes que afectan cómo se entrena y se ajusta el modelo.</p>
 <p>La <em>grid search</em> consiste en definir una “<em>cuadrícula</em>” de posibles valores para los hiperparámetros que se desean optimizar. Por ejemplo, si se está trabajando con un modelo de máquinas de vectores de soporte (SVM), se podría tener una cuadrícula para los hiperparámetros de la función kernel y el parámetro de regularización. Luego, se entrena y evalúa el modelo utilizando todas las combinaciones posibles de valores en la cuadrícula.</p>
 <p>El objetivo es encontrar la combinación de hiperparámetros que produce el mejor rendimiento del modelo según una métrica específica, como precisión, exactitud, <span class="math inline">\(F1\)</span>-score, error cuadrático medio, etc.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Para recordar
 </div>
 </div>
@@ -1246,7 +1278,11 @@ The final value used for the model was k = 24.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit.knn)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Encontramos óptimo <span class="math inline">\(k= 24\)</span>, el número de instancias más cercanas que hay que recopilar para hacer una predicción óptima. Ahora, usamos el modelo ajustado para predecir la clase para nuestro conjunto de prueba, e imprimir la matriz de confusión:</p>
@@ -1286,12 +1322,12 @@ Prediction   no  yes
                                           </code></pre>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Métrica de disimilaridad
 </div>
 </div>
@@ -1300,8 +1336,8 @@ Métrica de disimilaridad
 </div>
 </div>
 </section>
-<section id="árboles-de-decisión" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="árboles-de-decisión"><span class="header-section-number">7.4</span> Árboles de decisión</h2>
+<section id="árboles-de-decisión" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="árboles-de-decisión"><span class="header-section-number">8.7</span> Árboles de decisión</h2>
 <p>Los Árboles de Decisión (DT, de <em>Decision</em> <em>Tree</em> en inglés) son algoritmos de ML basados en la <strong>información</strong>. Este tipo de algoritmos determinan qué variables explicativas proporcionan la mayor parte de la información (<strong>ganancia de información</strong>) para medir la variable objetivo y hacen predicciones probando secuencialmente las características en orden a su información <span class="citation" data-cites="kelleher2018data">(<a href="references.html#ref-kelleher2018data" role="doc-biblioref">Kelleher y Tierney 2018</a>)</span>.</p>
 <p>Un DT se crea mediante un proceso de particionamiento recursivo del espacio de las variables explicativas y asignando una predicción en cada una de las regiones (hojas) resultantes. Es decir, va seleccionando variables y cortes en sus valores y con ello crea una rama del árbol con dos nodos hijos. Para una mejor comprensión de la estructura de un árbol, necesitamos definir los siguientes conceptos:</p>
 <ul>
@@ -1312,17 +1348,17 @@ Métrica de disimilaridad
 <p>En la siguiente imagen se puede apreciar el funcionamiento de un árbol de decisión.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="aprsup/DT_partitioning.jpg" class="img-fluid figure-img" width="602"></p>
+<p><img src="aprsup/DT_partitioning.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" width="602"></p>
 </figure>
 </div>
 <p>Una vez obtenidas las distintas regiones <span class="math inline">\(R_h\)</span>, el modelo sería <span class="math display">\[f(\mathbf{x})=\sum_{h=1}^{H}g_{h}I(\mathbf{x}\in R_{h})\]</span> siendo <span class="math inline">\(I(\mathbf{x}\in R_{h})\)</span> la función indicatriz que vale <span class="math inline">\(1\)</span> si la observación <span class="math inline">\(\mathbf{x}\)</span> pertenece a la región <span class="math inline">\(R_{h}\)</span> y <span class="math inline">\(g_{h}\)</span> la predicción (el valor de la variable respuesta) que se le asignará a dicha observación. En un problema de regresión <span class="math inline">\(g_{h}\)</span> será la media de la variable respuesta <span class="math inline">\(y\)</span> en dicha región. En un problema de clasificación, será la proporción de las clases.</p>
 <p>Nótese que, habitualmente, favorecemos árboles que empleen el menor número de preguntas posible, lo que significa que buscamos árboles poco profundos. La construcción de árboles con poca profundidad implica que las características más informativas, es decir, aquellas que mejor distinguen entre observaciones con diferentes valores en la variable objetivo, deben ubicarse en la parte superior del árbol. Para llevar a cabo esta tarea, es fundamental contar con una métrica formal que evalúe cuán efectivamente una variable discrimina entre los niveles de la variable objetivo.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Entropía
 </div>
 </div>
@@ -1352,12 +1388,12 @@ Entropía
 <!--# Para cada variable explicativa, se crean los conjuntos resultantes dividiendo las observaciones en el conjunto de datos utilizando un umbral para dicha variable. A continuación, se suman los valores de entropía de cada uno de estos conjuntos. Calcular la información que sigue siendo necesaria para organizar las observaciones en conjuntos puros después de dividirlos utilizando la variable explicativa. 3. Calcular la Ganancia de Información restando la entropía restante (paso 2) del valor de entropía original (paso 1) -->
 <p>Es decir, la idea es emplear los valores de las características medidas sobre las observaciones para dividir el conjunto inicial de datos en subconjuntos más pequeños repetidamente, hasta que la entropía de cada uno de los subconjuntos sea cero (o pequeña, menor que un umbral). Para cada partición, la entropía media de los subconjuntos resultantes debería ser menor que la del conjunto anterior.</p>
 <p>En términos generales, la <strong>ganancia de información</strong> se define como la diferencia entre la entropía anterior y la nueva entropía. Por lo tanto, para cada nodo en el árbol, se elige para la división aquella variable que maximiza la ganancia de información.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Índice de Gini
 </div>
 </div>
@@ -1396,15 +1432,19 @@ Entropía
 <span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Índice de Gini"</span> <span class="ot">=</span> <span class="st">"red"</span>, </span>
 <span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Error Rate"</span> <span class="ot">=</span> <span class="st">"green"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tarea
 </div>
 </div>
@@ -1422,12 +1462,12 @@ Tarea
 <li><p>Poda pre-pruning (previa a la construcción completa del árbol): Se establece un criterio de parada como la profundidad máxima, el número mínimo de muestras en un nodo o un umbral mínimo de ganancia de información para realizar una división.</p></li>
 <li><p>Poda post-pruning (posterior a la construcción del árbol completo): Se construye el árbol hasta su máxima profundidad y luego se eliminan nodos internos si su eliminación mejora la métrica de validación (por ejemplo, validación cruzada). Una técnica común es la poda por reducción de error, donde se evalúa si eliminar un nodo interno mejora el rendimiento del modelo. Esta poda se puede formalizar mediante la minimización de una función de coste regularizada: <span class="math display">\[C(T)=C_t(T) + \alpha |T|\]</span> donde <span class="math inline">\(T\subset T_{full}\)</span> es cualquier árbol que se pueda lograr podando el árbol completo <span class="math inline">\(T_{full}\)</span>, <span class="math inline">\(|T|\)</span> es el número de nodos terminales en <span class="math inline">\(T\)</span>, <span class="math inline">\(C_t(T)\)</span> es el error en el entrenamiento del subárbol <span class="math inline">\(T\)</span> y <span class="math inline">\(\alpha\)</span> es un hiperparámetro que controla la penalización por la complejidad del modelo. Este hiperpárametro <span class="math inline">\(\alpha\)</span> rige el equilibrio entre el tamaño del árbol y su ajuste a los datos. Valores grandes, dan como resultados árboles pequeños y, por otro lado, valores pequeños de <span class="math inline">\(\alpha\)</span> dan lugar a árboles de mayor tamaño. Con <span class="math inline">\(\alpha=0\)</span>, <span class="math inline">\(T=T_{full}\)</span>.</p></li>
 </ul>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Para recordar
 </div>
 </div>
@@ -1435,25 +1475,26 @@ Para recordar
 <p>La salida de un DT es un conjunto de reglas que se puede representar como un árbol donde cada nodo representa una decisión binaria.</p>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Ventajas">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Ejemplo: Construcción de un árbol de decisión usando entropía de Shannon
+<div class="callout-title-container flex-fill">
+Ventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-19" class="callout-19-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Ventajas">
+<section id="ejemplo-construcción-de-un-árbol-de-decisión-usando-entropía-de-shannon" class="level2 callout-body-container callout-body" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="ejemplo-construcción-de-un-árbol-de-decisión-usando-entropía-de-shannon"><span class="header-section-number">8.8</span> Ejemplo: Construcción de un árbol de decisión usando entropía de Shannon</h2>
 <p>Supongamos que trabajamos en un banco y queremos predecir si un cliente pagará o no un préstamo. Para ello, tenemos un conjunto de datos con dos características binarias:</p>
 <ul>
 <li><strong>Tiene empleo</strong> (Sí/No)</li>
 <li><strong>Historial crediticio positivo</strong> (Sí/No)</li>
 <li><strong>Variable objetivo</strong> Paga préstamo (Sí/No)</li>
 </ul>
-<table class="table">
+<table class="caption-top table">
 <caption>Datos de clientes y su historial de préstamos</caption>
 <thead>
 <tr class="header">
@@ -1580,11 +1621,11 @@ H_{\text{Historial}} = \frac{2}{4} 0 + \frac{2}{4} 1 = 0.5
 <p>El árbol resultante es:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="aprsup/DT_manual.png" class="img-fluid figure-img" width="445"></p>
+<p><img src="aprsup/DT_manual.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="445"></p>
 </figure>
 </div>
 <p>Así, tenemos 3 nodos terminales. Dos de ellos son puros y otro está en la situación de máxima incertidumbre. No obstante, no disponemos de más variables para seguir construyendo el árbol.</p>
-</div>
+</section>
 </div>
 </div>
 <p>A continuación aplicamos el método de DT al conjunto de datos <code>bank</code>.</p>
@@ -1598,7 +1639,11 @@ H_{\text{Historial}} = \frac{2}{4} 0 + \frac{2}{4} 1 = 0.5
 <span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>fit.dt <span class="ot">&lt;-</span> <span class="fu">rpart</span>(deposit<span class="sc">~</span>., <span class="at">data =</span> df, <span class="at">method =</span> <span class="st">'class'</span>)</span>
 <span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(fit.dt, <span class="at">extra =</span> <span class="dv">106</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Como podemos observar, la interpretación del modelo de DT es muy sencilla. Todas las observaciones están en el primer nodo (el nodo raíz). Sin realizar “preguntas” sobre las variables explicativas, el nodo es de clase “<em>no</em>” con una probabilidad de “<em>yes</em>” del <span class="math inline">\(0.48\)</span>.</p>
@@ -1607,12 +1652,12 @@ H_{\text{Historial}} = \frac{2}{4} 0 + \frac{2}{4} 1 = 0.5
 <li><p>Si el valor es menor que <span class="math inline">\(343\)</span> (este valor es aprendido por el algoritmo y puede ser difícil de interpretar) entonces la observación va hacia la rama izquierda, cayendo en un nodo dónde la probabilidad de “yes” ha disminuido a <span class="math inline">\(0.30\)</span>. En ese nodo aparecen el <span class="math inline">\(62\%\)</span> de todas las observaciones del conjunto de entrenamiento.</p></li>
 <li><p>Por contra, si el valor de <code>duration</code>es mayor que <span class="math inline">\(343\)</span> entonces la observación va hacia la rama derecha, cayendo en un nodo dónde la probabilidad de “yes” ha aumentado a <span class="math inline">\(0.77\)</span>. En ese nodo aparecen el <span class="math inline">\(38\%\)</span> de todas las observaciones del conjunto de entrenamiento. Además, fíjate que se trata de un nodo terminal.</p></li>
 </ul>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tarea
 </div>
 </div>
@@ -1621,7 +1666,7 @@ Tarea
 </div>
 </div>
 <p>Podemos interpretar el resto de los nodos terminales del ejemplo como sigue:</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 24%">
 <col style="width: 26%">
@@ -1756,7 +1801,11 @@ Prediction   no  yes
 <span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>tune.fit <span class="ot">&lt;-</span> <span class="fu">rpart</span>(deposit<span class="sc">~</span>., <span class="at">data =</span> df, <span class="at">method =</span> <span class="st">'class'</span>, <span class="at">control =</span> control)</span>
 <span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rpart.plot</span>(tune.fit, <span class="at">extra =</span> <span class="dv">106</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>El nuevo modelo presenta un rendimiento ligeramente menor que el original pero respondiendo a condiciones que antes no imponíamos.</p>
@@ -1795,12 +1844,12 @@ Prediction   no  yes
                                           </code></pre>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Ventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -1808,7 +1857,7 @@ Ventajas
 <div id="callout-21" class="callout-21-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
-<li><p><strong>Explicabilidad</strong>: Los DT son altamente interpretables, lo que significa que sus resultados se pueden entender y comunicar de manera sencilla (ver <a href="nuevas.html"><span>Capítulo&nbsp;9</span></a>). Esto los hace ideales para tomar decisiones basadas en modelos en entornos donde se necesita entender el razonamiento detrás de las predicciones.</p></li>
+<li><p><strong>Explicabilidad</strong>: Los DT son altamente interpretables, lo que significa que sus resultados se pueden entender y comunicar de manera sencilla (ver <a href="nuevas.html" class="quarto-xref"><span>Capítulo 9</span></a>). Esto los hace ideales para tomar decisiones basadas en modelos en entornos donde se necesita entender el razonamiento detrás de las predicciones.</p></li>
 <li><p><strong>Compatibilidad con datos mixtos</strong>: Pueden manejar tanto variables explicativas cuantitativas como cualitativas (categóricas). Esta versatilidad les permite trabajar con una amplia variedad de tipos de datos.</p></li>
 <li><p><strong>Clasificación multiclase</strong>: Los DT se pueden extender de manera natural para la clasificación multiclase, lo que significa que pueden asignar observaciones a más de dos categorías.</p></li>
 <li><p><strong>Escalado de variables no requerido</strong>: A diferencia de algunos otros algoritmos, los DT no requieren que las variables se escalen o estandaricen antes de su uso. Esto facilita el proceso y ahorra tiempo en la preparación de datos.</p></li>
@@ -1820,12 +1869,12 @@ Ventajas
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Desventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -1847,15 +1896,15 @@ Desventajas
 </div>
 <p>Si bien los DTs son una herramienta valiosa, es importante considerar estas limitaciones al seleccionar la técnica de ML adecuada para un problema específico. Las desventajas mencionadas anteriormente son algunas de las razones por las que se han desarrollado métodos más avanzados, basados en ensamblado como los Bosques Aleatorios, para abordar algunas de estas limitaciones.</p>
 </section>
-<section id="métodos-de-ensamblado" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="métodos-de-ensamblado"><span class="header-section-number">7.5</span> Métodos de ensamblado</h2>
+<section id="métodos-de-ensamblado" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="métodos-de-ensamblado"><span class="header-section-number">8.9</span> Métodos de ensamblado</h2>
 <p>Los métodos de ensamblado son una potente estrategia en el campo del ML que se basa en la idea de que la unión de múltiples modelos puede mejorar significativamente el rendimiento de predicción en comparación con un solo modelo.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 La unión hace la fuerza
 </div>
 </div>
@@ -1869,8 +1918,8 @@ La unión hace la fuerza
 <li><p>el ensamblado de <strong>bagging</strong></p></li>
 <li><p>el ensamblado de <strong>boosting</strong></p></li>
 </ul>
-<section id="bagging" class="level3" data-number="7.5.1">
-<h3 data-number="7.5.1" class="anchored" data-anchor-id="bagging"><span class="header-section-number">7.5.1</span> Bagging</h3>
+<section id="bagging" class="level3" data-number="8.9.1">
+<h3 data-number="8.9.1" class="anchored" data-anchor-id="bagging"><span class="header-section-number">8.9.1</span> Bagging</h3>
 <p>El ensamblado de <strong>Bagging</strong>, (de “<em>Bootstrap Aggregating</em>” en inglés), es una técnica de ML diseñada para mejorar la precisión y la estabilidad de los modelos predictivos. Se basa en la idea de construir múltiples modelos similares y combinar sus predicciones para obtener un resultado final más robusto y generalizable.</p>
 <p>Ya vimos que uno de los problemas de los árboles de decisión era que son clasificadores con alta varianza. La técnica bagging nació con el objetivo de reducir dicha varianza dado que una manera de reducir la varianza de un estimador es hacer la media de varios estimadores. Se entrenan <span class="math inline">\(M\)</span> árboles distintos <span class="math inline">\(f_m(\mathbf{x}), m=1,\dots, M\)</span> en diferentes subconjuntos del conjunto de datos (elegidos aleatoriamente con remplazamiento) y se calcula el ensamblado total</p>
 <p><span class="math display">\[
@@ -1883,12 +1932,12 @@ f(\mathbf{x})=\sum_{m=1}^{M} \frac{1}{M}f_{m}(\mathbf{x})
 <li><p><strong>Predicciones</strong>: Una vez que se han entrenado todos los modelos base, se utilizan para hacer predicciones individuales sobre un conjunto de datos de prueba.</p></li>
 <li><p><strong>Combinación</strong>: Finalmente, las predicciones de todos los modelos base se combinan para obtener una predicción agregada. En problemas de clasificación, esto suele implicar votación, donde se elige la clase con más votos, y en problemas de regresión, se calcula un promedio de las predicciones.</p></li>
 </ol>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Ventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -1904,12 +1953,12 @@ Ventajas
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Desventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -1927,8 +1976,8 @@ Desventajas
 </div>
 </div>
 <p>El algoritmo más conocido que utiliza Bagging es el “<strong>Random Forest</strong>”, que combina múltiples DTs para lograr un modelo predictivo altamente preciso.</p>
-<section id="random-forest" class="level4" data-number="7.5.1.1">
-<h4 data-number="7.5.1.1" class="anchored" data-anchor-id="random-forest"><span class="header-section-number">7.5.1.1</span> Random Forest</h4>
+<section id="random-forest" class="level4" data-number="8.9.1.1">
+<h4 data-number="8.9.1.1" class="anchored" data-anchor-id="random-forest"><span class="header-section-number">8.9.1.1</span> Random Forest</h4>
 <p>Un Random Forest o Bosque Aleatorio es una potente técnica de ensamblado que utiliza un conjunto de DTs para mejorar la precisión de las predicciones. En lugar de confiar en un solo árbol, se construye un bosque compuesto por numerosos árboles individuales. La singularidad de un Bosque Aleatorio radica en cómo se crean y combinan estos árboles.</p>
 <p>Cada árbol dentro del Bosque Aleatorio no se crea a partir de todo el conjunto de datos, sino que se entrena con un subconjunto aleatorio de variables y un conjunto de observaciones seleccionadas al azar. Este proceso de muestreo aleatorio introduce diversidad en la construcción de cada árbol, lo que ayuda a mitigar la tendencia de DT a sobreajustar los datos.</p>
 <p>Cada árbol individual en el Bosque Aleatorio genera una predicción para la variable objetivo, pero no se espera que cada árbol sea altamente efectivo por sí solo. La fortaleza del método radica en la combinación de numerosos árboles, cada uno de los cuales opera en una región diferente del espacio de características. El Bosque Aleatorio se basa en una regla de decisión que cuenta los votos de cada árbol para determinar la predicción final. En teoría, un gran número de modelos relativamente no correlacionados que funcionan como un comité superarán a cualquier modelo individual.</p>
@@ -1966,12 +2015,12 @@ Desventajas
 <li><p>En <strong>regresión</strong>: Promediar las predicciones de todos los árboles.</p></li>
 </ul></li>
 </ol>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Simulación para comparar la varianza de Bagging y Random Forest
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -1981,7 +2030,7 @@ Simulación para comparar la varianza de Bagging y Random Forest
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>randomForest 4.7-1</code></pre>
+<pre><code>randomForest 4.7-1.1</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Type rfNews() to see new features/changes/bug fixes.</code></pre>
@@ -2056,7 +2105,11 @@ Attaching package: 'randomForest'</code></pre>
 <span id="cb66-54"><a href="#cb66-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb66-55"><a href="#cb66-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -2099,7 +2152,11 @@ yes  514 2159   0.1922933</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rf)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -2161,7 +2218,11 @@ balance    16.069887  21.95322             27.43302        328.61368</code></pre
 <div class="cell">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">varImpPlot</span>(rf)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Este gráfico muestra la importancia de las variables, ordenadas de mayor a menor. En este caso particular la variable más relevante dentro del modelo es la duración de la llamada.</p>
@@ -2169,11 +2230,11 @@ balance    16.069887  21.95322             27.43302        328.61368</code></pre
 <div class="cell">
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co">#MDSplot(rf,as.factor(df$deposit),k=3)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>La función grafica las <span class="math inline">\(k\)</span> primeras componentes principales (ver <a href="reddim.html"><span>Capítulo&nbsp;4</span></a>) de la matriz de proximidad, que es una matriz de medidas de proximidad entre la observaciones de entrenamiento (basada en la frecuencia con que los pares de puntos de datos se encuentran en los mismos nodos terminales).</p>
+<p>La función grafica las <span class="math inline">\(k\)</span> primeras componentes principales (ver <a href="reddim.html" class="quarto-xref"><span>Capítulo 4</span></a>) de la matriz de proximidad, que es una matriz de medidas de proximidad entre la observaciones de entrenamiento (basada en la frecuencia con que los pares de puntos de datos se encuentran en los mismos nodos terminales).</p>
 </section>
 </section>
-<section id="boosting" class="level3" data-number="7.5.2">
-<h3 data-number="7.5.2" class="anchored" data-anchor-id="boosting"><span class="header-section-number">7.5.2</span> Boosting</h3>
+<section id="boosting" class="level3" data-number="8.9.2">
+<h3 data-number="8.9.2" class="anchored" data-anchor-id="boosting"><span class="header-section-number">8.9.2</span> Boosting</h3>
 <p>El ensamblado de <strong>Boosting</strong> es una técnica de ML que se utiliza para mejorar el rendimiento de los modelos de clasificación o regresión.A diferencia del Bagging, que entrena múltiples modelos en paralelo y los promedia, el Boosting entrena modelos secuencialmente, dando mayor peso a las observaciones mal clasificadas en cada iteración.</p>
 <p>El proceso de Boosting funciona de la siguiente manera:</p>
 <ol type="1">
@@ -2185,12 +2246,12 @@ balance    16.069887  21.95322             27.43302        328.61368</code></pre
 <li><p>Al final de las iteraciones, se obtiene un <strong>modelo ensamblado fuerte</strong> que es capaz de mejorar significativamente la precisión de las predicciones en comparación con un solo modelo base.</p></li>
 </ol>
 <p>Algunos algoritmos de Boosting populares incluyen AdaBoost, Gradient Boosting, y XGBoost.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Ventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -2209,12 +2270,12 @@ Ventajas
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Desventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -2232,8 +2293,8 @@ Desventajas
 </div>
 </div>
 </div>
-<section id="adaboost-algoritmo-de-boosting-adaptativo" class="level4" data-number="7.5.2.1">
-<h4 data-number="7.5.2.1" class="anchored" data-anchor-id="adaboost-algoritmo-de-boosting-adaptativo"><span class="header-section-number">7.5.2.1</span> AdaBoost: Algoritmo de Boosting Adaptativo</h4>
+<section id="adaboost-algoritmo-de-boosting-adaptativo" class="level4" data-number="8.9.2.1">
+<h4 data-number="8.9.2.1" class="anchored" data-anchor-id="adaboost-algoritmo-de-boosting-adaptativo"><span class="header-section-number">8.9.2.1</span> AdaBoost: Algoritmo de Boosting Adaptativo</h4>
 <p>Uno de los algoritmos más representativos de Boosting es AdaBoost, que ajusta secuencialmente clasificadores débiles, aumentando el peso de las observaciones mal clasificadas en cada iteración.</p>
 <p><strong>Algoritmo AdaBoost</strong></p>
 <ol type="1">
@@ -2254,24 +2315,17 @@ Desventajas
 <p><strong>Ajuste secuencial en modelos aditivos</strong></p>
 <p>Dado que la optimización conjunta de todos los parámetros en <span class="math inline">\(F(\mathbf{x})\)</span> de forma global es compleja, se adopta un procedimiento secuencial: en cada iteración se ajusta un nuevo modelo <span class="math inline">\(f_m(\mathbf{x};\phi_m)\)</span> para minimizar el error con respecto al modelo acumulado hasta el momento <span class="math inline">\(F_{m-1}(\mathbf{x})\)</span>.</p>
 <p>Esto se hace mediante la optimización de la función de pérdida en cada paso, sin tener que considerar el conjunto completo de modelos de una vez. Esto se traduce en la siguiente optimización</p>
-<p><span class="math display">\[(\alpha_m,\phi_m)= arg min_{\alpha, \phi} \sum_{i=1}^{n}L(y_i, F_{m-1}(\mathbf{x}_i)+ \alpha f(\mathbf{x}_i,\phi))\]</span></p>
-<p>y la función se actualiza como:</p>
-<p><span class="math display">\[F_{m}(\mathbf{x})=F_{m-1}(\mathbf{x}) + \alpha_m f(\mathbf{x},\phi_m).\]</span></p>
-<p>En <span class="math inline">\(m=0\)</span> se proporciona un ajuste inicial que puede ser, por ejemplo, la media en el caso de regresión <span class="math inline">\(f_0(\mathbf{x})=\overline{y}\)</span> o las proporciones a priori en el caso de clasificación.</p>
+<p><span class="math display">\[(\alpha_m,\phi_m)= arg min_{\alpha, \phi} \sum_{i=1}^{n}L(y_i, F_{m-1}(\mathbf{x}_i)+ \alpha f(\mathbf{x}_i,\phi))\]</span> y la función se actualiza como: <span class="math display">\[F_{m}(\mathbf{x})=F_{m-1}(\mathbf{x}) + \alpha_m f(\mathbf{x},\phi_m).\]</span> En <span class="math inline">\(m=0\)</span> se proporciona un ajuste inicial que puede ser, por ejemplo, la media en el caso de regresión <span class="math inline">\(f_0(\mathbf{x})=\overline{y}\)</span> o las proporciones a priori en el caso de clasificación.</p>
 <p>Si utilizamos la función de pérdida cuadrática <span class="math inline">\(L(y,F(\mathbf{x}))=(y-F(\mathbf{x}))^{2}\)</span>, obtenemos la siguiente expresión para cada iteración: <span class="math display">\[
 L(y_i,F(\mathbf{x}_i))=L(y_i,F_{m-1}(\mathbf{x}_i)+\alpha f(\mathbf{x}_i,\phi))=(\underbrace{y_i-(F_{m-1}(\mathbf{x}_i)}_{r_{i}^{(m)}}+\alpha f(\mathbf{x}_i,\phi)))^{2} = (r_{i}^{(m)}-\alpha f(\mathbf{x}_i,\phi))^{2}\]</span></p>
 <p>donde <span class="math inline">\(r_{i}^{(m)}\)</span> representa los residuos del modelo actual (<span class="math inline">\(F_{m-1}(\mathbf{x}_i)\)</span>). ¿Cómo se interpreta esto? La interpretación de esta ecuación es que, en cada paso, el nuevo término <span class="math inline">\(\alpha f(\mathbf{x}_i,\phi)\)</span> busca ajustar los errores que ha cometido el modelo hasta el momento.</p>
-<p><strong>Caso de AdaBoost: Función de pérdida exponencial</strong> En AdaBoost, en lugar de la pérdida cuadrática, se emplea una función de pérdida exponencial: <span class="math inline">\(L(y,f(\mathbf{x}))=exp(-yf(\mathbf{x})).\)</span> Es decir, la función de pérdida que se minimiza es:</p>
-<p><span class="math display">\[L(y_i,F_{m-1}(\mathbf{x}_i)+\alpha f_m(\mathbf{x},\phi_m))=exp(-y_i(F_{m-1}(\mathbf{x}_i) + \alpha f_m(\mathbf{x},\phi_m)))\]</span></p>
-<p>donde <span class="math inline">\(y_i\)</span> es la etiqueta de la observación <span class="math inline">\(i\)</span>, <span class="math inline">\(F_{m-1}(\mathbf{x}_i)\)</span> es la predicción acumulada hasta la iteración <span class="math inline">\(m-1\)</span>, y <span class="math inline">\(\alpha_m\)</span> es el coeficiente que ajusta la contribución de <span class="math inline">\(f_m(\mathbf{x},\phi_m).\)</span></p>
+<p><strong>Caso de AdaBoost: Función de pérdida exponencial</strong> En AdaBoost, en lugar de la pérdida cuadrática, se emplea una función de pérdida exponencial: <span class="math inline">\(L(y,f(\mathbf{x}))=exp(-yf(\mathbf{x})).\)</span> Es decir, la función de pérdida que se minimiza es: <span class="math display">\[L(y_i,F_{m-1}(\mathbf{x}_i)+\alpha f_m(\mathbf{x},\phi_m))=exp(-y_i(F_{m-1}(\mathbf{x}_i) + \alpha f_m(\mathbf{x},\phi_m)))\]</span> donde <span class="math inline">\(y_i\)</span> es la etiqueta de la observación <span class="math inline">\(i\)</span>, <span class="math inline">\(F_{m-1}(\mathbf{x}_i)\)</span> es la predicción acumulada hasta la iteración <span class="math inline">\(m-1\)</span>, y <span class="math inline">\(\alpha_m\)</span> es el coeficiente que ajusta la contribución de <span class="math inline">\(f_m(\mathbf{x},\phi_m).\)</span></p>
 <p>Siguiendo la misma lógica del ajuste secuencial, el nuevo modelo se obtiene minimizando:</p>
 <p><span class="math display">\[\min_{\alpha_m, \phi_m} \sum_{i=1}^{n}exp(-y_i(F_{m-1}(\mathbf{x}_i) + \alpha_m f_m(\mathbf{x},\phi_m))).\]</span></p>
 <p>Una forma de reformular esta expresión es definiendo los pesos <span class="math inline">\(w_i^{(m)}\)</span> de cada observación en la iteración <span class="math inline">\(m\)</span>: <span class="math inline">\(w_i^{(m)}=exp(-y_i F_{m-1}(\mathbf{x}_i))\)</span> puesto que <span class="math inline">\(w_i^{(m)}\)</span> es independiente tanto de <span class="math inline">\(\alpha\)</span> como de <span class="math inline">\(f_m\)</span>. Este término refleja la importancia relativa de cada instancia en la siguiente iteración: los errores pasados aumentan su influencia y afectan más al siguiente modelo. Este término refleja la importancia relativa de cada instancia en la siguiente iteración: los errores pasados aumentan su influencia y afectan más al siguiente modelo (el objetivo es reducir progresivamente el error al hacer que el nuevo modelo ajuste los fallos del conjunto de modelos acumulado).</p>
 <p>A partir de aquí, minimizando la función de pérdida exponencial (derivando <span class="math inline">\(L\)</span> con respecto a <span class="math inline">\(\alpha_m\)</span> e igualando a 0), se obtiene la expresión del coeficiente <span class="math inline">\(\alpha_m\)</span>:</p>
-<p><span class="math display">\[\alpha_m = \frac{1}{2}\ln\left(\frac{1-error_m}{error_m}\right)\]</span></p>
-<p>donde el error de clasificación en la iteración <span class="math inline">\(m\)</span> está dado por:</p>
-<p><span class="math display">\[error_m = \frac{\sum_{i=1}^{n} w_i^{(m)}I(y_i \neq f_{m}(\mathbf{x}_i))}{\sum_{i=1}^{n} w_i^{(m)}}.\]</span></p>
-<p>Finalmente, los pesos se actualizan según <span class="math inline">\(w_i^{(m+1)}=w_i^{(m)} exp(-y_i \alpha_m f_{m}(\mathbf{x}_i)).\)</span> Usando que <span class="math inline">\(-y_i f_m(\mathbf{x}_i) = 2 I(y_i \neq f_m(\mathbf{x}_i))-1\)</span>, podemos escribir la actualización de pesos como <span class="math display">\[w_i^{(m+1)} = w_i^{(m)} e^{\alpha_m I(y_i \neq f_m(\mathbf{x}_i))} e^{-\alpha_m}.\]</span> El término <span class="math inline">\(e^{-\alpha_m}\)</span> es constante y no afecta la normalización relativa de los pesos, por lo que puede ignorarse. Con esto, habríamos obtenido todos los valores del algoritmo Adaboost.</p>
+<p><span class="math display">\[\alpha_m = \frac{1}{2}\ln\left(\frac{1-error_m}{error_m}\right)\]</span> donde el error de clasificación en la iteración <span class="math inline">\(m\)</span> está dado por:</p>
+<p><span class="math display">\[error_m = \frac{\sum_{i=1}^{n} w_i^{(m)}I(y_i \neq f_{m}(\mathbf{x}_i))}{\sum_{i=1}^{n} w_i^{(m)}}.\]</span> Finalmente, los pesos se actualizan según <span class="math inline">\(w_i^{(m+1)}=w_i^{(m)} exp(-y_i \alpha_m f_{m}(\mathbf{x}_i)).\)</span> Usando que <span class="math inline">\(-y_i f_m(\mathbf{x}_i) = 2 I(y_i \neq f_m(\mathbf{x}_i))-1\)</span>, podemos escribir la actualización de pesos como <span class="math display">\[w_i^{(m+1)} = w_i^{(m)} e^{\alpha_m I(y_i \neq f_m(\mathbf{x}_i))} e^{-\alpha_m}.\]</span> El término <span class="math inline">\(e^{-\alpha_m}\)</span> es constante y no afecta la normalización relativa de los pesos, por lo que puede ignorarse. Con esto, habríamos obtenido todos los valores del algoritmo Adaboost.</p>
 <p>En resumen:</p>
 <ul>
 <li><p>AdaBoost sigue el mismo principio de ajuste secuencial que los modelos aditivos.</p></li>
@@ -2280,8 +2334,8 @@ L(y_i,F(\mathbf{x}_i))=L(y_i,F_{m-1}(\mathbf{x}_i)+\alpha f(\mathbf{x}_i,\phi))=
 <li><p>La actualización de los pesos garantiza que el ensamble final esté compuesto por modelos base especializados en corregir errores previos.</p></li>
 </ul>
 </section>
-<section id="gradient-boosting" class="level4" data-number="7.5.2.2">
-<h4 data-number="7.5.2.2" class="anchored" data-anchor-id="gradient-boosting"><span class="header-section-number">7.5.2.2</span> Gradient Boosting</h4>
+<section id="gradient-boosting" class="level4" data-number="8.9.2.2">
+<h4 data-number="8.9.2.2" class="anchored" data-anchor-id="gradient-boosting"><span class="header-section-number">8.9.2.2</span> Gradient Boosting</h4>
 <p>El algoritmo de <strong>Gradient Boosting</strong> es un método de aprendizaje supervisado que construye un modelo de predicción de manera secuencial, ajustando cada modelo subsecuente para corregir los errores del modelo acumulado. A diferencia de AdaBoost, que utiliza una función de pérdida exponencial, Gradient Boosting puede usar cualquier función de pérdida y optimizarla con el algoritmo de <strong>descenso de gradiente</strong>.</p>
 <p><strong>Relación con el descenso de gradiente</strong></p>
 <p>La clave de Gradient Boosting es que, en cada paso, el modelo nuevo se ajusta para minimizar la <strong>función de pérdida</strong> tomando en cuenta el gradiente de la pérdida con respecto a las predicciones actuales del modelo.</p>
@@ -2299,19 +2353,17 @@ L(y_i,F(\mathbf{x}_i))=L(y_i,F_{m-1}(\mathbf{x}_i)+\alpha f(\mathbf{x}_i,\phi))=
 <li><strong>Resultado</strong>: El modelo final es: <span class="math display">\[F(\mathbf{x}) = F_0(\mathbf{x}) + \eta \sum_{m=1}^{M} \alpha_m f_m(\mathbf{x})\]</span></li>
 </ol>
 <p><strong>¿Cómo se calculan los</strong> <span class="math inline">\(\alpha_m\)</span>?</p>
-<p>El coeficiente <span class="math inline">\(\alpha_m\)</span> controla cuánto contribuye cada modelo <span class="math inline">\(f_m(\mathbf{x})\)</span> al modelo acumulado (determina el tamaño del paso para la actualización). Se determina minimizando la función de pérdida total:</p>
-<p><span class="math display">\[\alpha_m = \arg\min_{\alpha}\sum_{i=1}^{n} L(y_i,F_{m-1}(\mathbf{x}_i)+\alpha f_{m}(\mathbf{x}_i))\]</span></p>
+<p>El coeficiente <span class="math inline">\(\alpha_m\)</span> controla cuánto contribuye cada modelo <span class="math inline">\(f_m(\mathbf{x})\)</span> al modelo acumulado (determina el tamaño del paso para la actualización). Se determina minimizando la función de pérdida total: <span class="math display">\[\alpha_m = \arg\min_{\alpha}\sum_{i=1}^{n} L(y_i,F_{m-1}(\mathbf{x}_i)+\alpha f_{m}(\mathbf{x}_i))\]</span></p>
 <p>Así, los <span class="math inline">\(\alpha_m\)</span> se obtienen mediante un proceso de optimización. Si la pérdida es diferenciable, se calcula la derivada de la función de pérdida con respecto a <span class="math inline">\(\alpha\)</span> y obtenemos la magnitud en la que debemos actualizar el modelo.</p>
 <p><strong>Tasa de aprendizaje</strong></p>
 <p>La tasa de aprendizaje <span class="math inline">\(\eta\)</span> regula también la magnitud de las actualizaciones en cada iteración de Gradient Boosting. En lugar de actualizar el modelo acumulado sólo con <span class="math inline">\(\alpha_m\)</span>, se escala su impacto mediante <span class="math inline">\(\eta\)</span>:</p>
-<p><span class="math display">\[F_{m}(\mathbf{x})=F_{m-1}(\mathbf{x})+\eta  \alpha_{m} f_{m}(\mathbf{x})\]</span></p>
-<p>La tasa de aprendizaje <span class="math inline">\(\eta\)</span> es crucial para el comportamiento general del modelo de Gradient Boosting, asegurando que las actualizaciones sean de la magnitud adecuada para lograr que haya mejora pero no se sobreajuste. Es decir, controla el balance entre velocidad de convergencia y sobreajuste.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<p><span class="math display">\[F_{m}(\mathbf{x})=F_{m-1}(\mathbf{x})+\eta  \alpha_{m} f_{m}(\mathbf{x})\]</span> La tasa de aprendizaje <span class="math inline">\(\eta\)</span> es crucial para el comportamiento general del modelo de Gradient Boosting, asegurando que las actualizaciones sean de la magnitud adecuada para lograr que haya mejora pero no se sobreajuste. Es decir, controla el balance entre velocidad de convergencia y sobreajuste.</p>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Caso de regresión con pérdida cuadrática
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -2319,24 +2371,18 @@ Caso de regresión con pérdida cuadrática
 <div id="callout-29" class="callout-29-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>En Gradient Boosting, la idea clave es que en cada iteración se busca minimizar una función de pérdida ajustando un modelo a la dirección del descenso del gradiente de dicha función.</p>
-<p>Si tomamos la pérdida cuadrática</p>
-<p><span class="math display">\[L(y_i,F(\mathbf{x}_i))=(y_i - F(\mathbf{x}_i))^{2},\]</span></p>
-<p>el gradiente de la pérdida respecto a <span class="math inline">\(F_{m-1}(\mathbf{x}_i)\)</span> es</p>
-<p><span class="math display">\[\frac{\partial L(y_i,F_{m-1}(\mathbf{x}_i))}{\partial F_{m-1}(\mathbf{x}_i)}=-2(y_i-F_{m-1}(\mathbf{x}_i)).\]</span></p>
-<p>El método de descenso del gradiente indica que, para minimizar la función de pérdida, hay que moverse en la dirección opuesta a su gradiente. En este caso, los residuos</p>
-<p><span class="math display">\[r_i^{(m)}=-\frac{\partial L(y_i,F_{m-1}(\mathbf{x}_i))}{\partial F_{m-1}(\mathbf{x}_i)}=2(y_i-F_{m-1}(\mathbf{x}_i))\]</span></p>
-<p>nos dan esa dirección, lo que significa que el siguiente modelo <span class="math inline">\(f_{m}(\mathbf{x})\)</span> se ajusta para predecir los residuos <span class="math inline">\(r_i^{(m)}\)</span>, corrigiendo los errores del modelo anterior.</p>
+<p>Si tomamos la pérdida cuadrática <span class="math display">\[L(y_i,F(\mathbf{x}_i))=(y_i - F(\mathbf{x}_i))^{2},\]</span> el gradiente de la pérdida respecto a <span class="math inline">\(F_{m-1}(\mathbf{x}_i)\)</span> es <span class="math display">\[\frac{\partial L(y_i,F_{m-1}(\mathbf{x}_i))}{\partial F_{m-1}(\mathbf{x}_i)}=-2(y_i-F_{m-1}(\mathbf{x}_i)).\]</span> El método de descenso del gradiente indica que, para minimizar la función de pérdida, hay que moverse en la dirección opuesta a su gradiente. En este caso, los residuos <span class="math display">\[r_i^{(m)}=-\frac{\partial L(y_i,F_{m-1}(\mathbf{x}_i))}{\partial F_{m-1}(\mathbf{x}_i)}=2(y_i-F_{m-1}(\mathbf{x}_i))\]</span> nos dan esa dirección, lo que significa que el siguiente modelo <span class="math inline">\(f_{m}(\mathbf{x})\)</span> se ajusta para predecir los residuos <span class="math inline">\(r_i^{(m)}\)</span>, corrigiendo los errores del modelo anterior.</p>
 <p>Una vez ajustado <span class="math inline">\(f_{m}(\mathbf{x})\)</span>, se determina el coeficiente <span class="math inline">\(\alpha_{m}\)</span> minimizando</p>
 <p><span class="math display">\[\alpha_m = \arg \min_{\alpha} \sum_{i=1}^{n}(y_i - F_{m-1}(\mathbf{x}_i) - \alpha f_{m}(\mathbf{x}_i)))^{2}.\]</span></p>
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Función de pérdida log-loss
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -2345,15 +2391,7 @@ Función de pérdida log-loss
 <div class="callout-body-container callout-body">
 <p>La función de pérdida logarítmica (log-loss) se basa en la idea de maximizar la verosimilitud de los datos bajo un modelo probabilístico.</p>
 <p>En un problema de clasificación binaria, donde <span class="math inline">\(y_i \in \{0,1\}\)</span>, el objetivo es construir un modelo que prediga la probabilidad de que una observación pertenezca a la clase <span class="math inline">\(y_i=1\)</span>, dado un conjunto de características <span class="math inline">\(\mathbf{x}_i\)</span>.</p>
-<p>Dado un conjunto de datos con <span class="math inline">\(n\)</span> observaciones, asumimos que cada <span class="math inline">\(y_i\)</span> sigue una distribución de Bernoulli con probabilidad <span class="math inline">\(p_i\)</span>:</p>
-<p><span class="math display">\[P(y_i | \mathbf{x}_i) = p_i^{y_i}(1-p_i)^{1-y_i}.\]</span></p>
-<p>Como has estudiado en asignaturas previas del Grado en Ciencia e Ingeniería de Datos, dado un conjunto de datos <span class="math inline">\(\{(\mathbf{x}_i,y_i)\}_{i=1}^{n}\)</span>, la verosimilitud conjunta es el producto de todas las probabilidades individuales:</p>
-<p><span class="math display">\[L(y,\mathbf{x})=\prod_{i=1}^{n} p_i^{y_i}(1-p_i)^{1-y_i}.\]</span></p>
-<p>Para facilitar los cálculos, tomamos el logaritmo de esta verosimilitud:</p>
-<p><span class="math display">\[\log L(y,\mathbf{x})=\sum_{i=1}^{n} \left[ y_i \log p_i + (1-y_i) \log (1-p_i) \right].\]</span></p>
-<p>La función de pérdida logarítmica es la versión negativa de este logaritmo de la verosimilitud:</p>
-<p><span class="math display">\[L(y_i,F(\mathbf{x}_i))=- \left[ y_i \log p_i + (1-y_i) \log (1-p_i) \right].\]</span></p>
-<p>Esta función mide qué cómo se ajustan las probabilidades predichas <span class="math inline">\(p_i\)</span> a las etiquetas reales <span class="math inline">\(y_i\)</span>. El objetivo al entrenar un modelo de clasificación es minimizar esta función de pérdida para mejorar la calidad de las predicciones.</p>
+<p>Dado un conjunto de datos con <span class="math inline">\(n\)</span> observaciones, asumimos que cada <span class="math inline">\(y_i\)</span> sigue una distribución de Bernoulli con probabilidad <span class="math inline">\(p_i\)</span>: <span class="math display">\[P(y_i | \mathbf{x}_i) = p_i^{y_i}(1-p_i)^{1-y_i}.\]</span> Como has estudiado en asignaturas previas del Grado en Ciencia e Ingeniería de Datos, dado un conjunto de datos <span class="math inline">\(\{(\mathbf{x}_i,y_i)\}_{i=1}^{n}\)</span>, la verosimilitud conjunta es el producto de todas las probabilidades individuales: <span class="math display">\[L(y,\mathbf{x})=\prod_{i=1}^{n} p_i^{y_i}(1-p_i)^{1-y_i}.\]</span> Para facilitar los cálculos, tomamos el logaritmo de esta verosimilitud: <span class="math display">\[\log L(y,\mathbf{x})=\sum_{i=1}^{n} \left[ y_i \log p_i + (1-y_i) \log (1-p_i) \right].\]</span> La función de pérdida logarítmica es la versión negativa de este logaritmo de la verosimilitud: <span class="math display">\[L(y_i,F(\mathbf{x}_i))=- \left[ y_i \log p_i + (1-y_i) \log (1-p_i) \right].\]</span> Esta función mide qué cómo se ajustan las probabilidades predichas <span class="math inline">\(p_i\)</span> a las etiquetas reales <span class="math inline">\(y_i\)</span>. El objetivo al entrenar un modelo de clasificación es minimizar esta función de pérdida para mejorar la calidad de las predicciones.</p>
 <p>Con el siguiente código puedes ver mejor cómo funciona la pérdida log-loss.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -2385,18 +2423,22 @@ Función de pérdida log-loss
 <span id="cb76-27"><a href="#cb76-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb76-28"><a href="#cb76-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Caso de clasificación con pérdida log-loss
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -2404,25 +2446,19 @@ Caso de clasificación con pérdida log-loss
 <div id="callout-31" class="callout-31-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>En clasificación, la función de pérdida más utilizada en Gradient Boosting es la pérdida logarítmica (log-loss) para problemas de clasificación binaria. A diferencia de la regresión, donde predecimos valores continuos, en clasificación binaria nuestro objetivo es predecir la probabilidad de que una observación pertenezca a una de las dos clases.</p>
-<p>En lugar de predecir directamente la etiqueta <span class="math inline">\(y_i\)</span>, el modelo ajusta una función <span class="math inline">\(F(\mathbf{x}_i)\)</span> para modelar la probabilidad de pertenecer a la clase <span class="math inline">\(y_i=1\)</span>. Esta probabilidad se calcula mediante la siguiente fórmula logística:</p>
-<p><span class="math display">\[p_i = P(y_i=1 | \mathbf{x}_i)=\frac{1}{1+e^{-F(\mathbf{x}_i)}}.\]</span></p>
-<p>Esta transformación asegura que las predicciones <span class="math inline">\(p_i\)</span> se encuentren siempre en el intervalo <span class="math inline">\([0,1]\)</span>, que es lo necesario para una probabilidad.</p>
-<p>La función de pérdida logarítmica es</p>
-<p><span class="math display">\[L(y_i,F(\mathbf{x}_i))=-y_i \log p_i - (1-y_i)\log(1-p_i).\]</span></p>
-<p>El gradiente de la función de pérdida respecto a la predicción <span class="math inline">\(F_{m-1}(\mathbf{x}_i)\)</span> del modelo en la iteración <span class="math inline">\(m-1\)</span> es</p>
-<p><span class="math display">\[\frac{\partial L(y_i,F_{m-1}(\mathbf{x}_i))}{\partial F_{m-1}(\mathbf{x}_i))}=p_i - y_i.\]</span></p>
-<p>Este gradiente muestra cómo cambia la función de pérdida a medida que ajustamos <span class="math inline">\(F(\mathbf{x}_i)\)</span>. Como el gradiente está dado por la diferencia entre la probabilidad predicha y la verdadera clase, podemos interpretarlo como una medida de error en la predicción de la probabilidad.</p>
+<p>En lugar de predecir directamente la etiqueta <span class="math inline">\(y_i\)</span>, el modelo ajusta una función <span class="math inline">\(F(\mathbf{x}_i)\)</span> para modelar la probabilidad de pertenecer a la clase <span class="math inline">\(y_i=1\)</span>. Esta probabilidad se calcula mediante la siguiente fórmula logística: <span class="math display">\[p_i = P(y_i=1 | \mathbf{x}_i)=\frac{1}{1+e^{-F(\mathbf{x}_i)}}.\]</span> Esta transformación asegura que las predicciones <span class="math inline">\(p_i\)</span> se encuentren siempre en el intervalo <span class="math inline">\([0,1]\)</span>, que es lo necesario para una probabilidad.</p>
+<p>La función de pérdida logarítmica es <span class="math display">\[L(y_i,F(\mathbf{x}_i))=-y_i \log p_i - (1-y_i)\log(1-p_i).\]</span> El gradiente de la función de pérdida respecto a la predicción <span class="math inline">\(F_{m-1}(\mathbf{x}_i)\)</span> del modelo en la iteración <span class="math inline">\(m-1\)</span> es <span class="math display">\[\frac{\partial L(y_i,F_{m-1}(\mathbf{x}_i))}{\partial F_{m-1}(\mathbf{x}_i))}=p_i - y_i.\]</span> Este gradiente muestra cómo cambia la función de pérdida a medida que ajustamos <span class="math inline">\(F(\mathbf{x}_i)\)</span>. Como el gradiente está dado por la diferencia entre la probabilidad predicha y la verdadera clase, podemos interpretarlo como una medida de error en la predicción de la probabilidad.</p>
 <p>Por tanto, los pseudo-redisuos son <span class="math inline">\(r_i^{(m)}=-(p_i - y_i),\)</span> que representan cuánto se equivoca la predicción de la probabilidad respecto a la verdadera clase <span class="math inline">\(y_i\)</span>.</p>
 <p>Al igual que en regresión, en cada iteración se ajusta un modelo <span class="math inline">\(f_{m}(\mathbf{x}_i)\)</span> para predecir estos errores <span class="math inline">\(r_i^{(m)}\)</span> cometidos en iteraciones previas.</p>
 </div>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tarea
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -2434,14 +2470,14 @@ Tarea
 </div>
 </div>
 </section>
-<section id="xgboost" class="level4" data-number="7.5.2.3">
-<h4 data-number="7.5.2.3" class="anchored" data-anchor-id="xgboost"><span class="header-section-number">7.5.2.3</span> XGBoost</h4>
+<section id="xgboost" class="level4" data-number="8.9.2.3">
+<h4 data-number="8.9.2.3" class="anchored" data-anchor-id="xgboost"><span class="header-section-number">8.9.2.3</span> XGBoost</h4>
 <p><strong>XGBoost</strong>, que significa “<em>Extreme Gradient Boosting</em>”, es un modelo de ML de tipo ensamblado que ha ganado gran popularidad en competiciones de ciencia de datos y aplicaciones prácticas debido a su alto rendimiento y eficacia en una variedad de problemas de clasificación y regresión. XGBoost es una poderosa técnica de ML que ha demostrado su eficacia en una amplia gama de aplicaciones. Su capacidad para manejar datos ruidosos, seleccionar características importantes y su velocidad de entrenamiento lo hacen valioso tanto para profesionales de datos como para científicos de datos en competiciones y proyectos del mundo real.</p>
 <p>XGBoost es una extensión del método de <em>Gradient Boosting</em>, que se centra en mejorar las debilidades de dicho algoritmo. ¿Cómo funciona el método del Gradient Boosting?. Lo vemos en la siguiente figura:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="aprsup/grad1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">https://www.kaggle.com/code/rtatman/machine-learning-with-xgboost-in-r</figcaption><p></p>
+<figcaption>https://www.kaggle.com/code/rtatman/machine-learning-with-xgboost-in-r</figcaption>
 </figure>
 </div>
 <p>Como hemos dicho, XGBoost es una optimización del algoritmo de Gradient Boosting que mantiene su filosofía básica pero introduce mejoras clave para hacerlo más eficiente y robusto. Al igual que Gradient Boosting, XGBoost construye modelos de manera secuencial, ajustando nuevos árboles a los residuos de los anteriores, pero incorpora innovaciones que lo hacen superior en términos de velocidad, capacidad de generalización y escalabilidad:</p>
@@ -2552,7 +2588,7 @@ evaluation_log:
 <pre><code>Column 2 ['No'] of item 2 is missing in item 1. Use fill=TRUE to fill with NA (NULL for list columns), or use.names=FALSE to ignore column names. use.names='check' (default from v1.12.2) emits this message and proceeds as if use.names=FALSE for  backwards compatibility. See news item 5 in v1.12.2 for options to control this message.</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="htmlwidget-82136763d1957fe0882f" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-82136763d1957fe0882f" style="width:100%;height:464px;"></div>
 <script type="application/json" data-for="htmlwidget-82136763d1957fe0882f">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       rankdir = \"LR\"]\n\nnode [color = \"DimGray\",\n      fillcolor = \"beige\",\n      style = \"filled\",\n      shape = \"rectangle\",\n      fontname = \"Helvetica\"]\n\nedge [color = \"DimGray\",\n     arrowsize = \"1.5\",\n     arrowhead = \"vee\",\n     fontname = \"Helvetica\"]\n\n  \"1\" [label = \"duration (2984.53)\nhousing (  71.14)\nage (  55.56)\", fillcolor = \"#F5F5DC\", fontcolor = \"#000000\"] \n  \"2\" [label = \"poutcome (358.950)\nduration (112.584)\nhousing (318.900)\nage (129.145)\nbalance ( 79.631)\", fillcolor = \"#F5F5DC\", fontcolor = \"#000000\"] \n  \"3\" [label = \"duration (418.88)\nhousing (119.48)\npoutcome (299.20)\nbalance ( 68.00)\", fillcolor = \"#F5F5DC\", fontcolor = \"#000000\"] \n  \"4\" [label = \"Leaf (-1.2496)\", fillcolor = \"#F5F5DC\", fontcolor = \"#000000\"] \n  \"5\" [label = \"Leaf (-1.0535)\", fillcolor = \"#F5F5DC\", fontcolor = \"#000000\"] \n  \"6\" [label = \"Leaf (1.0899)\", fillcolor = \"#F5F5DC\", fontcolor = \"#000000\"] \n  \"7\" [label = \"Leaf (0.78719)\", fillcolor = \"#F5F5DC\", fontcolor = \"#000000\"] \n  \"1\"->\"2\" \n  \"2\"->\"4\" \n  \"3\"->\"6\" \n  \"1\"->\"3\" \n  \"2\"->\"5\" \n  \"3\"->\"7\" \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
@@ -2579,7 +2615,11 @@ evaluation_log:
 <span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="fu">xgb.plot.importance</span>(importance_matrix)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Pasamos a obtener las predicciones. El resultado es un vector de valores numéricos, cada uno representando la probabilidad de que un caso en particular pertenezca al valor <span class="math inline">\(1\)</span> de nuestra variable objetivo. Es decir, la probabilidad de que esa observación sea un “<em>yes</em>”.</p>
@@ -2620,12 +2660,12 @@ X1     0    1
                                           </code></pre>
 </div>
 </div>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Time consuming
 </div>
 </div>
@@ -2633,12 +2673,12 @@ Time consuming
 <p>La tarea que más tiempo consume al usar el modelo XGBoost es encontrar los mejores hiperparámetros para alcanzar la mayor precisión posible de un modelo.</p>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tarea
 </div>
 </div>
@@ -2649,8 +2689,8 @@ Tarea
 </section>
 </section>
 </section>
-<section id="naive-bayes" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="naive-bayes"><span class="header-section-number">7.6</span> Naive Bayes</h2>
+<section id="naive-bayes" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="naive-bayes"><span class="header-section-number">8.10</span> Naive Bayes</h2>
 <p>El clasificador ingenuo de Bayes (en inglés “<em>Naïve Bayes</em>”) es un algoritmo de clasificación basado en el conocido <strong>teorema de Bayes</strong>. A pesar de su simplicidad, los clasificadores “ingenuos” de Bayes son especialmente útiles para problemas con muchas variables de entrada, variables de entrada cuantitativas con un número muy grande de valores posibles y clasificación de texto. Es uno de los algoritmos básicos que suele aparecer en problemas de <em>Procesamiento de Lenguaje Natural</em>. Podrás estudiar aspectos fundamentales de Lenguaje Natural a lo largo de tus estudios de grado.</p>
 <p>El teorema de Bayes relaciona la probabilidad condicional de dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>. La idea es modificar nuestras creencias iniciales sobre lo que ha sucedido (a priori) proporcionalmente con la forma en que nuestras observaciones se relacionan con sus posibles causas (probabilidad inversa):<span class="math display">\[P(A∩B)=P(A,B)=P(A)*P(B|A)=P(B)*P(A|B)⇒P(B|A)=\frac{P(B)P(A|B)}{P(A)}\]</span></p>
 <p>Su aplicación a un problema de clasificación es como sigue. Supongamos que queremos clasificar un conjunto de observaciones según una variable objetivo <span class="math inline">\(Y = \{y_1,y_2,\dots,y_K\}\)</span>, utilizando un vector de variables explicativas <span class="math inline">\(\mathbf{X} = (X_1,X_2,\ldots,X_p)\)</span>. La idea del modelo Naïve Bayes es estimar: <span class="math display">\[P(Y=y_k|X_1=x_1,\dots,X_p=x_p)\]</span> Mediante el teorema de Bayes: <span class="math display">\[P(Y_k|\mathbf{X})=\frac{P(Y_k)P(X_1=x_1,\dots,X_p=x_p|Y_k)}{P(X_1=x_1,\dots,X_p=x_p)}\]</span></p>
@@ -2666,12 +2706,12 @@ Tarea
 <li>Si la variable <span class="math inline">\(X_j\)</span> es cuantitativa, habitualmente se asume una distribución Normal (también pueden utilizarse estimadores no paramétricos como histogramas) condicional a cada clase <span class="math inline">\(Y_k\)</span>, y se estiman los parámetros <span class="math inline">\(\mu_{jk}\)</span>, <span class="math inline">\(\sigma_{jk}\)</span> para cada variable y clase: <span class="math display">\[P(X_j=x_j|Y_k)=\frac{1}{\sqrt{2 \pi}\sigma_{jk}}\exp \left( - \frac{(x_j - \mu_{jk})^{2}}{2\sigma^{2}_{jk}} \right)\]</span></li>
 </ul>
 <p>Finalmente se predice para cada conjunto de variables explicativas la clase con mayor probabilidad de clase condicionada <span class="math inline">\(P(Y_k|X_1,\ldots,X_p)\)</span>.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Independencia condicional
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -2743,8 +2783,8 @@ classes    0    1
 </div>
 </div>
 </section>
-<section id="modelos-de-mezcla-de-gaussianas" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="modelos-de-mezcla-de-gaussianas"><span class="header-section-number">7.7</span> Modelos de mezcla de Gaussianas</h2>
+<section id="modelos-de-mezcla-de-gaussianas" class="level2" data-number="8.11">
+<h2 data-number="8.11" class="anchored" data-anchor-id="modelos-de-mezcla-de-gaussianas"><span class="header-section-number">8.11</span> Modelos de mezcla de Gaussianas</h2>
 <p>Los modelos de mezcla de gaussianas (<strong>GMM</strong>, por sus siglas en inglés, “<em>Gaussian Mixture Models</em>”) son una técnica de ML utilizada para modelar datos con estructuras complejas y distribuciones múltiples. Estos modelos se basan en la idea de que un conjunto de datos puede estar compuesto por varias distribuciones gaussianas (también conocidas como normales). En otras palabras, los GMM permiten descomponer un conjunto de datos en múltiples componentes gaussianas, cada una de las cuales describe una parte de la distribución de los datos.</p>
 <p>Los datos en el mundo real rara vez siguen una distribución simple y unimodal (¡ninguna teoría es tan compleja como un conjunto de datos!). Los GMM abordan esta complejidad al permitir que múltiples componentes gaussianas se superpongan y se combinen para representar mejor la verdadera distribución de los datos. Esto los convierte en una herramienta efectiva para modelar datos que pueden ser una mezcla de diferentes poblaciones o grupos subyacentes.</p>
 <p>Cada componente gaussiana representa una subdistribución de datos, y se caracteriza por su media (promedio) y desviación estándar (dispersión). En un modelo de mezcla de gaussianas, se asume que cada componente es una distribución normal.</p>
@@ -2754,9 +2794,9 @@ classes    0    1
 <p>Los GMM son especialmente útiles en la detección de anomalías, ya que permiten identificar regiones en el espacio de características donde los datos son inusuales o atípicos en comparación con el modelo GMM.</p>
 <p>Aunque los GMM son efectivos en la modelación de datos complejos, pueden ser sensibles al número de componentes elegido y a la inicialización. La selección de un número adecuado de componentes y una buena inicialización son aspectos importantes en su aplicación.</p>
 </section>
-<section id="comparación-de-modelos" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Comparación de modelos</h1>
-<p>Hemos aplicado una variedad de modelos (y en otras asignaturas verás nuevos modelos de ML). Podemos comparar el rendimiento de modelos de diversas maneras. Una de ellas, tal y como vimos en el <a href="eval.html"><span>Capítulo&nbsp;6</span></a> es la curva ROC:</p>
+<section id="comparación-de-modelos" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Comparación de modelos</h1>
+<p>Hemos aplicado una variedad de modelos (y en otras asignaturas verás nuevos modelos de ML). Podemos comparar el rendimiento de modelos de diversas maneras. Una de ellas, tal y como vimos en el <a href="eval.html" class="quarto-xref"><span>Capítulo 6</span></a> es la curva ROC:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
 <span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>roc_score</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2828,15 +2868,19 @@ Area under the curve: 64.33%</code></pre>
 <span id="cb102-5"><a href="#cb102-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">"#377eb8"</span>, <span class="st">"#4daf4a"</span>, <span class="st">"goldenrod"</span>,<span class="st">"salmon"</span>,<span class="st">"#977eb8"</span>),</span>
 <span id="cb102-6"><a href="#cb102-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">cex =</span>.<span class="dv">5</span>, <span class="at">xpd =</span> <span class="cn">TRUE</span>, <span class="at">horiz =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="aprsup_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="aprsup_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<div class="callout-caution callout callout-style-default callout-captioned">
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tarea
 </div>
 </div>
@@ -2844,12 +2888,12 @@ Tarea
 <p>A la vista de los resultados. ¿Qué modelo es el más adecuado? Piensa sobre ello.</p>
 </div>
 </div>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Modelo óptimo vs modelo útil
 </div>
 </div>
@@ -2859,20 +2903,20 @@ Modelo óptimo vs modelo útil
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-agresti2015foundations" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-agresti2015foundations" class="csl-entry" role="listitem">
 Agresti, Alan. 2015. <em>Foundations of linear and generalized linear models</em>. John Wiley &amp; Sons.
 </div>
-<div id="ref-hastie2009elements" class="csl-entry" role="doc-biblioentry">
+<div id="ref-hastie2009elements" class="csl-entry" role="listitem">
 Hastie, Trevor, Robert Tibshirani, Jerome H Friedman, y Jerome H Friedman. 2009. <em>The elements of statistical learning: data mining, inference, and prediction</em>. Vol. 2. Springer.
 </div>
-<div id="ref-kelleher2018data" class="csl-entry" role="doc-biblioentry">
+<div id="ref-kelleher2018data" class="csl-entry" role="listitem">
 Kelleher, John D, y Brendan Tierney. 2018. <em>Data science</em>. MIT Press.
 </div>
-<div id="ref-mccullagh2019generalized" class="csl-entry" role="doc-biblioentry">
+<div id="ref-mccullagh2019generalized" class="csl-entry" role="listitem">
 McCullagh, Peter. 2019. <em>Generalized linear models</em>. Routledge.
 </div>
-<div id="ref-murphy2012machine" class="csl-entry" role="doc-biblioentry">
+<div id="ref-murphy2012machine" class="csl-entry" role="listitem">
 Murphy, Kevin P. 2012. <em>Machine learning: a probabilistic perspective</em>. MIT press.
 </div>
 </div>
@@ -2906,12 +2950,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
     }
-  });
-  clipboard.on('success', function(e) {
+    return false;
+  }
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2919,18 +2966,72 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copiada");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2940,55 +3041,319 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./eval.html" class="pagination-link">
+      <a href="./eval.html" class="pagination-link" aria-label="Medidas de rendimiento">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Medidas de rendimiento</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./reglas.html" class="pagination-link">
+      <a href="./reglas.html" class="pagination-link" aria-label="Reglas de asociación">
         <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reglas de asociación</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

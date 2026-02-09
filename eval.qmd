@@ -25,7 +25,6 @@ Cuando incrementamos la **información** (en forma de variables o combinación d
 -   **Pérdida de generalidad**: Si añadimos demasiados parámetros de entrada a un modelo es posible representar exactamente la información de los datos de entrenamiento, pero es muy probable que el modelo sea pésimo para nuevos datos. Es lo que se conoce como **sobreajuste** ("*overfitting*" en inglés).
 
 ::: {.callout-tip title="George E.P. Box"}
-## George E. P. Box
 
 "Todos los modelos están equivocados, pero algunos son útiles"
 :::
@@ -73,55 +72,46 @@ Normalmente, a medida que aumenta la complejidad del modelo, se observa una redu
 A continuación te explicaremos algunas técnicas para conseguir evitar el problema del sobreajuste. Despliega los paneles siguientes para obtener más información.
 
 ::: {.callout-note collapse="true" title="Aumentar el tamaño de la muestra"}
-## Aumentar el tamaño de la muestra
 
 Obtener más datos de entrenamiento puede ayudar a reducir el riesgo de sobreajuste. Cuanto más datos tengas disponibles, más probable es que el modelo aprenda patrones reales en lugar de ruido.
 :::
 
 ::: {.callout-note collapse="true" title="Validación cruzada"}
-## Validación cruzada
 
 Utiliza técnicas de validación cruzada, como la validación cruzada $k$-fold, para evaluar el rendimiento del modelo en diferentes subconjuntos de datos de entrenamiento y prueba. Esto puede ayudar a identificar si el modelo está sobreajustando en una sola partición de los datos. Ver @sec-data para una completa descripción.
 :::
 
 ::: {.callout-note collapse="true" title="Regularización"}
-## Regularización
 
 Aplica técnicas de regularización como la regularización L1 (Lasso) y L2 (Ridge) para penalizar los coeficientes de las características menos importantes. Esto ayuda a simplificar el modelo, eliminando parámetros del modelo, y evitar que se ajuste demasiado a los datos. Es probable que estudies estas técnicas en asignaturas de cursos más avanzados.
 :::
 
 ::: {.callout-note collapse="true" title="Selección de características"}
-## Selección de características
 
 Elimina características irrelevantes o redundantes que no contribuyan significativamente a la capacidad predictiva del modelo. Una menor dimensionalidad puede reducir el riesgo de sobreajuste.
 :::
 
 ::: {.callout-note collapse="true" title="Modelos más simples"}
-## Modelos más simples
 
 Considera modelos más simples con menos parámetros, como regresiones lineales en lugar de modelos polinómicos complejos. Los modelos simples tienden a tener menos probabilidad de sobreajuste.
 :::
 
 ::: {.callout-note collapse="true" title="Dropout"}
-## Dropout
 
 En modelos de redes neuronales, el *dropout* es una técnica que consiste en apagar aleatoriamente una fracción de las neuronas durante el entrenamiento. Esto evita que las neuronas se vuelvan demasiado dependientes entre sí y reduce el riesgo de sobreajuste.
 :::
 
 ::: {.callout-note collapse="true" title="Partición de los datos"}
-## Partición de los datos
 
 Tal y como te explicamos en el @sec-data, divide tus datos en tres conjuntos: entrenamiento, validación y prueba. Utiliza el conjunto de validación para ajustar los hiperparámetros del modelo y el conjunto de prueba solo para la evaluación final.
 :::
 
 ::: {.callout-note collapse="true" title="Seguimiento del rendimiento"}
-## Seguimiento del rendimiento
 
 Controla regularmente el rendimiento del modelo en el conjunto de prueba durante el entrenamiento. Si el rendimiento en el conjunto de prueba comienza a empeorar mientras mejora en el conjunto de entrenamiento, es una señal de posible sobreajuste.
 :::
 
 ::: {.callout-note collapse="true" title="Ensemble Learning"}
-## Ensemble Learning
 
 Combina múltiples modelos juntos, como *Random Forests* o *Gradient Boosting*, que pueden reducir el riesgo de sobreajuste al promediar las predicciones de varios modelos. Trataremos estas técnicas en el @sec-aprsup.
 :::
@@ -189,11 +179,11 @@ Los elementos de la matriz de confusión son:
 
 Es muy importante recalcar que la importancia relativa de los dos errores (FP y FN) depende del problema que estemos considerando. Por ejemplo, en un estudio de control de accesos, un FP significa dejar entrar a una persona que debería de haber sido detenida, mientras que un FN significa no dejar entrar a una persona a la que se debería de haber permitido el paso. Si estamos en un entorno de seguridad restringida, es claro que el error FP es mucho más crítico que el error FN. Sin embargo, la respuesta sobre qué error es más relevante no es única y depende fuertemente del contexto.
 
-::: callout-important
-# Para pensar
 
+::: {.callout-important title="Para pensar"}
 Por ejemplo, ¿qué es más costoso para un sistema de detección de intrusiones, levantar falsas alarmas al detectar como anomalías situaciones que no lo son, o clasificar como normal una anomalía potencialmente peligrosa?
 :::
+
 
 A continuación, definimos las métricas de rendimiento más importantes en base a la matriz de confusión, siendo $N$ el número total de observaciones consideradas, es decir $N=TP+TN+FP+FN$:
 
@@ -263,13 +253,13 @@ Entonces, cabe plantearse la duda ¿*cuál es la solución óptima para este pro
 
 Supongamos que elegimos un modelo de $k$ vecinos más cercanos con $k$ igual $3$. En estos momentos, estaríamos en disposición de llevar el modelo a "*producción*". Es decir, si este fuera nuestro modelo elegido habríamos comprobado su buen funcionamiento en datos diferentes a aquellos sobre los que ha sido entrenado. El error esperado para nuevos datos está en torno al $1,5\%$. Recordemos que aún hemos reservado una partición (validación) para simular este error. La partición de validación, no obstante, sólo debería de ser empleada con un modelo, sólo uno.
 
-::: callout-important
-# Para recordar
 
+::: {.callout-important title="Para recordar"}
 -   **Entrenamos** los modelos de ML en la partición de **entrenamiento**.
 -   **Probamos** que el funcionamiento de los modelos elegidos en el entrenamiento es el correcto en la partición de **prueba**.
 -   **Simulamos** el comportamiento en un entorno real del **único** modelo elegido en la partición de **validación** o producción.
 :::
+
 
 ## Comparación de modelos
 
@@ -285,11 +275,12 @@ Fíjate que para valores bajos del umbral habrá muchas observaciones clasificad
 
 Existe un método gráfico para ilustrar la capacidad predictiva de un modelo de Aprendizaje Máquina binario. Se trata de la **curva ROC** (del inglés "*Receiver Operating Characteristic curve*", o curva característica de operación).
 
-::: callout-note
-# Curva ROC
+
+::: {.callout-note collapse="true" title="Curva ROC"}
 
 Para dibujar la curva ROC se enfrentan la Sensibilidad o Recuperación (TPR), frente a 1 - Especificidad, o tasa de falsos positivos (FPR).
 :::
+
 
 Un ejemplo de una curva ROC aparece en la figura @fig-roc. Los valores de *False Positive Rate* y *True Positive Rate* de cada uno de los puntos de la curva se obtienen de las correspondientes matrices de confusión resultantes de modificar el umbral de decisión de clasificadores binarios. Es decir, se construye un modelo de clasificación que devuelve una probabilidad de clase para cada nuevo punto evaluado. Se establece un umbral. Se obtiene, para la partición correspondiente, la matriz de confusión. Se calculan las métricas de rendimiento y se grafica el punto. Este proceso se repite para una colección de umbrales, uniendo los puntos resultantes de la gráfica. De este modo se consigue la curva ROC.
 

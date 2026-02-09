@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,10 +91,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-23d6ac4f9a19bb637dc5af5d1e4747a8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -694,11 +694,11 @@ Desventajas
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)   <span class="co"># manipulación de datos</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ dplyr     1.1.4     ✔ readr     2.1.6
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   4.0.0     ✔ tibble    3.2.1
+✔ ggplot2   4.0.1     ✔ tibble    3.3.0
 ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.0.4     
+✔ purrr     1.2.0     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -785,16 +785,16 @@ Desventajas
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(k2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ cluster     : int [1:300] 1 2 1 2 2 1 2 1 1 2 ...
- $ centers     : num [1:2, 1:8] -0.017 0.2666 0.1444 -0.1493 -0.0583 ...
+ $ cluster     : int [1:300] 1 2 1 1 1 1 2 1 2 2 ...
+ $ centers     : num [1:2, 1:8] 0.1929 -0.1986 0.2284 -0.3088 0.0378 ...
   ..- attr(*, "dimnames")=List of 2
   .. ..$ : chr [1:2] "1" "2"
   .. ..$ : chr [1:8] "winner_rank" "loser_rank" "winner_age" "loser_age" ...
- $ totss       : num 2400
- $ withinss    : num [1:2] 1037 1011
- $ tot.withinss: num 2047
- $ betweenss   : num 353
- $ size        : int [1:2] 178 122
+ $ totss       : num 2373
+ $ withinss    : num [1:2] 1499 546
+ $ tot.withinss: num 2045
+ $ betweenss   : num 328
+ $ size        : int [1:2] 198 102
  $ iter        : int 1
  $ ifault      : int 0
  - attr(*, "class")= chr "kmeans"</code></pre>
@@ -817,30 +817,30 @@ Tarea
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>k2 </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>K-means clustering with 2 clusters of sizes 178, 122
+<pre><code>K-means clustering with 2 clusters of sizes 198, 102
 
 Cluster means:
-  winner_rank loser_rank  winner_age  loser_age winner_rank_points
-1 -0.01703742  0.1443779 -0.05828689 0.02949860        -0.02999927
-2  0.26663784 -0.1492814  0.17461529 0.09792729        -0.14803331
+  winner_rank loser_rank winner_age  loser_age winner_rank_points
+1   0.1929297  0.2283611 0.03780373 -0.0395994         -0.1165739
+2  -0.1985986 -0.3087638 0.02192554  0.3594313          0.1040267
   loser_rank_points   w_1stWon   l_1stWon
-1        -0.2103818 -0.5980146 -0.5921638
-2         0.3493643  0.8796614  0.8712083
+1        -0.2518329 -0.4944153 -0.4582096
+2         0.1730643  0.9156036  0.9768778
 
 Clustering vector:
-  [1] 1 2 1 2 2 1 2 1 1 2 1 2 1 1 1 1 2 2 2 2 1 2 1 2 1 1 1 2 2 2 2 1 2 1 1 1 1
- [38] 1 2 2 1 2 1 2 1 2 2 1 2 1 1 1 1 1 1 1 2 2 2 1 1 1 1 1 1 1 2 2 2 1 1 1 1 2
- [75] 2 2 1 1 2 2 1 1 1 1 1 2 2 2 1 2 1 2 2 1 1 1 1 1 1 1 2 1 1 1 1 1 2 1 1 2 1
-[112] 2 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 2 1 1 2 1 2 2 1 2 2 2 1 2 1 1 1 2 1 2 1
-[149] 1 1 1 2 2 1 1 2 2 2 1 1 1 2 2 2 1 2 1 1 2 1 2 1 1 2 1 2 1 2 2 2 1 2 1 2 1
-[186] 1 1 2 1 2 2 1 2 1 1 2 1 1 2 1 2 1 2 1 2 1 1 1 2 2 1 2 2 1 1 2 2 1 1 1 1 2
-[223] 1 1 2 2 1 2 1 1 1 1 2 1 2 1 2 2 1 1 1 1 2 1 1 1 2 2 1 1 2 1 2 2 2 2 1 2 1
-[260] 2 2 2 1 1 1 2 1 1 1 2 2 1 1 1 2 1 2 2 1 2 1 2 2 2 2 2 1 1 1 1 1 2 1 1 1 1
-[297] 1 1 1 1
+  [1] 1 2 1 1 1 1 2 1 2 2 1 1 1 1 1 2 1 1 1 1 1 2 2 2 1 2 1 1 1 2 1 1 1 1 2 1 1
+ [38] 1 2 1 1 1 2 1 1 2 1 1 2 1 2 1 1 1 1 1 1 2 2 1 1 1 2 1 1 1 1 1 2 1 2 1 1 2
+ [75] 2 1 2 2 1 2 1 1 1 2 1 2 2 2 1 1 1 1 1 1 1 1 1 2 1 2 1 1 1 1 2 2 2 1 2 2 1
+[112] 1 1 1 2 1 2 1 1 2 1 2 1 1 1 1 1 1 1 2 1 2 2 2 1 1 1 1 1 2 2 1 1 2 1 1 2 2
+[149] 1 1 1 2 1 1 1 2 1 2 1 2 1 1 1 2 2 2 2 2 1 1 1 1 2 1 1 1 1 1 1 2 1 1 1 1 1
+[186] 1 1 2 2 1 1 2 1 1 1 2 1 1 2 2 1 1 1 2 1 1 2 1 2 1 1 1 1 2 1 1 1 1 1 1 2 1
+[223] 2 1 1 2 2 2 2 1 2 1 1 2 1 1 1 1 2 1 2 1 1 2 1 1 2 2 2 1 2 1 1 1 2 1 1 1 1
+[260] 1 2 2 1 1 2 1 1 1 1 2 1 2 1 2 2 2 1 1 1 1 2 1 1 1 1 2 1 1 1 1 1 2 1 2 2 1
+[297] 1 2 1 2
 
 Within cluster sum of squares by cluster:
-[1] 1036.652 1010.724
- (between_SS / total_SS =  14.7 %)
+[1] 1499.3203  545.5785
+ (between_SS / total_SS =  13.8 %)
 
 Available components:
 
@@ -974,9 +974,9 @@ Nombrar los grupos
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_silhouette</span>(sil)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  cluster size ave.sil.width
-1       1  163          0.21
-2       2   23         -0.03
-3       3  114          0.15</code></pre>
+1       1  178          0.17
+2       2   92          0.19
+3       3   30          0.01</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1009,17 +1009,17 @@ Nombrar los grupos
 clusGap(x = df_scaled2, FUNcluster = kmeans, K.max = 10, B = 50, nstart = 25)
 B=50 simulated reference sets, k = 1..10; spaceH0="scaledPCA"
  --&gt; Number of clusters (method 'firstmax'): 1
-          logW   E.logW       gap      SE.sim
- [1,] 5.609254 6.514412 0.9051581 0.012889396
- [2,] 5.517014 6.380632 0.8636170 0.010670603
- [3,] 5.449267 6.300392 0.8511242 0.010218405
- [4,] 5.404869 6.237161 0.8322924 0.009850572
- [5,] 5.352124 6.187439 0.8353150 0.009987448
- [6,] 5.297457 6.145854 0.8483968 0.010091446
- [7,] 5.252858 6.113348 0.8604897 0.010367260
- [8,] 5.217406 6.085771 0.8683657 0.010087062
- [9,] 5.181165 6.063511 0.8823466 0.009811481
-[10,] 5.165770 6.043687 0.8779171 0.009809079</code></pre>
+          logW   E.logW       gap     SE.sim
+ [1,] 5.610157 6.491873 0.8817160 0.01154074
+ [2,] 5.525058 6.369603 0.8445446 0.01029144
+ [3,] 5.459229 6.305949 0.8467195 0.01027638
+ [4,] 5.389530 6.253101 0.8635711 0.01057318
+ [5,] 5.331809 6.211349 0.8795406 0.01077999
+ [6,] 5.295494 6.175493 0.8799987 0.01142516
+ [7,] 5.244593 6.143985 0.8993924 0.01139349
+ [8,] 5.204421 6.116014 0.9115926 0.01074288
+ [9,] 5.178322 6.091192 0.9128700 0.01066251
+[10,] 5.147616 6.068864 0.9212486 0.01109973</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_gap_stat</span>(gap_stat)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1089,16 +1089,15 @@ Tarea
  
 ******************************************************************* 
 * Among all indices:                                                
-* 4 proposed 2 as the best number of clusters 
-* 3 proposed 3 as the best number of clusters 
-* 8 proposed 4 as the best number of clusters 
-* 1 proposed 5 as the best number of clusters 
-* 1 proposed 6 as the best number of clusters 
-* 6 proposed 10 as the best number of clusters 
+* 5 proposed 2 as the best number of clusters 
+* 6 proposed 3 as the best number of clusters 
+* 4 proposed 6 as the best number of clusters 
+* 5 proposed 8 as the best number of clusters 
+* 3 proposed 10 as the best number of clusters 
 
                    ***** Conclusion *****                            
  
-* According to the majority rule, the best number of clusters is  4 
+* According to the majority rule, the best number of clusters is  3 
  
  
 ******************************************************************* </code></pre>
@@ -1114,7 +1113,7 @@ Tarea
 <div class="cell-output cell-output-stdout">
 <pre><code># Method Agreement Procedure:
 
-The choice of 4 clusters is supported by 7 (23.33%) methods out of 30 (Ch, Scott, Marriot, Tracew, Friedman, PtBiserial, Dunn).</code></pre>
+The choice of 3 clusters is supported by 7 (24.14%) methods out of 29 (Elbow, Scott, Marriot, trcovw, Tracew, Cindex, Ball).</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(n_clust)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1137,9 +1136,9 @@ The choice of 4 clusters is supported by 7 (23.33%) methods out of 30 (Ch, Scott
 <pre><code># A tibble: 3 × 9
   Cluster winner_rank loser_rank winner_age loser_age winner_rank_points
     &lt;int&gt;       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;              &lt;dbl&gt;
-1       1     -0.104     -0.0706    -0.0767  0.0655              0.00675
-2       2      2.29       2.57       0.490   0.281              -0.491  
-3       3     -0.0547    -0.351      0.107   0.000561           -0.116  
+1       1    -0.211       -0.175    -0.0439   -0.0131              0.128
+2       2    -0.00242     -0.216     0.0163    0.249              -0.208
+3       3     1.85         2.16      0.535     0.275              -0.538
 # ℹ 3 more variables: loser_rank_points &lt;dbl&gt;, w_1stWon &lt;dbl&gt;, l_1stWon &lt;dbl&gt;</code></pre>
 </div>
 </div>
@@ -1317,7 +1316,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>hc2<span class="sc">$</span>ac</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9092942</code></pre>
+<pre><code>[1] 0.9077203</code></pre>
 </div>
 </div>
 <p>El <strong>coeficiente aglomerativo</strong> mide la cantidad de estructura de agrupamiento encontrada (los valores más cercanos a <span class="math inline">\(1\)</span> sugieren una fuerte estructura de agrupamiento).</p>
@@ -1335,7 +1334,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(m, ac)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  average    single  complete      ward 
-0.8736034 0.7977364 0.9092942 0.9464965 </code></pre>
+0.8666477 0.8292432 0.9077203 0.9445404 </code></pre>
 </div>
 </div>
 <p>En ocasiones se emplea una representación gráfica en forma de árbol llamada <strong>dendrograma</strong> que ilustra las agrupaciones derivadas de la aplicación de una técnica de agrupamiento jerárquico. En el eje de ordenadas se presenta la distancia a la que se unen los diferentes clústeres. Las observaciones aparecen en el eje de abscisas.</p>
@@ -1379,7 +1378,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Coeficiente de división; cantidad de estructura de agrupación encontrada</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>hc4<span class="sc">$</span>dc</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9004656</code></pre>
+<pre><code>[1] 0.899507</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8514345</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1431,7 +1430,7 @@ Atención
 <div class="cell-output cell-output-stdout">
 <pre><code>sub_grp
   1   2   3   4 
-180  86  13  21 </code></pre>
+ 22 137  32 109 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualización</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(<span class="fu">list</span>(<span class="at">data=</span>df_scaled2,<span class="at">cluster=</span>sub_grp))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1703,51 +1702,51 @@ Attaching package: 'kohonen'</code></pre>
 The number of data layers is 1.
 Distance measure(s) used: sumofsquares.
 Training data included: 300 objects.
-Mean distance to the closest unit in the map: 2.824.</code></pre>
+Mean distance to the closest unit in the map: 2.785.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clustering</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df.som<span class="sc">$</span>unit.classif)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  2 15  2 11 16  1</code></pre>
+<pre><code>[1]  4  6 10 13 12 10</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nombrar los clusters</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>df.som<span class="sc">$</span>codes</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-     winner_rank  loser_rank  winner_age   loser_age winner_rank_points
-V1  -0.002717471 -0.11191009 -0.96121516  1.08653214       -0.450097621
-V2   0.551130277 -0.08242684 -0.91014367 -0.62391182       -0.614781400
-V3   2.112893586  0.84630674  0.57675773 -0.47367812       -0.801397181
-V4   6.101070754 -0.24932234  0.66198533  0.28773081       -0.905872969
-V5   0.121997307  4.08261714  0.29649736  1.02799522       -0.158122668
-V6  -0.324777168 -0.01439636  0.30262255 -0.24007824       -0.045399847
-V7  -0.460300422 -0.13211709  0.28949848 -1.12480980        0.148769705
-V8   0.339309460  0.36141963 -0.81469663 -1.01910187       -0.584447089
-V9  -0.258739720  0.13832159  0.58385802  1.46049296       -0.009397473
-V10 -0.197267279 -0.34069627  1.43049450  0.06486114       -0.285505923
-V11 -0.348805044 -0.27065696  0.16845060  0.70165617       -0.084420367
-V12  0.484179739 -0.37722569 -1.09445160  0.37426863       -0.439556212
-V13 -0.725884357 -0.49442343 -0.45532611  0.02835826        2.023723768
-V14 -0.190473430 -0.67999901  0.85683490  0.34584389       -0.098563214
-V15 -0.261946405 -0.74499642  0.05010691  0.04038623       -0.020458946
-V16 -0.419077486 -0.26866757  0.44837639 -0.01155559        0.345244662
-    loser_rank_points     w_1stWon    l_1stWon
-V1        -0.21234864 -0.881112025 -0.74202004
-V2        -0.26254378 -0.733846023 -0.74341102
-V3        -0.45096737  0.384702203 -0.01651591
-V4         0.28200459  0.538568672  0.52285431
-V5        -0.92521265  0.282675505  0.09726915
-V6        -0.37927503 -0.661922714 -1.05552668
-V7        -0.18680979 -0.195912341 -0.16635891
-V8        -0.50857567  0.440149880  0.60599426
-V9        -0.36362894 -0.466313976 -0.38566141
-V10       -0.01177170  0.006499184 -0.07616920
-V11       -0.08612448  0.577802107  0.16158005
-V12        0.13983773  0.617713805  1.09247578
-V13        0.49185726 -0.791387249 -0.59717488
-V14        1.34510232 -1.075380461 -0.54946807
-V15        2.95673412  0.802207711  0.65759155
-V16       -0.13790795  1.630044200  1.74627312</code></pre>
+    winner_rank  loser_rank  winner_age   loser_age winner_rank_points
+V1  -0.27604767 -0.45794158 -0.32208732  0.82254035         0.13701233
+V2  -0.22921294 -0.74545667 -0.11299907  0.15676933        -0.11253497
+V3  -0.50835902 -0.50641895  0.25617441  1.29298701         0.19831835
+V4  -0.74823316 -0.35607352 -0.38587698  0.27267058         3.32252963
+V5  -0.19829253  0.20103335  0.07359370 -0.78511665        -0.17458574
+V6  -0.09255659 -0.29895390  1.27789572  0.29547943        -0.26308534
+V7   0.09158417 -0.01499387 -0.01830410  1.73219675        -0.39795833
+V8  -0.66838734 -0.32273668 -0.16945218  0.09078504         0.96487563
+V9   0.32392917  0.05637247 -0.78836340  0.34568982        -0.54508525
+V10  0.23660405 -0.01806126  1.26696412 -0.18075815        -0.40798541
+V11 -0.24018926 -0.26261412 -0.07294197 -0.63866905        -0.27235380
+V12  0.48653803 -0.10672885 -1.30368912 -0.20101556        -0.54421634
+V13  0.23450109  3.88922181  0.43822742  0.27069265        -0.13272911
+V14  5.21501406  0.40889181  1.39122699  0.57032304        -0.88736161
+V15 -0.32086648  0.26807902  0.71950531 -1.14832360        -0.07788664
+V16  0.03475218 -0.03370229 -1.09856877 -1.09712929        -0.37460006
+    loser_rank_points    w_1stWon    l_1stWon
+V1         0.19190885  1.53046757  1.85040484
+V2         2.74307365  0.51151678  0.01946429
+V3         0.23036055  0.30394309  0.01230908
+V4         0.29347080 -0.32599361 -0.13994428
+V5        -0.41072702  1.80506677  2.00984962
+V6        -0.06327389  0.85974861  0.84127789
+V7        -0.31082224 -0.86531415 -0.59842809
+V8        -0.06996829 -0.67610052 -0.33332495
+V9        -0.37588812  0.26571252  0.53203106
+V10       -0.33336834 -0.52996097 -0.53219611
+V11       -0.02888228 -0.84516732 -0.87749078
+V12       -0.21469266 -0.93810917 -0.84102001
+V13       -0.91852302 -0.26941047 -0.59283637
+V14       -0.28863429 -0.05748325 -0.23630952
+V15       -0.47987736 -0.02808460 -0.09447832
+V16       -0.34297067 -0.05141429 -0.10754774</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df.som, <span class="at">type=</span><span class="st">"codes"</span>)</span>
@@ -1876,8 +1875,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1988,7 +1985,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

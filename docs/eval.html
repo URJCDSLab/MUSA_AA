@@ -2,24 +2,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Aprendizaje Automático - 6&nbsp; Medidas de rendimiento</title>
+<title>6&nbsp; Medidas de rendimiento – Aprendizaje Automático</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -33,8 +40,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,31 +57,67 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-23d6ac4f9a19bb637dc5af5d1e4747a8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sín resultados",
+    "search-no-results-text": "Sin resultados",
     "search-matching-documents-text": "documentos encontrados",
-    "search-copy-link-title": "Copiar el enlace en la busqueda",
-    "search-hide-matches-text": "Esconder resultados adicionales",
-    "search-more-match-text": "hay más resultados en este documento",
-    "search-more-matches-text": "más resultados en este documento",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
     "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Eviar"
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -83,11 +125,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Medidas de rendimiento</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./eval.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Medidas de rendimiento</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -95,100 +142,113 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Aprendizaje Automático</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Buscar"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos</span></a>
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./eda.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis Exploratorio de Datos</span></a>
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis Exploratorio de Datos</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reddim.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Técnicas de reducción de la dimensionalidad</span></a>
+  <a href="./reddim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Técnicas de reducción de la dimensionalidad</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aprnosup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aprendizaje no supervisado</span></a>
+  <a href="./aprnosup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aprendizaje no supervisado</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./eval.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Medidas de rendimiento</span></a>
+  <a href="./eval.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Medidas de rendimiento</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aprsup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></a>
+  <a href="./aprsup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reglas.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reglas de asociación</span></a>
+  <a href="./reglas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reglas de asociación</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nuevas.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nuevas tendencias</span></a>
+  <a href="./nuevas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nuevas tendencias</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./conclusiones.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conclusiones</span></a>
+  <a href="./conclusiones.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conclusiones</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">Bibliografía</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliografía</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">Indice de contenidos</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#complejidad-de-un-modelo" id="toc-complejidad-de-un-modelo" class="nav-link active" data-scroll-target="#complejidad-de-un-modelo"> <span class="header-section-number">6.1</span> Complejidad de un modelo</a></li>
-  <li><a href="#balance-sesgo-varianza" id="toc-balance-sesgo-varianza" class="nav-link" data-scroll-target="#balance-sesgo-varianza"> <span class="header-section-number">6.2</span> Balance Sesgo-Varianza</a></li>
-  <li><a href="#métricas-de-evaluación" id="toc-métricas-de-evaluación" class="nav-link" data-scroll-target="#métricas-de-evaluación"> <span class="header-section-number">6.3</span> Métricas de evaluación</a>
+  <li><a href="#complejidad-de-un-modelo" id="toc-complejidad-de-un-modelo" class="nav-link active" data-scroll-target="#complejidad-de-un-modelo"><span class="header-section-number">6.1</span> Complejidad de un modelo</a></li>
+  <li><a href="#balance-sesgo-varianza" id="toc-balance-sesgo-varianza" class="nav-link" data-scroll-target="#balance-sesgo-varianza"><span class="header-section-number">6.2</span> Balance Sesgo-Varianza</a></li>
+  <li><a href="#métricas-de-evaluación" id="toc-métricas-de-evaluación" class="nav-link" data-scroll-target="#métricas-de-evaluación"><span class="header-section-number">6.3</span> Métricas de evaluación</a>
   <ul class="collapse">
-  <li><a href="#métricas-para-regresión" id="toc-métricas-para-regresión" class="nav-link" data-scroll-target="#métricas-para-regresión"> <span class="header-section-number">6.3.1</span> Métricas para Regresión</a></li>
-  <li><a href="#métricas-para-clasificación" id="toc-métricas-para-clasificación" class="nav-link" data-scroll-target="#métricas-para-clasificación"> <span class="header-section-number">6.3.2</span> Métricas para Clasificación</a></li>
+  <li><a href="#métricas-para-regresión" id="toc-métricas-para-regresión" class="nav-link" data-scroll-target="#métricas-para-regresión"><span class="header-section-number">6.3.1</span> Métricas para Regresión</a></li>
+  <li><a href="#métricas-para-clasificación" id="toc-métricas-para-clasificación" class="nav-link" data-scroll-target="#métricas-para-clasificación"><span class="header-section-number">6.3.2</span> Métricas para Clasificación</a></li>
   </ul></li>
-  <li><a href="#rendimiento-en-las-particiones" id="toc-rendimiento-en-las-particiones" class="nav-link" data-scroll-target="#rendimiento-en-las-particiones"> <span class="header-section-number">6.4</span> Rendimiento en las particiones</a></li>
-  <li><a href="#ajuste-de-parámetros-de-modelos-de-ml" id="toc-ajuste-de-parámetros-de-modelos-de-ml" class="nav-link" data-scroll-target="#ajuste-de-parámetros-de-modelos-de-ml"> <span class="header-section-number">6.5</span> Ajuste de parámetros de modelos de ML</a></li>
-  <li><a href="#comparación-de-modelos" id="toc-comparación-de-modelos" class="nav-link" data-scroll-target="#comparación-de-modelos"> <span class="header-section-number">6.6</span> Comparación de modelos</a>
+  <li><a href="#rendimiento-en-las-particiones" id="toc-rendimiento-en-las-particiones" class="nav-link" data-scroll-target="#rendimiento-en-las-particiones"><span class="header-section-number">6.4</span> Rendimiento en las particiones</a></li>
+  <li><a href="#ajuste-de-parámetros-de-modelos-de-ml" id="toc-ajuste-de-parámetros-de-modelos-de-ml" class="nav-link" data-scroll-target="#ajuste-de-parámetros-de-modelos-de-ml"><span class="header-section-number">6.5</span> Ajuste de parámetros de modelos de ML</a></li>
+  <li><a href="#comparación-de-modelos" id="toc-comparación-de-modelos" class="nav-link" data-scroll-target="#comparación-de-modelos"><span class="header-section-number">6.6</span> Comparación de modelos</a>
   <ul class="collapse">
-  <li><a href="#curva-roc" id="toc-curva-roc" class="nav-link" data-scroll-target="#curva-roc"> <span class="header-section-number">6.6.1</span> Curva ROC</a></li>
+  <li><a href="#curva-roc" id="toc-curva-roc" class="nav-link" data-scroll-target="#curva-roc"><span class="header-section-number">6.6.1</span> Curva ROC</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -198,7 +258,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-eval" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Medidas de rendimiento</span></span></h1>
+<h1 class="title"><span id="sec-eval" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Medidas de rendimiento</span></span></h1>
 </div>
 
 
@@ -206,11 +266,14 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
+
 </header>
+
 
 <p>Las medidas de rendimiento de un modelo de ML serán fundamentales para poder considerar que dicho modelo cumple con los requisitos establecidos al inicio del proyecto. Existe un principio fundamental en el análisis de datos que podríamos simplificar así:</p>
 <p><span class="math display">\[DATOS = MODELO + ERROR\]</span></p>
@@ -219,17 +282,17 @@ div.csl-indent {
 <li><p>El <strong>modelo</strong> es una representación <strong>simplificada</strong> de la realidad que proponemos para describirla e interpretarla más fácilmente.</p></li>
 <li><p>El <strong>error</strong> refleja la diferencia entre nuestra representación simplificada de la realidad (el modelo) y los datos que relamente describen esa realidad de forma precisa.</p></li>
 </ul>
-<p>Una vez elegido el modelo, o modelos de ML que vamos a emplear para analizar nuestros datos, y una vez que hemos entrenado dichos modelos sobre un conjunto de datos (empleando los algoritmos adecuados) surge la tarea de evaluar el rendimiento del modelo. Dentro del ciclo de vida de un proyecto de ciencia de datos (ver <a href="intro.html#fig-ds2">Figura&nbsp;<span>1.2 (b)</span></a>) nos encontramos en la etapa de “<em>Evaluar y criticar el modelo</em>”. Podemos decir que estamos en la etapa de establecer si el <em>error</em> es aceptable o, por contra, es demasiado alto y no podemos aceptar el modelo como útil. En ese último caso, debemos buscar un modelo más preciso o que cometa un error asumible.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<p>Una vez elegido el modelo, o modelos de ML que vamos a emplear para analizar nuestros datos, y una vez que hemos entrenado dichos modelos sobre un conjunto de datos (empleando los algoritmos adecuados) surge la tarea de evaluar el rendimiento del modelo. Dentro del ciclo de vida de un proyecto de ciencia de datos (ver <a href="intro.html#fig-ds2" class="quarto-xref">Figura&nbsp;<span>1.2 (b)</span></a>) nos encontramos en la etapa de “<em>Evaluar y criticar el modelo</em>”. Podemos decir que estamos en la etapa de establecer si el <em>error</em> es aceptable o, por contra, es demasiado alto y no podemos aceptar el modelo como útil. En ese último caso, debemos buscar un modelo más preciso o que cometa un error asumible.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Para recordar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Importante
+<div class="callout-title-container flex-fill">
+Para recordar
 </div>
 </div>
-<div class="callout-body-container callout-body" title="Para recordar">
+<div class="callout-body-container callout-body">
 <p>En modelos de ML, se utilizan diferentes medidas de rendimiento para evaluar el comportamiento del modelo, y para llevar a cabo la comparación y evaluación de los modelos empleados.</p>
 </div>
 </div>
@@ -240,24 +303,28 @@ Importante
 <li><p><strong>Principio de parsimonia</strong>: Preferimos modelos sencillos y fáciles de explicar, a modelos complicados. Este principio también es conocido como “<em>navaja de Occam</em>”.</p></li>
 <li><p><strong>Pérdida de generalidad</strong>: Si añadimos demasiados parámetros de entrada a un modelo es posible representar exactamente la información de los datos de entrenamiento, pero es muy probable que el modelo sea pésimo para nuevos datos. Es lo que se conoce como <strong>sobreajuste</strong> (“<em>overfitting</em>” en inglés).</p></li>
 </ul>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled" title="George E.P. Box">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-George E. P. Box
+<div class="callout-title-container flex-fill">
+George E.P. Box
 </div>
 </div>
-<div class="callout-body-container callout-body" title="George E.P. Box">
+<div class="callout-body-container callout-body">
 <p>“Todos los modelos están equivocados, pero algunos son útiles”</p>
 </div>
 </div>
 <p>La figura siguiente muestra, con un ejemplo, los conceptos de <em>bajoajuste</em>, y <em>sobreajuste</em>:</p>
-<div id="fig-eval1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="eval/overf.jpg" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Figura 6.1: https://medium.com/<span class="citation" data-cites="kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700">(<a href="references.html#ref-kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700" role="doc-biblioref"><strong>kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700?</strong></a>)</span></figcaption><p></p>
+<div id="fig-eval1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-eval1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="eval/overf.jpg" class="img-fluid figure-img" width="600">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eval1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.1: https://medium.com/<span class="citation" data-cites="kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700">(<a href="references.html#ref-kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700" role="doc-biblioref"><strong>kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700?</strong></a>)</span>
+</figcaption>
 </figure>
 </div>
 <p>El fundamento de cualquier proyecto de ML es acabar con un modelo que funcione bien en datos no vistos. El <strong>underfitting</strong>, o bajoajuste, se produce cuando un modelo es demasiado simple para capturar la complejidad de los datos subyacentes. En otras palabras, el modelo no se ajusta lo suficiente a los datos de entrenamiento y no puede hacer predicciones precisas tanto en los datos de entrenamiento como en los datos de prueba. Esto suele ocurrir cuando se utiliza un modelo demasiado básico o se aplican suposiciones demasiado restrictivas sobre la relación entre las variables.</p>
@@ -284,163 +351,167 @@ George E. P. Box
 <li><p>Un modelo con <strong>sesgo bajo y varianza alta</strong> se ajusta muy bien a los datos de entrenamiento pero generaliza mal. Puede ser útil cuando se dispone de una gran cantidad de datos y se busca la máxima precisión.</p></li>
 <li><p>El equilibrio adecuado se encuentra al <strong>ajustar la complejidad del modelo y la cantidad de datos disponibles</strong>. Esto se logra mediante técnicas como la selección de características, la regularización y la validación cruzada.</p></li>
 </ul>
-<div id="fig-biasvariance" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="eval/bias_variance.jpg" class="img-fluid figure-img" width="400"></p>
-<p></p><figcaption class="figure-caption">Figura 6.2: https://nvsyashwanth.github.io/machinelearningmaster/bias-variance/</figcaption><p></p>
+<div id="fig-biasvariance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-biasvariance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="eval/bias_variance.jpg" class="img-fluid figure-img" width="400">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biasvariance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.2: https://nvsyashwanth.github.io/machinelearningmaster/bias-variance/
+</figcaption>
 </figure>
 </div>
 <p>Normalmente, a medida que aumenta la complejidad del modelo, se observa una reducción del error debido a un menor sesgo del modelo. Sin embargo, esto sólo ocurre hasta cierto punto. A medida que aumente la complejidad del modelo, acabará sobreajustándolo y, por tanto, su varianza empezará a ser elevada. Por lo tanto, una disminución del sesgo del modelo aumenta la varianza y viceversa, lo que nos lleva al concepto de balance, es decir, tenemos que llegar a un compromiso en ambos extremos. Un modelo ideal es el que tiene una varianza y un sesgo pequeños.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="eval/biasvariance.jpg" class="img-fluid figure-img" width="400"></p>
-<p></p><figcaption class="figure-caption">https://medium.com/<span class="citation" data-cites="kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700">(<a href="references.html#ref-kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700" role="doc-biblioref"><strong>kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700?</strong></a>)</span></figcaption><p></p>
+<figcaption>https://medium.com/<span class="citation" data-cites="kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700">(<a href="references.html#ref-kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700" role="doc-biblioref"><strong>kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700?</strong></a>)</span></figcaption>
 </figure>
 </div>
 <section id="evitar-el-sobreajuste" class="level4" data-number="6.2.0.1">
 <h4 data-number="6.2.0.1" class="anchored" data-anchor-id="evitar-el-sobreajuste"><span class="header-section-number">6.2.0.1</span> Evitar el sobreajuste</h4>
 <p>A continuación te explicaremos algunas técnicas para conseguir evitar el problema del sobreajuste. Despliega los paneles siguientes para obtener más información.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Aumentar el tamaño de la muestra">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Aumentar el tamaño de la muestra
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Aumentar el tamaño de la muestra">
+<div class="callout-body-container callout-body">
 <p>Obtener más datos de entrenamiento puede ayudar a reducir el riesgo de sobreajuste. Cuanto más datos tengas disponibles, más probable es que el modelo aprenda patrones reales en lugar de ruido.</p>
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Validación cruzada">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Validación cruzada
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Validación cruzada">
-<p>Utiliza técnicas de validación cruzada, como la validación cruzada <span class="math inline">\(k\)</span>-fold, para evaluar el rendimiento del modelo en diferentes subconjuntos de datos de entrenamiento y prueba. Esto puede ayudar a identificar si el modelo está sobreajustando en una sola partición de los datos. Ver <a href="data.html"><span>Capítulo&nbsp;2</span></a> para una completa descripción.</p>
+<div class="callout-body-container callout-body">
+<p>Utiliza técnicas de validación cruzada, como la validación cruzada <span class="math inline">\(k\)</span>-fold, para evaluar el rendimiento del modelo en diferentes subconjuntos de datos de entrenamiento y prueba. Esto puede ayudar a identificar si el modelo está sobreajustando en una sola partición de los datos. Ver <a href="data.html" class="quarto-xref"><span>Capítulo 2</span></a> para una completa descripción.</p>
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Regularización">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Regularización
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Regularización">
+<div class="callout-body-container callout-body">
 <p>Aplica técnicas de regularización como la regularización L1 (Lasso) y L2 (Ridge) para penalizar los coeficientes de las características menos importantes. Esto ayuda a simplificar el modelo, eliminando parámetros del modelo, y evitar que se ajuste demasiado a los datos. Es probable que estudies estas técnicas en asignaturas de cursos más avanzados.</p>
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Selección de características">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Selección de características
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Selección de características">
+<div class="callout-body-container callout-body">
 <p>Elimina características irrelevantes o redundantes que no contribuyan significativamente a la capacidad predictiva del modelo. Una menor dimensionalidad puede reducir el riesgo de sobreajuste.</p>
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Modelos más simples">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Modelos más simples
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Modelos más simples">
+<div class="callout-body-container callout-body">
 <p>Considera modelos más simples con menos parámetros, como regresiones lineales en lugar de modelos polinómicos complejos. Los modelos simples tienden a tener menos probabilidad de sobreajuste.</p>
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Dropout">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Dropout
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-8" class="callout-8-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Dropout">
+<div class="callout-body-container callout-body">
 <p>En modelos de redes neuronales, el <em>dropout</em> es una técnica que consiste en apagar aleatoriamente una fracción de las neuronas durante el entrenamiento. Esto evita que las neuronas se vuelvan demasiado dependientes entre sí y reduce el riesgo de sobreajuste.</p>
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Partición de los datos">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Partición de los datos
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Partición de los datos">
-<p>Tal y como te explicamos en el <a href="data.html"><span>Capítulo&nbsp;2</span></a>, divide tus datos en tres conjuntos: entrenamiento, validación y prueba. Utiliza el conjunto de validación para ajustar los hiperparámetros del modelo y el conjunto de prueba solo para la evaluación final.</p>
+<div class="callout-body-container callout-body">
+<p>Tal y como te explicamos en el <a href="data.html" class="quarto-xref"><span>Capítulo 2</span></a>, divide tus datos en tres conjuntos: entrenamiento, validación y prueba. Utiliza el conjunto de validación para ajustar los hiperparámetros del modelo y el conjunto de prueba solo para la evaluación final.</p>
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Seguimiento del rendimiento">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Seguimiento del rendimiento
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Seguimiento del rendimiento">
+<div class="callout-body-container callout-body">
 <p>Controla regularmente el rendimiento del modelo en el conjunto de prueba durante el entrenamiento. Si el rendimiento en el conjunto de prueba comienza a empeorar mientras mejora en el conjunto de entrenamiento, es una señal de posible sobreajuste.</p>
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled" title="Ensemble Learning">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Ensemble Learning
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
-<div class="callout-body-container callout-body" title="Ensemble Learning">
-<p>Combina múltiples modelos juntos, como <em>Random Forests</em> o <em>Gradient Boosting</em>, que pueden reducir el riesgo de sobreajuste al promediar las predicciones de varios modelos. Trataremos estas técnicas en el <a href="aprsup.html"><span>Capítulo&nbsp;7</span></a>.</p>
+<div class="callout-body-container callout-body">
+<p>Combina múltiples modelos juntos, como <em>Random Forests</em> o <em>Gradient Boosting</em>, que pueden reducir el riesgo de sobreajuste al promediar las predicciones de varios modelos. Trataremos estas técnicas en el <a href="aprsup.html" class="quarto-xref"><span>Capítulo 7</span></a>.</p>
 </div>
 </div>
 </div>
@@ -473,10 +544,10 @@ Ensemble Learning
 </section>
 <section id="métricas-para-clasificación" class="level3" data-number="6.3.2">
 <h3 data-number="6.3.2" class="anchored" data-anchor-id="métricas-para-clasificación"><span class="header-section-number">6.3.2</span> Métricas para Clasificación</h3>
-<p>Tal y como veremos en el <a href="aprsup.html"><span>Capítulo&nbsp;7</span></a>, los modelos de clasificación son una parte importante de las técnicas de ML. El objetivo de dichos modelos es hacer una división perfecta en diferentes clases, previamente definidas en base a las etiquetas de la variable respuesta. En este capítulo nos centramos en la más popular de todos los tipos de clasificación: la clasificación binaria. De hecho, cuando nos enfrentamos a un problema de clasificación multiclase una de las soluciones más habituales es convertirlo en varios problemas de clasificación binaria usando una de las clases como clase de referencia.</p>
+<p>Tal y como veremos en el <a href="aprsup.html" class="quarto-xref"><span>Capítulo 7</span></a>, los modelos de clasificación son una parte importante de las técnicas de ML. El objetivo de dichos modelos es hacer una división perfecta en diferentes clases, previamente definidas en base a las etiquetas de la variable respuesta. En este capítulo nos centramos en la más popular de todos los tipos de clasificación: la clasificación binaria. De hecho, cuando nos enfrentamos a un problema de clasificación multiclase una de las soluciones más habituales es convertirlo en varios problemas de clasificación binaria usando una de las clases como clase de referencia.</p>
 <p>El propósito de la clasificación binaria es dividir las observaciones dadas en dos clases mutuamente excluyentes <em>{-1,+1}</em>. La elección de la métrica de evaluación del rendimiento de un modelo es relevante, ya que se utilizará para seleccionar o descartar los modelos de clasificación. En general, este conjunto de métricas se obtiene de la matriz de confusión que enfrenta las clases observadas y las predicciones realizadas por el modelo de ML.</p>
 <p>Definimos la matriz de confusión asociada a los valores predichos por un clasificador como:</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th></th>
@@ -514,12 +585,12 @@ Ensemble Learning
 <li><strong>FN</strong>; “False negative” o falsos negativos, corresponde con las observaciones <span class="math inline">\(1\)</span>, que son erróneamente clasificadas como <span class="math inline">\(-1\)</span>.</li>
 </ul>
 <p>Es muy importante recalcar que la importancia relativa de los dos errores (FP y FN) depende del problema que estemos considerando. Por ejemplo, en un estudio de control de accesos, un FP significa dejar entrar a una persona que debería de haber sido detenida, mientras que un FN significa no dejar entrar a una persona a la que se debería de haber permitido el paso. Si estamos en un entorno de seguridad restringida, es claro que el error FP es mucho más crítico que el error FN. Sin embargo, la respuesta sobre qué error es más relevante no es única y depende fuertemente del contexto.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled" title="Para pensar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Para pensar
 </div>
 </div>
@@ -540,13 +611,13 @@ Para pensar
 </section>
 <section id="rendimiento-en-las-particiones" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="rendimiento-en-las-particiones"><span class="header-section-number">6.4</span> Rendimiento en las particiones</h2>
-<p>Tal y como se indicó en el <a href="data.html"><span>Capítulo&nbsp;2</span></a>, existen diversas formas de particionar los datos para llevar a cabo las labores de entrenamiento, prueba y validación. En este apartado nos vamos a centrar en realizar la evaluación de un modelo en las diferentes particiones. Para ello vamos a emplear el método de “<em>k-folds</em>”. La muestra de entrenamiento será dividida en <span class="math inline">\(k\)</span> grupos de entrenamiento. Cada uno de esos grupos queda fuera del entrenamiento una vez y se emplean las observaciones en el grupo para estimar el error. De este modo, se dispone de <span class="math inline">\(k\)</span> errores, medidos en la muestra de entrenamiento. Podemos calcular una media de los errores, junto con su desviación típica.</p>
+<p>Tal y como se indicó en el <a href="data.html" class="quarto-xref"><span>Capítulo 2</span></a>, existen diversas formas de particionar los datos para llevar a cabo las labores de entrenamiento, prueba y validación. En este apartado nos vamos a centrar en realizar la evaluación de un modelo en las diferentes particiones. Para ello vamos a emplear el método de “<em>k-folds</em>”. La muestra de entrenamiento será dividida en <span class="math inline">\(k\)</span> grupos de entrenamiento. Cada uno de esos grupos queda fuera del entrenamiento una vez y se emplean las observaciones en el grupo para estimar el error. De este modo, se dispone de <span class="math inline">\(k\)</span> errores, medidos en la muestra de entrenamiento. Podemos calcular una media de los errores, junto con su desviación típica.</p>
 </section>
 <section id="ajuste-de-parámetros-de-modelos-de-ml" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="ajuste-de-parámetros-de-modelos-de-ml"><span class="header-section-number">6.5</span> Ajuste de parámetros de modelos de ML</h2>
 <p>Es común que el científico de datos necesite ajustar los parámetros de más alto nivel de los modelos de ML. Por ejemplo, en una SVM es necesario elegir el kernel y sus parámetros (aprenderás esta técnica de clasificación en asignaturas del próximo curso). En el método de los <span class="math inline">\(k\)</span> vecinos más cercanos se necesita fijar el número <span class="math inline">\(k\)</span>. En una Regresión Logística, el científico de datos ha de fijar los umbrales de significatividad estadística a partir de los cuales una variable debería (o no) formar parte del modelo. En un Árbol de Decisión, se necesita fijar varios parámetros, como, por ejemplo, la profundidad del árbol, o el número mínimo de observaciones para que un nodo sea considerado como un nodo terminal (lo trataremos en el próximo capítulo de estos apuntes).</p>
 <p>Sea como fuere, para ajustar los parámetros de un modelo de ML debemos seleccionar la medida de rendimiento sobre la que comparar dos modelos diferentes. A modo de ejemplo, supongamos un modelo de clasificación basado en los <span class="math inline">\(k\)</span> vecinos más cercanos, esto es con un único parámetro <span class="math inline">\(k\)</span>. En este caso, el error global es la métrica elegida. Podríamos replicar el experimento de clasificación cambiando el número de vecinos. De este modo, los diferentes modelos de ML corresponden a modelos de <span class="math inline">\(k\)</span> vecinos más cercanos con diferentes elecciones del parámetro <span class="math inline">\(k\)</span>. La tabla siguiente muestra los resultados para valores de <span class="math inline">\(k\)</span> entre <span class="math inline">\(1\)</span> y <span class="math inline">\(11\)</span>:</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Número de vecinos <span class="math inline">\(k\)</span></th>
@@ -602,7 +673,7 @@ Para pensar
 </table>
 <p>En este caso elegimos <span class="math inline">\(k=1\)</span> como parámetro para el modelo de los <span class="math inline">\(k\)</span>-vecinos más cercanos al ser el valor asociado con el menor error. Es decir, el modelo quedaría como sigue. El modelo, que veremos en el siguiente tema, funciona como sigue: para cada nueva observación calculamos su vecino más cercano en la muestra de entrenamiento y asignamos a la nueva observación la clase de dicho vecino.</p>
 <p>Podemos incluso llevar esta estrategia a su extremo mediante la técnica de “<em>leave-one-out</em>”, que consiste en hacer tantos folds como observaciones. En ese caso obtenemos errores similares. También podemos reducir el número de folds buscando mayor número de observaciones en cada uno de ellos, reduciendo de este modo la varianza en la media de los errores. Por ejemplo, con <span class="math inline">\(5\)</span> folds los errores, para diferentes elecciones de <span class="math inline">\(k\)</span> vecinos, son:</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Número de vecinos <span class="math inline">\(k\)</span></th>
@@ -660,12 +731,12 @@ Para pensar
 <p>A continuación, deberíamos de probar el modelo en la muestra de prueba (test). Por ejemplo, con <span class="math inline">\(k=1\)</span> vecino más cercanose obtiene un error similar al esperado, <span class="math inline">\(1,51\%\)</span>. Nótese que en este caso no hay desviación típica, pues es el error en una única partición. Cuando probamos el modelo elegido (<span class="math inline">\(k=3\)</span>) el resultado sí es algo mejor: <span class="math inline">\(1,47\%\)</span>. Normalmente el modelo del primer vecino más cercano no presenta un buen equilibrio entre el sesgo y la varianza, y elecciones de <span class="math inline">\(k&gt;1\)</span> suelen ser preferibles <span class="citation" data-cites="cover1967nearest">(<a href="references.html#ref-cover1967nearest" role="doc-biblioref">Cover y Hart 1967</a>)</span>.</p>
 <p>Entonces, cabe plantearse la duda ¿<em>cuál es la solución óptima para este problema</em>? La respuesta es que depende del objetivo y, en este caso, cualquier elección entre <span class="math inline">\(1\)</span> y <span class="math inline">\(3\)</span> vecinos parece razonable. Fíjate en la importancia de la medida de distancia elegida. El primer vecino más cercano, es el más cercano según esa media. Una medida diferente conduciría, probablemente, a otro vecino y en consecuencia a otros resultados de rendimiento.</p>
 <p>Supongamos que elegimos un modelo de <span class="math inline">\(k\)</span> vecinos más cercanos con <span class="math inline">\(k\)</span> igual <span class="math inline">\(3\)</span>. En estos momentos, estaríamos en disposición de llevar el modelo a “<em>producción</em>”. Es decir, si este fuera nuestro modelo elegido habríamos comprobado su buen funcionamiento en datos diferentes a aquellos sobre los que ha sido entrenado. El error esperado para nuevos datos está en torno al <span class="math inline">\(1,5\%\)</span>. Recordemos que aún hemos reservado una partición (validación) para simular este error. La partición de validación, no obstante, sólo debería de ser empleada con un modelo, sólo uno.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled" title="Para recordar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Para recordar
 </div>
 </div>
@@ -687,24 +758,31 @@ Para recordar
 <section id="curva-roc" class="level3" data-number="6.6.1">
 <h3 data-number="6.6.1" class="anchored" data-anchor-id="curva-roc"><span class="header-section-number">6.6.1</span> Curva ROC</h3>
 <p>Existe un método gráfico para ilustrar la capacidad predictiva de un modelo de Aprendizaje Máquina binario. Se trata de la <strong>curva ROC</strong> (del inglés “<em>Receiver Operating Characteristic curve</em>”, o curva característica de operación).</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
+<div class="callout callout-style-default callout-note callout-titled" title="Curva ROC">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Curva ROC
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Para dibujar la curva ROC se enfrentan la Sensibilidad o Recuperación (TPR), frente a 1 - Especificidad, o tasa de falsos positivos (FPR).</p>
 </div>
 </div>
-<p>Un ejemplo de una curva ROC aparece en la figura <a href="#fig-roc">Figura&nbsp;<span>6.3</span></a>. Los valores de <em>False Positive Rate</em> y <em>True Positive Rate</em> de cada uno de los puntos de la curva se obtienen de las correspondientes matrices de confusión resultantes de modificar el umbral de decisión de clasificadores binarios. Es decir, se construye un modelo de clasificación que devuelve una probabilidad de clase para cada nuevo punto evaluado. Se establece un umbral. Se obtiene, para la partición correspondiente, la matriz de confusión. Se calculan las métricas de rendimiento y se grafica el punto. Este proceso se repite para una colección de umbrales, uniendo los puntos resultantes de la gráfica. De este modo se consigue la curva ROC.</p>
-<div id="fig-roc" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="eval/ROC.jpg" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Figura 6.3: https://machinelearningmastery.com/roc-curves-and-precision-recall-curves-for-classification-in-python/</figcaption><p></p>
+</div>
+<p>Un ejemplo de una curva ROC aparece en la figura <a href="#fig-roc" class="quarto-xref">Figura&nbsp;<span>6.3</span></a>. Los valores de <em>False Positive Rate</em> y <em>True Positive Rate</em> de cada uno de los puntos de la curva se obtienen de las correspondientes matrices de confusión resultantes de modificar el umbral de decisión de clasificadores binarios. Es decir, se construye un modelo de clasificación que devuelve una probabilidad de clase para cada nuevo punto evaluado. Se establece un umbral. Se obtiene, para la partición correspondiente, la matriz de confusión. Se calculan las métricas de rendimiento y se grafica el punto. Este proceso se repite para una colección de umbrales, uniendo los puntos resultantes de la gráfica. De este modo se consigue la curva ROC.</p>
+<div id="fig-roc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="eval/ROC.jpg" class="img-fluid figure-img" width="600">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6.3: https://machinelearningmastery.com/roc-curves-and-precision-recall-curves-for-classification-in-python/
+</figcaption>
 </figure>
 </div>
 <p>Es claro que la mejor solución sería aquella que tiene <em>FPR</em> igual a <span class="math inline">\(0\)</span> y <em>TPR</em> igual a <span class="math inline">\(1\)</span>. En un caso tan ideal, no hay errores de clasificación, la Precisión es perfecta y la Sensibilidad también. Se corresponde con una matriz de confusión diagonal. En el ejemplo presentado en la figura anterior vemos como el modelo de clasificación propuesto no alcanza un rendimiento tan alto en ninguno de los umbrales de decisión.</p>
@@ -714,13 +792,13 @@ Curva ROC
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="eval/roc-curve-original.jpg" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">https://sefiks.com/2020/12/10/a-gentle-introduction-to-roc-curve-and-auc/</figcaption><p></p>
+<figcaption>https://sefiks.com/2020/12/10/a-gentle-introduction-to-roc-curve-and-auc/</figcaption>
 </figure>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-cover1967nearest" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-cover1967nearest" class="csl-entry" role="listitem">
 Cover, Thomas, y Peter Hart. 1967. <span>«Nearest neighbor pattern classification»</span>. <em>IEEE transactions on information theory</em> 13 (1): 21-27.
 </div>
 </div>
@@ -755,12 +833,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
     }
-  });
-  clipboard.on('success', function(e) {
+    return false;
+  }
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -768,18 +849,72 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copiada");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -789,55 +924,319 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./aprnosup.html" class="pagination-link">
+      <a href="./aprnosup.html" class="pagination-link" aria-label="Aprendizaje no supervisado">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aprendizaje no supervisado</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./aprsup.html" class="pagination-link">
+      <a href="./aprsup.html" class="pagination-link" aria-label="Aprendizaje supervisado">
         <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
