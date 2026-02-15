@@ -315,7 +315,7 @@ window.Quarto = {
 </header>
 
 
-<p>Este tema se centra en la importancia de los datos en el contexto del ML, explorando cómo su almacenamiento y procesamiento permiten a los sistemas informáticos y a los usuarios extraer información valiosa. Si reflexionamos sobre el ciclo de vida de un proyecto de ciencia de datos (recuerda la Figura <a href="intro.html#fig-ds2" class="quarto-xref">Figura&nbsp;<span>1.2 (b)</span></a>), podemos observar cómo los datos ocupan el centro de todo el proceso, mientras que las demás tareas y etapas se desarrollan en torno a ellos.</p>
+<p>Este tema se centra en la importancia de los datos en el contexto del ML, explorando cómo su almacenamiento y procesamiento permiten a los sistemas informáticos y a los usuarios extraer información valiosa. Si reflexionamos sobre el ciclo de vida de un proyecto de ciencia de datos (recuerda la Figura <a href="#fig-ds2" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-ds2</span></a>), podemos observar cómo los datos ocupan el centro de todo el proceso, mientras que las demás tareas y etapas se desarrollan en torno a ellos.</p>
 <p>En el contexto del ML, los datos representan el recurso fundamental. Desde el inicio de un proyecto en ciencia de datos, se habrá dedicado tiempo y esfuerzo a comprender el problema y definir los objetivos a alcanzar. Estas etapas se han planificado meticulosamente con un enfoque centrado en los datos, contemplando aspectos como la naturaleza de los datos a recopilar, las estrategias para su adquisición, así como las mejores prácticas para su almacenamiento y gestión, entre otros factores cruciales. Piensa que sin una adecuada recolección y mantenimiento de los datos, ningún proyecto de datos puede prosperar.</p>
 <p>En el transcurso de este tema, exploraremos brevemente temas de importancia crítica, como la salvaguardia de los datos, cuestiones éticas y la preservación de la privacidad. Estos aspectos son fundamentales en cualquier proyecto vinculado a este campo, ya que garantizar la integridad y la seguridad de los datos, así como respetar los principios éticos y legales, son pilares esenciales en la construcción de soluciones de aprendizaje automático que sean responsables y confiables.</p>
 <section id="tipos-de-datos" class="level2" data-number="2.1">
@@ -381,7 +381,7 @@ Datos no estructurados
 <p>La naturaleza dinámica de estos datos introduce un nivel de complejidad significativamente mayor en su tratamiento y modelización. A diferencia de los datos estáticos, donde el conjunto de observaciones suele considerarse cerrado, los datos dinámicos requieren modelos capaces de adaptarse a la evolución temporal, capturar dependencias entre observaciones sucesivas y, en muchos casos, manejar flujos continuos de información. En este contexto, resulta habitual diseñar esquemas de representación que permitan estructurar los datos dinámicos, por ejemplo, mediante ventanas temporales, agregaciones por intervalos o transformaciones que reduzcan la dimensionalidad temporal.</p>
 <p>Estos enfoques son especialmente efectivos cuando se trabaja con datos dinámicos estructurados, como tablas de series temporales multivariantes provenientes de sensores o sistemas de registro estandarizados. Sin embargo, en el caso de datos dinámicos no estructurados, como secuencias de vídeo, audio de comunicaciones técnicas o texto generado en tiempo real (por ejemplo, informes o anotaciones), el desafío es mayor. En estos escenarios, la tarea consiste en procesar la información conforme se genera, sin poder asumir de antemano una estructura fija ni una dimensionalidad constante, lo que exige métodos específicos de preprocesamiento, extracción de características y modelización.</p>
 <p>En el ámbito del Aprendizaje Automático aplicado al deporte, esta distinción entre datos estáticos y dinámicos no es meramente conceptual. Tiene implicaciones directas en la elección de modelos, en los procedimientos de validación y en la interpretación de resultados. Ignorar la dimensión temporal en datos intrínsecamente dinámicos puede conducir a modelos sesgados, con un rendimiento aparente elevado pero escasa capacidad de generalización en situaciones reales.</p>
-<p>Para más información sobre este tema, consultar <span class="citation" data-cites="weiss2012data">(<a href="references.html#ref-weiss2012data" role="doc-biblioref">Weiss 2012</a>)</span>.</p>
+<p>Para más información sobre este tema, consultar <span class="citation" data-cites="weiss2012data">(<a href="#ref-weiss2012data" role="doc-biblioref">Weiss 2012</a>)</span>.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 21%">
@@ -1039,12 +1039,12 @@ Fuentes de datos
 1  1  1    C
 2  1  2    B
 3  1  3    C
-4  1  4    C
-5  1  5    B
+4  1  4    B
+5  1  5    A
 6  1  6    C
-7  1  7    C
+7  1  7    A
 8  1  8    C
-9  1  9    A
+9  1  9    B
 10 1 10    B</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.data.frame</span>(datos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1188,7 +1188,7 @@ Para recordar
 </div>
 </div>
 <p>En caso de sobreajuste, cuando el modelo se enfrenta a datos nuevos su rendimiento se ve deteriorado.</p>
-<p>Existen varias técnicas estadísticas para la construcción de particiones. La primera de ellas, división en entrenamiento, test y validación, es la más sencilla y consiste, simplemente, en reservar un conjunto (fijo) de observaciones para probar los modelos. La Figura <a href="#fig-particion" class="quarto-xref">Figura&nbsp;<span>2.1</span></a> siguiente figura lo muestra de forma esquemática:</p>
+<p>Existen varias técnicas estadísticas para la construcción de particiones. La primera de ellas, división en entrenamiento, test y validación, es la más sencilla y consiste, simplemente, en reservar un conjunto (fijo) de observaciones para probar los modelos. La Figura <a href="#fig-particion" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-particion</span></a> siguiente figura lo muestra de forma esquemática:</p>
 <div id="fig-particion" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-particion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1199,7 +1199,7 @@ Figura&nbsp;2.1: Partición en entrenamiento, test y validación
 </figcaption>
 </figure>
 </div>
-<p>¿Cómo seleccionamos el tamaño de cada trozo? Podemos aconsejar reservar en torno al 60% de las observaciones para la muestra de entrenamiento, en torno al 20% para la muestra de prueba y el restante 20% para validación. Sin embargo, estos valores son muy dependientes del volumen de datos y de los objetivos particulares del problema. La principal desventaja de este método es que la estimación del error en la partición de prueba puede ser muy variable, dependiendo precisamente de las observaciones que se incluyan en el conjunto de entrenamiento y de las que se incluyan en el conjunto de prueba. Además, si te fijas bien, solo un conjunto de observaciones, siempre el mismo, se emplea para entrenar el modelo. Este hecho sugiere que esta aproximación tiende a sobreestimar el modelo. Una técnica ampliamente utilizada es la conocida como “<em>k-folds cross validation</em>” (véase Figura <a href="#fig-kfold" class="quarto-xref">Figura&nbsp;<span>2.2</span></a>).</p>
+<p>¿Cómo seleccionamos el tamaño de cada trozo? Podemos aconsejar reservar en torno al 60% de las observaciones para la muestra de entrenamiento, en torno al 20% para la muestra de prueba y el restante 20% para validación. Sin embargo, estos valores son muy dependientes del volumen de datos y de los objetivos particulares del problema. La principal desventaja de este método es que la estimación del error en la partición de prueba puede ser muy variable, dependiendo precisamente de las observaciones que se incluyan en el conjunto de entrenamiento y de las que se incluyan en el conjunto de prueba. Además, si te fijas bien, solo un conjunto de observaciones, siempre el mismo, se emplea para entrenar el modelo. Este hecho sugiere que esta aproximación tiende a sobreestimar el modelo. Una técnica ampliamente utilizada es la conocida como “<em>k-folds cross validation</em>” (véase Figura <a href="#fig-kfold" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-kfold</span></a>).</p>
 <div id="fig-kfold" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kfold-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1429,7 +1429,7 @@ Basadas en documentos
 </div>
 <div id="callout-25" class="callout-25-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Estas bases de datos permiten el almacenamiento de documentos completos (normalmente textuales) y partes de interés de estos. Son ampliamente utilizadas en los sistemas de gestión documental, o sistemas de recomendación, los cuales son capaces de proporcionar información de interés de acuerdo con una búsqueda determinada. Ejemplo: ElasticSearch <span class="citation" data-cites="dixit2017elasticsearch">(<a href="references.html#ref-dixit2017elasticsearch" role="doc-biblioref">Dixit et&nbsp;al. 2017</a>)</span>.</p>
+<p>Estas bases de datos permiten el almacenamiento de documentos completos (normalmente textuales) y partes de interés de estos. Son ampliamente utilizadas en los sistemas de gestión documental, o sistemas de recomendación, los cuales son capaces de proporcionar información de interés de acuerdo con una búsqueda determinada. Ejemplo: ElasticSearch <span class="citation" data-cites="dixit2017elasticsearch">(<a href="#ref-dixit2017elasticsearch" role="doc-biblioref">Dixit et&nbsp;al. 2017</a>)</span>.</p>
 </div>
 </div>
 </div>
@@ -1445,7 +1445,7 @@ Gestión mediante clave-valor
 </div>
 <div id="callout-26" class="callout-26-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Son las bases de datos más comunes y tienen cierta similitud con las bases de datos relacionales. La clave actúa como clave primaria, mientras que el valor puede ser un único elemento o un conjunto de atributos relacionados. Ejemplo: MongoDB <span class="citation" data-cites="bradshaw2019mongodb">(<a href="references.html#ref-bradshaw2019mongodb" role="doc-biblioref">Bradshaw, Brazil, y Chodorow 2019</a>)</span>.</p>
+<p>Son las bases de datos más comunes y tienen cierta similitud con las bases de datos relacionales. La clave actúa como clave primaria, mientras que el valor puede ser un único elemento o un conjunto de atributos relacionados. Ejemplo: MongoDB <span class="citation" data-cites="bradshaw2019mongodb">(<a href="#ref-bradshaw2019mongodb" role="doc-biblioref">Bradshaw, Brazil, y Chodorow 2019</a>)</span>.</p>
 </div>
 </div>
 </div>
@@ -1461,7 +1461,7 @@ Basadas en grafos
 </div>
 <div id="callout-27" class="callout-27-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Son bases de datos que almacenan su información por medio de nodos y aristas. Los elementos principales son los nodos, que suelen contener una serie de atributos, los cuales se relacionan con otros nodos mediante las aristas. Son muy útiles para organizar datos no estructurados como pueden ser la información que se extrae del contenido textual. Ejemplo: Neo4J <span class="citation" data-cites="webber2012programmatic">(<a href="references.html#ref-webber2012programmatic" role="doc-biblioref">Webber 2012</a>)</span></p>
+<p>Son bases de datos que almacenan su información por medio de nodos y aristas. Los elementos principales son los nodos, que suelen contener una serie de atributos, los cuales se relacionan con otros nodos mediante las aristas. Son muy útiles para organizar datos no estructurados como pueden ser la información que se extrae del contenido textual. Ejemplo: Neo4J <span class="citation" data-cites="webber2012programmatic">(<a href="#ref-webber2012programmatic" role="doc-biblioref">Webber 2012</a>)</span></p>
 </div>
 </div>
 </div>
@@ -1477,7 +1477,7 @@ Orientadas a objetos
 </div>
 <div id="callout-28" class="callout-28-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Son bases de datos capaces de emular la abstracción proporcionada por la programación orientada a objetos. Por lo tanto, contienen entidades (clases) que incluyen atributos y métodos de acceso y modificación de estos, produciendo encapsulamiento. Ejemplo: Gemstone <span class="citation" data-cites="ra1994flexible">(<a href="references.html#ref-ra1994flexible" role="doc-biblioref">Ra, Kuno, y Rundensteiner 1994</a>)</span></p>
+<p>Son bases de datos capaces de emular la abstracción proporcionada por la programación orientada a objetos. Por lo tanto, contienen entidades (clases) que incluyen atributos y métodos de acceso y modificación de estos, produciendo encapsulamiento. Ejemplo: Gemstone <span class="citation" data-cites="ra1994flexible">(<a href="#ref-ra1994flexible" role="doc-biblioref">Ra, Kuno, y Rundensteiner 1994</a>)</span></p>
 </div>
 </div>
 </div>
@@ -1493,7 +1493,7 @@ De trabajo en memoria
 </div>
 <div id="callout-29" class="callout-29-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Estas bases de datos suelen estar constituidas por estructuras simples con el objetivo de poder ser alojadas en la memoria principal del computador. De esta manera se consigue que el tiempo de respuesta y la gestión y manejo de los datos sea mucho más rápida que en el resto de las bases de datos, que utilizan el disco duro del computador como lugar físico de almacenamiento. Debido a estas características son utilizadas en aplicaciones de alto rendimiento que gestionen volúmenes de datos asequibles. Ejemplo: Redis <span class="citation" data-cites="nelson2016mastering">(<a href="references.html#ref-nelson2016mastering" role="doc-biblioref">Nelson 2016</a>)</span></p>
+<p>Estas bases de datos suelen estar constituidas por estructuras simples con el objetivo de poder ser alojadas en la memoria principal del computador. De esta manera se consigue que el tiempo de respuesta y la gestión y manejo de los datos sea mucho más rápida que en el resto de las bases de datos, que utilizan el disco duro del computador como lugar físico de almacenamiento. Debido a estas características son utilizadas en aplicaciones de alto rendimiento que gestionen volúmenes de datos asequibles. Ejemplo: Redis <span class="citation" data-cites="nelson2016mastering">(<a href="#ref-nelson2016mastering" role="doc-biblioref">Nelson 2016</a>)</span></p>
 </div>
 </div>
 </div>
@@ -1509,7 +1509,7 @@ Para saber más sobre bases de datos
 </div>
 <div id="callout-30" class="callout-30-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Las distintas clasificaciones presentadas en este curso son una pequeña aproximación al mundo de las bases de datos. Para más detalles respecto a los conceptos detallados en este apartado ver <span class="citation" data-cites="harrington2016relational">(<a href="references.html#ref-harrington2016relational" role="doc-biblioref">Harrington 2016</a>)</span> para las bases de datos relacionales y <span class="citation" data-cites="meier2019sql">(<a href="references.html#ref-meier2019sql" role="doc-biblioref">Meier y Kaufmann 2019</a>)</span> para las bases de datos no relacionales.</p>
+<p>Las distintas clasificaciones presentadas en este curso son una pequeña aproximación al mundo de las bases de datos. Para más detalles respecto a los conceptos detallados en este apartado ver <span class="citation" data-cites="harrington2016relational">(<a href="#ref-harrington2016relational" role="doc-biblioref">Harrington 2016</a>)</span> para las bases de datos relacionales y <span class="citation" data-cites="meier2019sql">(<a href="#ref-meier2019sql" role="doc-biblioref">Meier y Kaufmann 2019</a>)</span> para las bases de datos no relacionales.</p>
 </div>
 </div>
 </div>
@@ -1858,7 +1858,7 @@ Seguridad
 <hr>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-bradshaw2019mongodb" class="csl-entry" role="listitem">
 Bradshaw, Shannon, Eoin Brazil, y Kristina Chodorow. 2019. <em>MongoDB: the definitive guide: powerful and scalable data storage</em>. O’Reilly Media.
 </div>

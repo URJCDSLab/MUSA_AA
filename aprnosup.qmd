@@ -12,11 +12,11 @@ A estos grupos se les denomina **clústeres** o **conglomerados**. La idea funda
 
 En deporte, las técnicas de agrupamiento se utilizan, entre otros fines, para:
 
-* segmentar jugadores según su **perfil de rendimiento**,
-* identificar **estilos de juego** en equipos o deportistas individuales,
-* detectar **anomalías** (rendimientos atípicos, cargas inusuales, posibles errores de medición),
-* reducir la complejidad de grandes volúmenes de datos procedentes de tracking o sensores,
-* apoyar procesos posteriores de modelización supervisada.
+-   segmentar jugadores según su **perfil de rendimiento**,
+-   identificar **estilos de juego** en equipos o deportistas individuales,
+-   detectar **anomalías** (rendimientos atípicos, cargas inusuales, posibles errores de medición),
+-   reducir la complejidad de grandes volúmenes de datos procedentes de tracking o sensores,
+-   apoyar procesos posteriores de modelización supervisada.
 
 El clustering se encuadra dentro del aprendizaje basado en similitud (*similarity-based learning*), y puede proporcionar una primera visión de la **estructura latente** de los datos antes de formular hipótesis más concretas o definir variables objetivo.
 
@@ -26,14 +26,13 @@ En muchos proyectos de analítica deportiva es recomendable comenzar con técnic
 
 Desde el punto de vista metodológico, existe una amplia variedad de algoritmos de agrupamiento. Una revisión detallada puede encontrarse en [@xu2015comprehensive]. Entre los más utilizados destacan:
 
-* los métodos basados en **centroides**, como el algoritmo de las *k-medias*, habituales en la segmentación de jugadores;
-* los métodos basados en **conectividad**, como el *agrupamiento jerárquico*, útiles para explorar relaciones anidadas entre perfiles;
-* los métodos basados en **densidad**, como *DBSCAN*, especialmente relevantes para la detección de comportamientos atípicos o eventos raros.
+-   los métodos basados en **centroides**, como el algoritmo de las *k-medias*, habituales en la segmentación de jugadores;
+-   los métodos basados en **conectividad**, como el *agrupamiento jerárquico*, útiles para explorar relaciones anidadas entre perfiles;
+-   los métodos basados en **densidad**, como *DBSCAN*, especialmente relevantes para la detección de comportamientos atípicos o eventos raros.
 
 En ocasiones, los algoritmos de agrupamiento se clasifican de forma general en **jerárquicos** y **no jerárquicos**.
 
 ::: {.callout-note collapse="true" title="Agrupamiento jerárquico"}
-
 El agrupamiento jerárquico genera una estructura de clústeres **anidados**, donde las observaciones se van agrupando progresivamente. Una vez que una observación se integra en un clúster, no lo abandona, sino que este clúster puede unirse a otros en niveles superiores. En deporte, este enfoque resulta útil para explorar jerarquías de perfiles o estilos.
 :::
 
@@ -71,7 +70,7 @@ El espacio de características y su representación son elementos cruciales en c
 
 Para definir estas relaciones, se emplean **medidas de similitud, disimilitud o distancias**, las cuales permiten cuantificar qué tan parecidas o diferentes son dos observaciones.
 
-### **Medida de similitud y disimilitud**
+### Medida de similitud y disimilitud
 
 En el análisis de conglomerados (clustering), las observaciones se agrupan en función de su semejanza. Para ello, se utilizan medidas que pueden ser de **similitud** o **disimilitud**, dependiendo de si queremos cuantificar cómo de parecidas o de distintas son dos observaciones.
 
@@ -101,11 +100,29 @@ El tipo de métrica utilizada puede influir en la calidad del análisis de agrup
 
 En la siguiente sección abordaremos los distintos tipos de métricas de distancia utilizadas en clustering. <!--#  y sus implicaciones en el análisis de datos -->
 
-### **Ejemplos de métricas**
+### Ejemplos de métricas
 
 El éxito de los algoritmos de clustering depende en gran medida de la elección de la medida de desemejenza o de la métrica de distancia. La manera en que medimos la similitud entre puntos determina cómo se formarán los grupos, afectando su interpretación y utilidad. En este capítulo exploraremos distintas métricas según la naturaleza de los datos: continuos, categóricos o mixtos.
 
-**Distancias para datos continuos**
+En clustering, **la métrica define qué significa “parecido”**. Antes de elegir algoritmo, decide:
+
+-   **Representación** del dato (vector de *features*, set, distribución, serie temporal, secuencia…).
+-   **Invariancias deseadas** (¿importa la magnitud o solo la forma? ¿importa el desfase temporal?).
+-   **Escalado** (muchas métricas son sensibles a unidades; estandarizar suele ser obligatorio).
+
+A continuación se listan métricas útiles en análisis de datos deportivos.
+
+------------------------------------------------------------------------
+
+### Notación básica
+
+-   Vectores: $\mathbf{x}, \mathbf{y} \in \mathbb{R}^d$
+-   Series temporales (univariadas): $\mathbf{x} = (x_1,\dots,x_T)$, $\mathbf{y} = (y_1,\dots,y_S)$
+-   Distribuciones discretas (histogramas): $\mathbf{p}=(p_1,\dots,p_B)$, $\mathbf{q}=(q_1,\dots,q_B)$ con $p_i\ge 0$, $\sum_i p_i = 1$.
+
+------------------------------------------------------------------------
+
+**Distancias para para vectores numéricos (tabular)**
 
 Las variables continuas toman valores en $\mathbb{R}$ y pueden ser comparados mediante métricas tradicionales de distancia. A continuación se explican algunas de ellas.
 
@@ -115,7 +132,19 @@ Las variables continuas toman valores en $\mathbb{R}$ y pueden ser comparados me
     ||\mathbf{x}-\mathbf{z}||_{2}=d_{\text{Euclídea}}(\mathbf{x},\mathbf{z}) = \sqrt{\sum_{j=1}^{m} \left(\mathbf{x}_j - \mathbf{z}_j \right)^{2}} = \left(\sum_{j=1}^{m} \left(\mathbf{x}_j - \mathbf{z}_j \right)^{2}\right)^{1/2}
     $$
 
-    Esta métrica mide la distancia geométrica entre dos puntos en un espacio multidimensional. Las distancias al cuadrado enfatizan las diferencias grandes (porque las diferencias se elevan al cuadrado).
+    Esta métrica mide la distancia geométrica entre dos puntos en un espacio multidimensional. Las distancias al cuadrado enfatizan las diferencias grandes (porque las diferencias se elevan al cuadrado). **Cuándo usarla**: cuando el “parecido” es **proximidad geométrica** y las variables están bien escaladas.
+
+    ::: {.callout-note collapse="true" title="Ejemplo"}
+    **Ejemplo deportivo (perfil por 90’)**\
+    Supón dos jugadores descritos por:\
+    $\text{features} = (\text{pases/90}, \text{tiros/90}, \text{presiones/90})$
+
+    Jugador A: $\mathbf{x}=(40,2,12)$,
+
+    Jugador B: $\mathbf{y}=(30,4,18)$
+
+    $$d_2 = \sqrt{(10)^2 + (-2)^2 + (-6)^2}=\sqrt{100+4+36}=\sqrt{140}\approx 11.83$$
+    :::
 
 -   **Distancia de Manhattan**. Es la distancia $l_1$, también se conoce como distancia de bloque o distancia de taxi. La distancia de Manhattan entre dos instancias $\mathbf{x}, \mathbf{z} \in \mathbb{R}^{m}$ es
 
@@ -124,6 +153,11 @@ Las variables continuas toman valores en $\mathbb{R}$ y pueden ser comparados me
     $$
 
     Se denomina así puesto que en 2D se calcula contando cuántas filas y columnas hay que moverse horizontal y verticalmente para llegar de $\mathbf{x}_i$ a $\mathbf{z}_i$ (en contraste con la distancia euclidiana, que sería la distancia en línea recta).
+
+    ::: {.callout-note collapse="true" title="Ejemplo"}
+    **Ejemplo (mismas features que el ejemplo previo)**\
+    $$d_1 = |40-30| + |2-4| + |12-18| = 10 + 2 + 6 = 18$$ Interpretación: “difieren 18 unidades en total” (suma de discrepancias).
+    :::
 
 -   **Distancia de Minkowski** (distancia $l_p$). Es una generalización de las dos anteriores, permitiendo ajustar la sensibilidad a valores extremos. La distancia de Minkowski entre dos instancias $\mathbf{x}, \mathbf{z} \in \mathbb{R}^{m}$
 
@@ -135,7 +169,38 @@ Las variables continuas toman valores en $\mathbb{R}$ y pueden ser comparados me
 
     En el extremo, cuando $p=\infty$, la métrica devuelve la diferencia máxima entre cualquiera de las variables, es decir, $||\mathbf{x}-\mathbf{z}||_{\infty} = max_{1\leq j \leq m}|\mathbf{x}_j - \mathbf{z}_j|$*.* Se conoce como la distancia de Chebyshev (distancia $l_{\infty}$).
 
-**Distancias para datos binarios**
+    ::: {.callout-note collapse="true" title="Ejemplo"}
+    **Ejemplo (**$p=\infty$) (mismas features que el ejemplo previo)\
+    Con A y B: $\max(10,2,6)=10$\
+    Interpretación: “en la peor variable, difieren 10”.
+    :::
+
+-   **Distancia coseno** $$\text{sim}_{\cos}(\mathbf{x},\mathbf{y})=\frac{\mathbf{x}\cdot \mathbf{y}}{\|\mathbf{x}\|\|\mathbf{y}\|}, 
+    \quad d_{\cos}=1-\text{sim}_{\cos}$$ Se utiliza cuando importa el **patrón relativo** (dirección) más que la magnitud.
+
+    ::: {.callout-note collapse="true" title="Ejemplo"}
+    **Mix de acciones**\
+    Jugador A: proporción de acciones $\mathbf{x}=(0.6\ \text{pases}, 0.3\ \text{conducciones}, 0.1\ \text{tiros})$
+
+    Jugador B: $\mathbf{y}=(0.3,0.6,0.1)$
+
+    Producto escalar: $0.6\cdot0.3 + 0.3\cdot0.6 + 0.1\cdot0.1 = 0.18+0.18+0.01=0.37$\
+    Normas: $\|\mathbf{x}\|=\|\mathbf{y}\|=\sqrt{0.36+0.09+0.01}=\sqrt{0.46}\approx 0.678$\
+    $$\text{sim}_{\cos}\approx \frac{0.37}{0.678^2}=\frac{0.37}{0.46}\approx 0.804,\quad d_{\cos}\approx 0.196$$ Interpretación: aunque “intercambian” pases y conducciones, siguen siendo relativamente parecidos.
+    :::
+
+-   **Distancia por correlación (forma, ignorando escala)** $$d_{\text{corr}}(\mathbf{x},\mathbf{y}) = 1 - \rho(\mathbf{x},\mathbf{y})$$ donde $\rho$ es la correlación de Pearson. Se aplica cuando interesa que dos perfiles **suban/bajen juntos** aunque uno tenga más volumen.
+
+    ::: {.callout-note collapse="true" title="Ejemplo"}
+    **Rendimiento por partido, 5 partidos**\
+    A: $\mathbf{x}=(1,2,3,4,5)$\
+    B: $\mathbf{y}=(2,4,6,8,10)$
+
+    Aquí $\rho=1$ (misma forma), así que $d_{\text{corr}}=0$.\
+    Interpretación: mismo patrón temporal, diferente escala.
+    :::
+
+**Distancias para datos binarios (conjuntos de elementos)**
 
 Cuando los datos son binarios se utilizan métricas especializadas para dicho tipo de datos para que reflejen correctamente la similitud entre las observaciones. Estas métricas se basan en las coincidencias entre los 0 y los 1 de las observaciones. En base a la siguiente tabla definimos:
 
@@ -167,6 +232,19 @@ $$
 
 La distancia de Hamming es 2 porque hay dos diferencias.
 
+::: {.callout-note collapse="true" title='Ejemplo'}
+**Zonas del campo como set**
+
+  Jaccard:
+  A visita zonas: $A=\{\text{carril izq}, \text{medio izq}, \text{frontal}\}$  
+  B visita zonas: $B=\{\text{medio izq}, \text{frontal}, \text{carril dcho}\}$  
+  Intersección: 2, unión: 4 --> $J=2/4=0.5$, $d_J=0.5$.
+  
+  Dice/Sørensen:
+  $$S_{\text{Dice}} = \frac{2\cdot 2}{3+3}=\frac{4}{6}\approx 0.667,\quad d\approx 0.333$$
+:::
+
+
 **Distancias para datos categóricos**
 
 Cuando se tienen datos categóricos nominales, es común medir la similitud entre las observaciones en términos de las frecuencias observadas en las distintas categorías (tablas de contingencia). Un ejemplo sería la **distancia de Goodall** [@goodall1966new]. Otra opción para este tipo de datos es utilizar la distancia de Hamming.
@@ -175,7 +253,7 @@ Si las variables son ordinales, hay que tener en cuenta el orden de los datos. E
 
 **Distancias para datos mixtos**
 
-Cuando el conjunto de datos incluye variables continuas y categóricas, una posibilidad es utilizar la distancia de Gower [@gower1971general]. La distancia de Gower entre dos observaciones $\mathbf{x}$ y $\mathbf{z}$ se define como
+Cuando el conjunto de datos incluye variables continuas y categóricas, una posibilidad es utilizar la distancia de Gower [@gower1971general] que combina diferencias normalizadas en numéricos con coincidencia/no-coincidencia en categóricos. La distancia de Gower entre dos observaciones $\mathbf{x}$ y $\mathbf{z}$ se define como
 
 $$
 d_{Gower}(\mathbf{x},\mathbf{z}) = 1-\frac{\sum_{t=1}^{m_1}(1-|x_{t}-z_{t}|/R_t) + a + a'}{m_1 + (m_2 - d) + m_3}
@@ -191,6 +269,85 @@ $$
 
 En esta fórmula, $d_{j}^{(f)}$ dependerá de la tipología de la variable $f$.
 
+::: {.callout-note collapse="true" title='Ejemplo'}
+Jugador A: (altura=185, edad=24, posición=DF)  
+Jugador B: (altura=175, edad=30, posición=DF)  
+        - Altura normalizada (rango 160–200): $|185-175|/40=0.25$  
+        - Edad normalizada (rango 18–38): $|24-30|/20=0.30$  
+        - Posición: DF vs DF --> 0  
+$$d_G=(0.25+0.30+0)/3 \approx 0.183$$
+:::
+
+
+**Métricas basadas en distribuciones (histogramas, heatmaps, densidades)**
+
+En deporte aparecen constantemente: mapas de calor, distribución de tiros por distancia, distribución de pases por longitud, ocupación espacial, etc.
+
+-   Divergencia de Jensen–Shannon (JS) Para dos distribuciones $\mathbf{p},\mathbf{q}$: $$ JS(\mathbf{p},\mathbf{q})=\tfrac{1}{2}KL(\mathbf{p}\|\mathbf{m})+\tfrac{1}{2}KL(\mathbf{q}\|\mathbf{m}),\quad     \mathbf{m}=\tfrac{1}{2}(\mathbf{p}+\mathbf{q})$$ Se usa cuando se quiere comparar formas de distribuciones (probabilidades). Es simétrica y está acotada.
+
+::: {.callout-note collapse="true" title='Ejemplo'}
+**Distribución de tiros por distancia en 3 bins**
+  Bins: cerca/medio/lejos  
+    $$\mathbf{p}=(0.6,0.3,0.1),\quad \mathbf{q}=(0.2,0.5,0.3)$$ 
+  Interpretación cualitativa: A tira mucho cerca; B reparte más hacia lejos. JS será alta (distribuciones diferentes).
+:::
+
+
+-   Distancia de Wasserstein-1 (Earth Mover’s Distance, EMD) La idea es: cuánto “trabajo” cuesta transformar una distribución en otra. Se usa cuando importa está la masa (p.ej., desplazamiento espacial), no solo diferencia bin a bin.
+
+    ::: {.callout-note collapse="true" title="Ejemplo"}
+    **Distribución de tiros por distancia, bins ordenados** Bins (de cerca a lejos): 1,2,3,4\
+    Jugador A: $\mathbf{p}=(1,0,0,0)$ (solo cerca)\
+    Jugador B: $\mathbf{q}=(0,0,0,1)$ (solo lejos)
+
+    Mover 1 unidad de masa del bin 1 al bin 4 cuesta “3 pasos”.\
+    Entonces: Wasserstein/EMD $\approx$ 3.
+
+    **Otro ejemplo** $$\mathbf{p}=(0.5,0.5,0,0),\quad \mathbf{q}=(0,0.5,0.5,0)$$ Aquí solo hay que mover 0.5 de masa “un paso” (de bin 1 a 3 pasando por 2, en 1D el coste depende de cómo definas posiciones). Cualitativamente: distancia moderada. :::
+    :::
+
+**Métricas para series temporales**
+
+-   Euclídea punto a punto (misma longitud y alineación) $$d(\mathbf{x},\mathbf{y})=\sqrt{\sum_{t=1}^T (x_t-y_t)^2}$$ Se usa cuando las series están alineadas en el tiempo (misma duración, mismo inicio).
+
+    ::: {.callout-note collapse="true" title='Ejemplo'} 
+    **Velocidad en 5 instantes** 
+    $$\mathbf{x}=(6,7,8,7,6),\quad \mathbf{y}=(6,6,7,6,6)$$
+     Diferencias: $(0,1,1,1,0)$ → $d=\sqrt{3}\approx1.73$.
+     Problema: si un sprint ocurre 2 segundos más tarde, esta distancia puede decir “son distintos” aunque sean el mismo patrón desplazado.
+    :::
+
+-   Distancia DTW (Dynamic Time Warping) DTW alinea series permitiendo estirar/contraer el eje temporal para encontrar el emparejamiento de menor coste. Se usa cuando interesa la forma y se aceptan desfases temporales (p.ej., respuesta de FC a cargas, sprints que ocurren con pequeño retraso).
+
+    ::: {.callout-note collapse="true" title='Ejemplo'} 
+    **Mismo sprint desplazado** 
+    $$\mathbf{x}=(0,0,5,0,0),\quad \mathbf{y}=(0,5,0,0,0)$$
+    Euclídea es grande (picos no coinciden).  
+    DTW puede “alinear” el pico de 5 con el de 5 y dar una distancia pequeña → captura que ambos tienen un sprint.
+    :::
+
+-   Soft-DTW (suavizada) Soft-DTW es una versión diferenciable/suavizada de DTW.\
+    Se utiliza cuando luego se quiere promediar series (barycenters) o integrarlo en optimización.
+
+Si hay dos alineamientos casi igual de buenos, DTW elige uno “a cuchillo”; Soft-DTW combina varios alineamientos, dando una medida más estable ante ruido.
+
+-   Distancia basada en correlación sobre series Mismo concepto que antes pero ahora para series: $$d_{\text{corr}}(\mathbf{x},\mathbf{y})=1-\rho(\mathbf{x},\mathbf{y})$$ Se aplica en series con misma tendencia/patrón pero distinta amplitud (p.ej., mismo ritmo de carga con diferente nivel).
+
+    ::: {.callout-note collapse="true" title="Ejemplo"}
+    $$\mathbf{x}=(10,12,14,16),\quad \mathbf{y}=(20,24,28,32)$$ $\rho=1$ → distancia 0 (patrón idéntico, escala distinta).
+    :::
+
+-   Series categóricas / secuencias: distancia de edición (Levenshtein) Para secuencias de eventos (p.ej., `Pase → Conducción → Pase → Tiro`), puede usarse distancia de edición: nº mínimo de inserciones/borrados/sustituciones para transformar una secuencia en otra (por ejemplo, patrones de juego como secuencias discretas).
+
+    ::: {.callout-note collapse="true" title="Ejemplo"}
+    **Secuencia de acciones**
+
+    -   A: `Pase, Pase, Tiro`
+    -   B: `Pase, Conducción, Pase, Tiro` Transformación: insertar `Conducción` tras el primer `Pase` → distancia 1.
+    :::
+
+<!--# Recomendaciones rápidas (para decidir en práctica) Perfiles tabulares (por jugador/partido): $L_2$ / $L_1$ con escalado; coseno si son proporciones. Datos mixtos (num + cat): Gower. Sets (zonas/tipos presentes): Jaccard/Dice. Distribuciones (heatmaps/histogramas): JS para “forma”; Wasserstein/EMD si importa la geometría (desplazamiento). Series temporales: Euclídea si están alineadas; DTW/Soft-DTW si hay desfases; correlación si importa forma ignorando amplitud.Secuencias discretas: distancia de edición (Levenshtein).  -->
+
 ## Parámetros de un modelo de ML
 
 Un parámetro es un valor que el algoritmo del modelo de ML ajusta durante el proceso de entrenamiento para hacer que el modelo se adapte mejor a los datos de entrenamiento y, en última instancia, haga predicciones más precisas en datos no vistos (datos de prueba o datos en producción). Los parámetros son esenciales para definir la estructura y el comportamiento del modelo.
@@ -202,7 +359,6 @@ Estos son los componentes internos del modelo que definen su estructura y su cap
 :::
 
 ::: {.callout-note collapse="true" title="Hiperparámetros del modelo"}
-
 A diferencia de los parámetros del modelo, los **hiperparámetros** son valores que se establecen antes del proceso de entrenamiento y controlan aspectos más generales del modelo. Ejemplos de hiperparámetros incluyen la tasa de aprendizaje, la cantidad de capas ocultas en una red neuronal, el valor $k$ en el modelo de $k$ vecinos, la profundidad de un árbol de decisión, etc. Los hiperparámetros afectan cómo se ajustan los parámetros del modelo durante el entrenamiento.
 :::
 
@@ -325,13 +481,10 @@ Los clústeres están representados por su centroide, entendiendo éste como un 
 Despliega los paneles siguientes para averiguar las principales ventajas y desventajas de este modelo de ML.
 
 ::: {.callout-note collapse="true" title="Ventajas"}
-
 Las principales ventajas del algoritmo de las $k$-medias son su **sencillez** y su **escalabilidad** (aplicable con facilidad a grandes conjuntos de datos).
 :::
 
 ::: {.callout-note collapse="true" title="Desventajas"}
-
-
 Las principales desventajas son la necesidad de elegir $k$ manualmente y la alta **dependencia** de los valores iniciales, las medias con las que comienza el algoritmo. Para evitar esta última desventaja se suele replicar el algoritmo varias veces con distintas inicializaciones. Además, los centroides pueden verse fuertemente influidos por **valores atípicos**.
 :::
 
@@ -347,7 +500,97 @@ El más común de los algoritmos de $k$-medoides es el PAM: "Partitioning Around
 
 4.  Se repiten los pasos 2 y 3 hasta que no haya cambios
 
-Los clústeres están representados por su medoide, entendiendo éste como un punto de referencia
+Los clústeres están representados por su medoide, entendiendo éste como un punto de referencia.
+
+
+### Clustering basado en densidad: DBSCAN
+
+DBSCAN (*Density-Based Spatial Clustering of Applications with Noise*) agrupa puntos que forman regiones densas y marca como ruido/outliers los puntos aislados. Es especialmente útil cuando:
+
+- Los clústeres no son “esféricos” (p. ej., trayectorias, zonas de calor con formas raras).
+- Hay outliers reales (acciones raras, partidos anómalos, jugadores con rol extremo).
+- No se quiere fijar el número de clústeres $k$ a priori.
+
+
+
+**Intuición en contexto deportivo**
+
+Imagina que cada observación es una acción (pase, presión, tiro) descrita por dos variables (p. ej., coordenadas (x,y) en el campo, o velocidad y aceleración). DBSCAN busca “manchas densas” de puntos: por ejemplo, zonas donde un equipo presiona mucho o regiones donde un jugador recibe con frecuencia.
+
+
+
+**Parámetros y conceptos clave**
+
+DBSCAN se define con dos hiperparámetros:
+
+- $\varepsilon$ (`eps`): radio de vecindad.
+- `min_samples`: número mínimo de puntos en la vecindad para considerar que hay densidad suficiente.
+
+Con ellos, clasifica cada punto como:
+
+- Core point (punto núcleo): tiene al menos `min_samples` puntos (incluido él) dentro de su vecindad de radio $\varepsilon$.
+- Border point (punto frontera): no cumple la condición de núcleo, pero cae dentro de la vecindad de un núcleo.
+- Noise / outlier: no es núcleo ni frontera (no pertenece a ningún clúster).
+
+**Vecindad $\varepsilon$**: $N_\varepsilon(p)=\{q: d(p,q)\le \varepsilon\}$
+
+
+**Algoritmo DBSCAN**
+
+Input: dataset $X$, distancia $d(\cdot,\cdot)$, parámetros $\varepsilon$ y `min_samples`  
+Output: etiquetas de clúster y ruido (habitualmente `-1` para ruido)
+
+1. Inicializa todas las observaciones como no visitadas y sin etiqueta.
+2. Para cada punto $p$ no visitado:
+   1) Marca $p$ como visitado.  
+   2) Calcula $N = N_\varepsilon(p)$ (sus vecinos).  
+   3) Si $|N| < \text{min\_samples}$:
+      - Marca $p$ como ruido (provisional; puede pasar a frontera más adelante).
+   4) Si no:
+      - Crea un nuevo clúster $C$ y asigna $p$ a $C$.
+      - Inicializa una lista/cola `S = N` para expandir el clúster.
+      - Mientras `S` no esté vacía:
+        - Extrae un punto $q$ de `S`.
+        - Si $q$ no está visitado:
+          - Marca $q$ como visitado.
+          - Calcula $N_q = N_\varepsilon(q)$.
+          - Si $|N_q| \ge \text{min\_samples}$, añade $N_q$ a `S` (expansión).
+        - Si $q$ no tiene clúster asignado (o era ruido), asígnalo a $C$.
+3. Devuelve las etiquetas.
+
+Idea clave: un clúster crece a partir de núcleos y va “absorbiendo” fronteras conectadas.
+
+**Elección de parámetros (`eps`, `min_samples`)**
+
+- Regla práctica para `min_samples`:
+    - Para datos tabulares: `min_samples`$\approx 2d$ ($d$ = dimensión) como punto de partida.
+    - Si hay mucho ruido: se aumenta `min_samples` para exigir más densidad.
+- Para  `eps`. Se puede elegir con el $k$-distance plot:
+      1. Se fija `k = min_samples`.
+      2. Para cada punto, se calcula la distancia a su $k$-ésimo vecino más cercano.
+      3. Se ordena esas distancias y se busca el “codo”: ese valor suele ser un buen `eps`.
+  Interpretación: `eps` controla cuán “cerca” deben estar las acciones/perfiles para considerarse del mismo patrón.
+
+
+
+::: {.callout-note collapse="true" title="Ventajas"}
+- No necesita fijar $k$.
+- Encuentra clústeres no convexos.
+- Identifica outliers de forma natural.
+- Funciona bien con ruido espacial.
+:::
+
+::: {.callout-note collapse="true" title="Desventajas"}
+- Difícil si hay densidades muy diferentes entre clústeres (un $\varepsilon$ único no va bien).
+- Sensible a escalado: es casi obligatorio estandarizar o definir una métrica acorde.
+- En alta dimensión, las distancias tienden a “parecerse” (problema de concentración).
+:::
+
+
+
+
+
+
 
 Estos algoritmos son **no-jerárquicos**, pues una observación puede cambiar de clúster durante la ejecución del mismo. Dos observaciones cualesquiera pueden pertenecer al mismo o a diferente grupo en diferentes iteraciones del algoritmo.
 
@@ -357,17 +600,17 @@ Para ilustrar el funcionamiento del algoritmo de las $k-medias$ en R, vamos a em
 
 Trabajaremos con las siguientes variables cuantitativas:
 
-- winner_rank: ranking de la ganadora
+-   winner_rank: ranking de la ganadora
 
-- loser_rank: ranking de la perdedora
+-   loser_rank: ranking de la perdedora
 
-- winner_age: edad de la ganadora
+-   winner_age: edad de la ganadora
 
-- loser_age: edad de la perdedora
+-   loser_age: edad de la perdedora
 
-- winner_rank_points
+-   winner_rank_points
 
-- loser_rank_points
+-   loser_rank_points
 
 Cargamos y preparamos los datos:
 
@@ -392,7 +635,6 @@ head(df)
 
 ```
 
-
 Como ocurre habitualmente en deporte, las variables están medidas en escalas muy diferentes (ranking frente a edad). Por ello, antes de aplicar $k-medias$ es imprescindible escalar las variables.
 
 ```{r}
@@ -414,7 +656,6 @@ fviz_dist(distance,
 
 Este gráfico comienza a mostrar qué partidos son más similares entre sí (colores fríos) y cuáles presentan perfiles claramente distintos (colores cálidos), en función de ranking y edad de las jugadoras.
 
-
 Podemos aplicar el algoritmo de las $k$-medias con $k=2$ sin más que llamar a la función `kmeans` tal y como sigue:
 
 ```{r}
@@ -426,9 +667,7 @@ str(k2)
 ::: callout-caution
 # Tarea
 
-¿Qué significa `nstart=25` en la anterior llamada a `kmeans`?
-(Pista: tiene que ver con la estabilidad de la solución).
-
+¿Qué significa `nstart=25` en la anterior llamada a `kmeans`? (Pista: tiene que ver con la estabilidad de la solución).
 :::
 
 Si imprimimos los resultados observamos que el algoritmo ha dividido los partidos en dos conglomerados, cada uno caracterizado por un centro (media) en las variables escaladas. Estos centros representan perfiles promedio de partido en cada clúster, no partidos reales concretos.
@@ -446,27 +685,26 @@ fviz_cluster(k2, data = df_scaled2)
 ::: callout-caution
 # Tarea
 
-¿Qué información estamos perdiendo al representar únicamente dos dimensiones del conjunto de datos?
-(Repasa el capítulo @sec-reddim sobre reducción de la dimensionalidad).
+¿Qué información estamos perdiendo al representar únicamente dos dimensiones del conjunto de datos? (Repasa el capítulo @sec-reddim sobre reducción de la dimensionalidad).
 :::
 
 **Interpretación en el dominio deportivo**
 
 En el ejemplo anterior, los clústeres pueden interpretarse, de forma exploratoria, como tipologías de partidos, por ejemplo:
 
-- partidos con grandes diferencias de ranking frente a partidos más equilibrados,
+-   partidos con grandes diferencias de ranking frente a partidos más equilibrados,
 
-- partidos protagonizados por jugadoras jóvenes frente a jugadoras más veteranas,
+-   partidos protagonizados por jugadoras jóvenes frente a jugadoras más veteranas,
 
-- combinaciones de ambos factores.
+-   combinaciones de ambos factores.
 
 No obstante, es importante subrayar que:
 
-- $k-medias$ no utiliza información del resultado más allá de las variables incluidas,
+-   $k-medias$ no utiliza información del resultado más allá de las variables incluidas,
 
-- los clústeres no tienen un significado deportivo “intrínseco”,
+-   los clústeres no tienen un significado deportivo “intrínseco”,
 
-- la interpretación requiere siempre conocimiento del dominio.
+-   la interpretación requiere siempre conocimiento del dominio.
 
 Este tipo de análisis resulta especialmente útil como paso previo a tareas más complejas, como la segmentación de jugadoras, el análisis de estilos de juego o la construcción de modelos supervisados.
 
@@ -652,12 +890,10 @@ El clustering aglomerativo comienza con $n$ conglomerados (uno por cada dato) y,
 Se necesita un criterio de conexión o "*linkage*" que especifique cómo se determina el parecido (o la disimilitud) entre dos clústeres. Este criterio no es único. Algunos de los criterios más comunes son:
 
 ::: {.callout-note title="Método de Ward"}
-
 Minimiza la suma de las diferencias cuadradas dentro de los clústeres. Minimiza la varianza total dentro del conglomerado.
 :::
 
 ::: {.callout-note title="Agrupamiento de enlace completo"}
-
 Minimiza la disimilitud máxima entre las observaciones de dos clústeres. Calcula todas las disimilitudes por pares entre los elementos del conglomerado A y los elementos del conglomerado B, y considera el mayor valor (es decir, el valor máximo) de estas disimilitudes como la distancia entre los dos conglomerados
 
 $$
@@ -668,7 +904,6 @@ Tiende a producir clusters más compactos.
 :::
 
 ::: {.callout-note title="Agrupamiento de enlace promedio"}
-
 Minimiza el promedio de las disimilitudes entre las observaciones de dos clústeres. Calcula todas las disimilitudes por pares entre los elementos del conglomerado A y los elementos del conglomerado B, y considera la media de estas disimilitudes como la distancia entre los dos conglomerados:
 
 $$
@@ -679,7 +914,6 @@ siendo $n_A$ y $n_B$ el número de elementos en los grupos $A$ y $B$, respectiva
 :::
 
 ::: {.callout-note title="Agrupamiento de enlace mínimo o simple"}
-
 Minimiza las disimilitudes entre las observaciones más cercanas de dos clústeres. Es decir, calcula todas las disimilitudes por pares entre los elementos del conglomerado A y los elementos del conglomerado B, y considera la menor de estas disimilitudes como criterio de vinculación
 
 $$
@@ -690,7 +924,6 @@ Tiende a producir clusters largos y "dispersos".
 :::
 
 ::: {.callout-note title="Agrupamiento de enlace de centroides"}
-
 Calcula la disimilitud entre el centroide del conglomerado A y el centroide del conglomerado B. Agrupación de enlace de centroides.
 :::
 
@@ -870,7 +1103,6 @@ fviz_gap_stat(gap_stat)
 ```
 
 ::: {.callout-note collapse="true" title="Ventajas del clustering jerárquico"}
-
 -   **Jerarquía de clusters**: El clustering jerárquico crea una jerarquía de clusters que permite analizar los datos a diferentes niveles de granularidad. Es posible, por tanto, explorar tanto clusters globales como subgrupos más específicos. Al tener una jerarquía de clusters, puedes tomar decisiones a diferentes niveles de detalle. Esto es valioso para la segmentación de mercado, la taxonomía de especies, la organización de documentos, entre otros.
 
 -   **Interpretación visual**: El dendrograma facilita la interpretación visual de cómo se agrupan los datos y cómo se relacionan entre sí.
@@ -887,7 +1119,6 @@ fviz_gap_stat(gap_stat)
 :::
 
 ::: {.callout-note collapse="true" title="Desventajas del clustering jerárquico"}
-
 -   **Requiere definir un criterio de corte**: Para convertir la jerarquía en clusters finales, es necesario definir un criterio de corte en el dendrograma. Esta elección puede ser subjetiva y afectar los resultados. Así mismo hay que definir el tipo de enlace a emplear (y la medida de disimilitud) Cada una de estas decisiones puede influir mucho en los resultados obtenidos. En la práctica, probamos varias opciones diferentes y buscamos la que ofrece la solución más útil o interpretable.
 
 -   Con estos métodos, **no hay una única respuesta correcta**: debe considerarse cualquier solución que exponga algunos aspectos interesantes de los datos.
@@ -900,6 +1131,33 @@ fviz_gap_stat(gap_stat)
 
 -   **Sin capacidad de predicción**: Las técnicas de agrupamiento jerárquicas no son útiles a la hora de predecir el clúster al que pertenecen nuevas observaciones.
 :::
+
+
+## Clustering en streaming: ventanas vs microclústeres
+
+En deporte es habitual que los datos lleguen de forma continua (GPS/tracking, wellness diario, eventos en vivo). En **streaming** no siempre es viable recalcular el clustering desde cero ni guardar todo el histórico, y además puede aparecer deriva (cambios de patrón a lo largo de la temporada, por lesiones, cambios tácticos, etc.). Para esta casuística existen dos enfoques prácticos:
+
+**(1) Ventanas (batch por trozos).**  
+Se define una ventana temporal y se hace clustering “normal” sobre los datos de esa ventana. Puede ser:
+- Deslizante (sliding): siempre los últimos $W$ puntos/días/sesiones.
+- Por bloques (tumbling): clústering cada cierto intervalo (p.ej., semanal).
+- Con decaimiento: lo reciente pesa más que lo antiguo.
+
+*Ventajas*: muy simple, fácil de explicar e implementar, alta interpretabilidad (“clústeres del último mes”).  
+*Inconvenientes*: recalcular puede ser costoso si llega mucho dato; con ventanas pequeñas los clústeres pueden ser inestables, y con ventanas grandes reaccionas tarde a la deriva.
+
+**Ejemplo**: agrupar sesiones por tipo de carga (distancia, HSR, aceleraciones, RPE) usando una ventana de 21–28 días y actualizando semanalmente.
+
+
+**(2) Microclústeres (resumen incremental).**  
+En lugar de guardar todos los puntos, se mantienen **microclústeres**: resúmenes que condensan regiones densas (típicamente: número de puntos, centroide y dispersión, más un mecanismo para “envejecer” lo antiguo). Cuando llega un punto nuevo, se asigna al microclúster más cercano si encaja, se actualizan sus estadísticas y, si no, se crea uno nuevo (a menudo como candidato a ruido). Con el tiempo, microclústeres “de ruido” pueden volverse densos y pasar a ser clústeres reales, y microclústeres que dejan de recibir puntos pueden desaparecer.
+
+*Ventajas*: actualizaciones online baratas, escalable, maneja outliers de forma natural y permite “olvidar” el pasado gradualmente.  
+*Inconvenientes*: más parámetros (radio/vecindad, densidad mínima, factor de decaimiento) y más complejidad conceptual que una ventana.
+
+**Ejemplo**: en tracking (x,y,velocidad) a alta frecuencia, los microclústeres pueden representar “zonas de ocupación” o “regímenes de movimiento” (caminar/trotar/sprint) sin almacenar cada muestra.
+
+
 
 ## Mapas auto-organizados
 
@@ -932,7 +1190,6 @@ Es decir, se presentan los datos al SOM, y cada dato se asigna a la neurona cuyo
 Después del entrenamiento, las neuronas en el mapa SOM que están cerca una de la otra representan clusters de datos. Los datos que se asignaron a estas neuronas durante el entrenamiento se consideran miembros de un mismo cluster. Los SOM tienen propiedades interesantes como la preservación topológica, garantizando que las neuronas cercanas en la malla tendrán pesos similares.
 
 ::: {.callout-note collapse="true" title="Función objetivo"}
-
 El algoritmo de entrenamiento de los Mapas de Kohonen (SOM) puede entenderse como un proceso de minimización de una función de coste mediante descenso de gradiente.
 
 El objetivo del entrenamiento en los SOM es minimizar la siguiente función de coste: $$    E = \sum_{x_i \in \mathbf{X}} \sum_{j} h_{j,j^*} \| \mathbf{x}_i - \mathbf{w}_j \|^2$$ donde:
@@ -969,7 +1226,6 @@ Aquí vemos que la actualización de los pesos se mueve en dirección a $\mathbf
 :::
 
 ::: {.callout-note collapse="true" title="Ventajas"}
-
 -   **Topología preservada**: Una ventaja clave de los SOM en el clustering es que preservan la topología de los datos. Esto significa que los clusters en el SOM reflejan la estructura de vecindad en los datos originales, lo que facilita la interpretación de los resultados.
 
 -   **Escalabilidad**: Los SOM pueden manejar grandes conjuntos de datos y dimensiones elevadas, lo que los hace útiles para aplicaciones del mundo real con datos complejos.
@@ -984,7 +1240,6 @@ Aquí vemos que la actualización de los pesos se mueve en dirección a $\mathbf
 :::
 
 ::: {.callout-note collapse="true" title="Desventajas"}
-
 -   **Sensibilidad a la inicialización**: Los SOM son sensibles a la inicialización de los pesos de las neuronas. Los resultados pueden variar significativamente según cómo se configuren los pesos iniciales, lo que significa que pueden converger a soluciones subóptimas si no se seleccionan adecuadamente los valores iniciales.
 
 -   **Determinación del tamaño del mapa**: Elegir el tamaño adecuado para el mapa SOM puede ser un desafío. Si el mapa es demasiado pequeño, puede no capturar la estructura de los datos correctamente, mientras que si es demasiado grande, puede sobreajustarse a los datos y perder la capacidad de generalización.

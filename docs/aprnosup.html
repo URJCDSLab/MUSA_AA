@@ -273,15 +273,17 @@ window.Quarto = {
   <ul>
   <li><a href="#aprendizaje-basado-en-semejanza" id="toc-aprendizaje-basado-en-semejanza" class="nav-link active" data-scroll-target="#aprendizaje-basado-en-semejanza"><span class="header-section-number">5.1</span> Aprendizaje basado en semejanza</a>
   <ul class="collapse">
-  <li><a href="#medida-de-similitud-y-disimilitud" id="toc-medida-de-similitud-y-disimilitud" class="nav-link" data-scroll-target="#medida-de-similitud-y-disimilitud"><span class="header-section-number">5.1.1</span> <strong>Medida de similitud y disimilitud</strong></a></li>
-  <li><a href="#ejemplos-de-métricas" id="toc-ejemplos-de-métricas" class="nav-link" data-scroll-target="#ejemplos-de-métricas"><span class="header-section-number">5.1.2</span> <strong>Ejemplos de métricas</strong></a></li>
+  <li><a href="#medida-de-similitud-y-disimilitud" id="toc-medida-de-similitud-y-disimilitud" class="nav-link" data-scroll-target="#medida-de-similitud-y-disimilitud"><span class="header-section-number">5.1.1</span> Medida de similitud y disimilitud</a></li>
+  <li><a href="#ejemplos-de-métricas" id="toc-ejemplos-de-métricas" class="nav-link" data-scroll-target="#ejemplos-de-métricas"><span class="header-section-number">5.1.2</span> Ejemplos de métricas</a></li>
+  <li><a href="#notación-básica" id="toc-notación-básica" class="nav-link" data-scroll-target="#notación-básica"><span class="header-section-number">5.1.3</span> Notación básica</a></li>
   </ul></li>
   <li><a href="#parámetros-de-un-modelo-de-ml" id="toc-parámetros-de-un-modelo-de-ml" class="nav-link" data-scroll-target="#parámetros-de-un-modelo-de-ml"><span class="header-section-number">5.2</span> Parámetros de un modelo de ML</a></li>
   <li><a href="#clustering-no-jerárquico" id="toc-clustering-no-jerárquico" class="nav-link" data-scroll-target="#clustering-no-jerárquico"><span class="header-section-number">5.3</span> Clustering no jerárquico</a>
   <ul class="collapse">
   <li><a href="#k-medias" id="toc-k-medias" class="nav-link" data-scroll-target="#k-medias"><span class="header-section-number">5.3.1</span> <span class="math inline">\(k\)</span>-medias</a></li>
-  <li><a href="#k-medias-en-r" id="toc-k-medias-en-r" class="nav-link" data-scroll-target="#k-medias-en-r"><span class="header-section-number">5.3.2</span> <span class="math inline">\(k\)</span>-medias en R</a></li>
-  <li><a href="#número-óptimo-de-clústeres" id="toc-número-óptimo-de-clústeres" class="nav-link" data-scroll-target="#número-óptimo-de-clústeres"><span class="header-section-number">5.3.3</span> Número óptimo de clústeres</a></li>
+  <li><a href="#clustering-basado-en-densidad-dbscan" id="toc-clustering-basado-en-densidad-dbscan" class="nav-link" data-scroll-target="#clustering-basado-en-densidad-dbscan"><span class="header-section-number">5.3.2</span> Clustering basado en densidad: DBSCAN</a></li>
+  <li><a href="#k-medias-en-r" id="toc-k-medias-en-r" class="nav-link" data-scroll-target="#k-medias-en-r"><span class="header-section-number">5.3.3</span> <span class="math inline">\(k\)</span>-medias en R</a></li>
+  <li><a href="#número-óptimo-de-clústeres" id="toc-número-óptimo-de-clústeres" class="nav-link" data-scroll-target="#número-óptimo-de-clústeres"><span class="header-section-number">5.3.4</span> Número óptimo de clústeres</a></li>
   </ul></li>
   <li><a href="#cluster-jerárquico" id="toc-cluster-jerárquico" class="nav-link" data-scroll-target="#cluster-jerárquico"><span class="header-section-number">5.4</span> Cluster Jerárquico</a>
   <ul class="collapse">
@@ -289,7 +291,8 @@ window.Quarto = {
   <li><a href="#cluster-jerárquico-divisivo" id="toc-cluster-jerárquico-divisivo" class="nav-link" data-scroll-target="#cluster-jerárquico-divisivo"><span class="header-section-number">5.4.2</span> Cluster jerárquico divisivo</a></li>
   <li><a href="#cluster-jerárquico-en-r" id="toc-cluster-jerárquico-en-r" class="nav-link" data-scroll-target="#cluster-jerárquico-en-r"><span class="header-section-number">5.4.3</span> Cluster jerárquico en R</a></li>
   </ul></li>
-  <li><a href="#mapas-auto-organizados" id="toc-mapas-auto-organizados" class="nav-link" data-scroll-target="#mapas-auto-organizados"><span class="header-section-number">5.5</span> Mapas auto-organizados</a></li>
+  <li><a href="#clustering-en-streaming-ventanas-vs-microclústeres" id="toc-clustering-en-streaming-ventanas-vs-microclústeres" class="nav-link" data-scroll-target="#clustering-en-streaming-ventanas-vs-microclústeres"><span class="header-section-number">5.5</span> Clustering en streaming: ventanas vs microclústeres</a></li>
+  <li><a href="#mapas-auto-organizados" id="toc-mapas-auto-organizados" class="nav-link" data-scroll-target="#mapas-auto-organizados"><span class="header-section-number">5.6</span> Mapas auto-organizados</a></li>
   </ul>
 </nav>
     </div>
@@ -353,7 +356,7 @@ Atención
 <p>En muchos proyectos de analítica deportiva es recomendable comenzar con técnicas de agrupamiento, incluso cuando posteriormente se disponga de etiquetas y el problema pueda abordarse mediante aprendizaje supervisado.</p>
 </div>
 </div>
-<p>Desde el punto de vista metodológico, existe una amplia variedad de algoritmos de agrupamiento. Una revisión detallada puede encontrarse en <span class="citation" data-cites="xu2015comprehensive">(<a href="references.html#ref-xu2015comprehensive" role="doc-biblioref">Xu y Tian 2015</a>)</span>. Entre los más utilizados destacan:</p>
+<p>Desde el punto de vista metodológico, existe una amplia variedad de algoritmos de agrupamiento. Una revisión detallada puede encontrarse en <span class="citation" data-cites="xu2015comprehensive">(<a href="#ref-xu2015comprehensive" role="doc-biblioref">Xu y Tian 2015</a>)</span>. Entre los más utilizados destacan:</p>
 <ul>
 <li>los métodos basados en <strong>centroides</strong>, como el algoritmo de las <em>k-medias</em>, habituales en la segmentación de jugadores;</li>
 <li>los métodos basados en <strong>conectividad</strong>, como el <em>agrupamiento jerárquico</em>, útiles para explorar relaciones anidadas entre perfiles;</li>
@@ -396,7 +399,7 @@ Agrupamiento no jerárquico
 <section id="aprendizaje-basado-en-semejanza" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="aprendizaje-basado-en-semejanza"><span class="header-section-number">5.1</span> Aprendizaje basado en semejanza</h2>
 <p>El aprendizaje basado en similitud es una estrategia en la que la relación entre observaciones se fundamenta en la semejanza de sus características. Para ello, es fundamental definir un espacio de características adecuado y establecer una métrica que permita cuantificar la semejanza o desemejanza entre observaciones.</p>
-<p>Cada variable descriptiva de un conjunto de datos representa una dimensión en un espacio <span class="math inline">\(m\)</span>-dimensional. Como explica <span class="citation" data-cites="kelleher2020fundamentals">(<a href="references.html#ref-kelleher2020fundamentals" role="doc-biblioref">Kelleher, Mac Namee, y D’arcy 2020</a>)</span> “<em>A feature space is an abstract</em> <span class="math inline">\(m\)</span><em>-dimensional space that is created by making each descriptive feature in the dataset an axis of an</em> <span class="math inline">\(m\)</span><em>-dimensional coordinate system and mapping each observation in the dataset to a point in this coordinate system based on the values of its descriptive features.</em>” Es decir, un <strong>espacio de características</strong> es un espacio abstracto en el que cada característica del conjunto de datos define un eje en un sistema de coordenadas de <span class="math inline">\(m\)</span> dimensiones. Así, cada observación se mapea a un punto en este espacio de acuerdo con los valores de sus características descriptivas.</p>
+<p>Cada variable descriptiva de un conjunto de datos representa una dimensión en un espacio <span class="math inline">\(m\)</span>-dimensional. Como explica <span class="citation" data-cites="kelleher2020fundamentals">(<a href="#ref-kelleher2020fundamentals" role="doc-biblioref">Kelleher, Mac Namee, y D’arcy 2020</a>)</span> “<em>A feature space is an abstract</em> <span class="math inline">\(m\)</span><em>-dimensional space that is created by making each descriptive feature in the dataset an axis of an</em> <span class="math inline">\(m\)</span><em>-dimensional coordinate system and mapping each observation in the dataset to a point in this coordinate system based on the values of its descriptive features.</em>” Es decir, un <strong>espacio de características</strong> es un espacio abstracto en el que cada característica del conjunto de datos define un eje en un sistema de coordenadas de <span class="math inline">\(m\)</span> dimensiones. Así, cada observación se mapea a un punto en este espacio de acuerdo con los valores de sus características descriptivas.</p>
 <p>Algunas consideraciones clave sobre este espacio de características:</p>
 <ul>
 <li><p>Si dos observaciones tienen exactamente los mismos valores en sus variables descriptivas, estarán representadas por el mismo punto en el espacio de características.</p></li>
@@ -413,7 +416,7 @@ Agrupamiento no jerárquico
 </ul>
 <p>Para definir estas relaciones, se emplean <strong>medidas de similitud, disimilitud o distancias</strong>, las cuales permiten cuantificar qué tan parecidas o diferentes son dos observaciones.</p>
 <section id="medida-de-similitud-y-disimilitud" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="medida-de-similitud-y-disimilitud"><span class="header-section-number">5.1.1</span> <strong>Medida de similitud y disimilitud</strong></h3>
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="medida-de-similitud-y-disimilitud"><span class="header-section-number">5.1.1</span> Medida de similitud y disimilitud</h3>
 <p>En el análisis de conglomerados (clustering), las observaciones se agrupan en función de su semejanza. Para ello, se utilizan medidas que pueden ser de <strong>similitud</strong> o <strong>disimilitud</strong>, dependiendo de si queremos cuantificar cómo de parecidas o de distintas son dos observaciones.</p>
 <p>La medida de desemejanza entre dos observaciones <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span> es una función <span class="math inline">\(\delta(x,y)\)</span> que cumple las siguientes propiedades</p>
 <p>- Coincidencia: <span class="math inline">\(\delta(x,y) = 0 \Leftrightarrow x=y\)</span></p>
@@ -433,29 +436,146 @@ Agrupamiento no jerárquico
 <p>En la siguiente sección abordaremos los distintos tipos de métricas de distancia utilizadas en clustering. <!--#  y sus implicaciones en el análisis de datos --></p>
 </section>
 <section id="ejemplos-de-métricas" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="ejemplos-de-métricas"><span class="header-section-number">5.1.2</span> <strong>Ejemplos de métricas</strong></h3>
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="ejemplos-de-métricas"><span class="header-section-number">5.1.2</span> Ejemplos de métricas</h3>
 <p>El éxito de los algoritmos de clustering depende en gran medida de la elección de la medida de desemejenza o de la métrica de distancia. La manera en que medimos la similitud entre puntos determina cómo se formarán los grupos, afectando su interpretación y utilidad. En este capítulo exploraremos distintas métricas según la naturaleza de los datos: continuos, categóricos o mixtos.</p>
-<p><strong>Distancias para datos continuos</strong></p>
+<p>En clustering, <strong>la métrica define qué significa “parecido”</strong>. Antes de elegir algoritmo, decide:</p>
+<ul>
+<li><strong>Representación</strong> del dato (vector de <em>features</em>, set, distribución, serie temporal, secuencia…).</li>
+<li><strong>Invariancias deseadas</strong> (¿importa la magnitud o solo la forma? ¿importa el desfase temporal?).</li>
+<li><strong>Escalado</strong> (muchas métricas son sensibles a unidades; estandarizar suele ser obligatorio).</li>
+</ul>
+<p>A continuación se listan métricas útiles en análisis de datos deportivos.</p>
+<hr>
+</section>
+<section id="notación-básica" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="notación-básica"><span class="header-section-number">5.1.3</span> Notación básica</h3>
+<ul>
+<li>Vectores: <span class="math inline">\(\mathbf{x}, \mathbf{y} \in \mathbb{R}^d\)</span></li>
+<li>Series temporales (univariadas): <span class="math inline">\(\mathbf{x} = (x_1,\dots,x_T)\)</span>, <span class="math inline">\(\mathbf{y} = (y_1,\dots,y_S)\)</span></li>
+<li>Distribuciones discretas (histogramas): <span class="math inline">\(\mathbf{p}=(p_1,\dots,p_B)\)</span>, <span class="math inline">\(\mathbf{q}=(q_1,\dots,q_B)\)</span> con <span class="math inline">\(p_i\ge 0\)</span>, <span class="math inline">\(\sum_i p_i = 1\)</span>.</li>
+</ul>
+<hr>
+<p><strong>Distancias para para vectores numéricos (tabular)</strong></p>
 <p>Las variables continuas toman valores en <span class="math inline">\(\mathbb{R}\)</span> y pueden ser comparados mediante métricas tradicionales de distancia. A continuación se explican algunas de ellas.</p>
 <ul>
 <li><p><strong>Distancia Euclídea</strong> (distancia <span class="math inline">\(l_2\)</span>). Es una de las métricas más conocidas y más utilizadas. La distancia euclídea entre dos instancias <span class="math inline">\(\mathbf{x}, \mathbf{z} \in \mathbb{R}^{m}\)</span> es</p>
 <p><span class="math display">\[
 ||\mathbf{x}-\mathbf{z}||_{2}=d_{\text{Euclídea}}(\mathbf{x},\mathbf{z}) = \sqrt{\sum_{j=1}^{m} \left(\mathbf{x}_j - \mathbf{z}_j \right)^{2}} = \left(\sum_{j=1}^{m} \left(\mathbf{x}_j - \mathbf{z}_j \right)^{2}\right)^{1/2}
 \]</span></p>
-<p>Esta métrica mide la distancia geométrica entre dos puntos en un espacio multidimensional. Las distancias al cuadrado enfatizan las diferencias grandes (porque las diferencias se elevan al cuadrado).</p></li>
+<p>Esta métrica mide la distancia geométrica entre dos puntos en un espacio multidimensional. Las distancias al cuadrado enfatizan las diferencias grandes (porque las diferencias se elevan al cuadrado). <strong>Cuándo usarla</strong>: cuando el “parecido” es <strong>proximidad geométrica</strong> y las variables están bien escaladas.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Ejemplo deportivo (perfil por 90’)</strong><br>
+Supón dos jugadores descritos por:<br>
+<span class="math inline">\(\text{features} = (\text{pases/90}, \text{tiros/90}, \text{presiones/90})\)</span></p>
+<p>Jugador A: <span class="math inline">\(\mathbf{x}=(40,2,12)\)</span>,</p>
+<p>Jugador B: <span class="math inline">\(\mathbf{y}=(30,4,18)\)</span></p>
+<p><span class="math display">\[d_2 = \sqrt{(10)^2 + (-2)^2 + (-6)^2}=\sqrt{100+4+36}=\sqrt{140}\approx 11.83\]</span></p>
+</div>
+</div>
+</div></li>
 <li><p><strong>Distancia de Manhattan</strong>. Es la distancia <span class="math inline">\(l_1\)</span>, también se conoce como distancia de bloque o distancia de taxi. La distancia de Manhattan entre dos instancias <span class="math inline">\(\mathbf{x}, \mathbf{z} \in \mathbb{R}^{m}\)</span> es</p>
 <p><span class="math display">\[
 ||\mathbf{x}-\mathbf{z}||_{1}=d_{Manhattan}(\mathbf{x},\mathbf{z}) = \sum_{j=1}^{m} \left|\mathbf{x}_j - \mathbf{z}_j \right|
 \]</span></p>
-<p>Se denomina así puesto que en 2D se calcula contando cuántas filas y columnas hay que moverse horizontal y verticalmente para llegar de <span class="math inline">\(\mathbf{x}_i\)</span> a <span class="math inline">\(\mathbf{z}_i\)</span> (en contraste con la distancia euclidiana, que sería la distancia en línea recta).</p></li>
+<p>Se denomina así puesto que en 2D se calcula contando cuántas filas y columnas hay que moverse horizontal y verticalmente para llegar de <span class="math inline">\(\mathbf{x}_i\)</span> a <span class="math inline">\(\mathbf{z}_i\)</span> (en contraste con la distancia euclidiana, que sería la distancia en línea recta).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Ejemplo (mismas features que el ejemplo previo)</strong><br>
+<span class="math display">\[d_1 = |40-30| + |2-4| + |12-18| = 10 + 2 + 6 = 18\]</span> Interpretación: “difieren 18 unidades en total” (suma de discrepancias).</p>
+</div>
+</div>
+</div></li>
 <li><p><strong>Distancia de Minkowski</strong> (distancia <span class="math inline">\(l_p\)</span>). Es una generalización de las dos anteriores, permitiendo ajustar la sensibilidad a valores extremos. La distancia de Minkowski entre dos instancias <span class="math inline">\(\mathbf{x}, \mathbf{z} \in \mathbb{R}^{m}\)</span></p>
 <p><span class="math display">\[
 ||\mathbf{x}-\mathbf{z}||_{p}=d_{Minkowski}(\mathbf{x},\mathbf{z}) = \left(\sum_{j=1}^{m} \left(\mathbf{x}_j - \mathbf{z}_j \right)^{p}\right)^{1/p},
 \]</span></p>
 <p>con <span class="math inline">\(p=1,2,\dots, \infty\)</span>. En función del valor de <span class="math inline">\(p\)</span> se logran distintas métricas de distancia. En particular, cuando <span class="math inline">\(p=1\)</span> obtenemos la distancia de Manhattan y cuando <span class="math inline">\(p=2\)</span> obtenemos la distancia euclídea. A partir de ella, se pueden definir infinitas distancias. Mayores valores de <span class="math inline">\(p\)</span> dan más énfasis a las diferencias grandes que valores pequeños de <span class="math inline">\(p\)</span>, ya que todas las diferencias se elevan a la potencia de <span class="math inline">\(p\)</span>.</p>
-<p>En el extremo, cuando <span class="math inline">\(p=\infty\)</span>, la métrica devuelve la diferencia máxima entre cualquiera de las variables, es decir, <span class="math inline">\(||\mathbf{x}-\mathbf{z}||_{\infty} = max_{1\leq j \leq m}|\mathbf{x}_j - \mathbf{z}_j|\)</span><em>.</em> Se conoce como la distancia de Chebyshev (distancia <span class="math inline">\(l_{\infty}\)</span>).</p></li>
+<p>En el extremo, cuando <span class="math inline">\(p=\infty\)</span>, la métrica devuelve la diferencia máxima entre cualquiera de las variables, es decir, <span class="math inline">\(||\mathbf{x}-\mathbf{z}||_{\infty} = max_{1\leq j \leq m}|\mathbf{x}_j - \mathbf{z}_j|\)</span><em>.</em> Se conoce como la distancia de Chebyshev (distancia <span class="math inline">\(l_{\infty}\)</span>).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Ejemplo (</strong><span class="math inline">\(p=\infty\)</span>) (mismas features que el ejemplo previo)<br>
+Con A y B: <span class="math inline">\(\max(10,2,6)=10\)</span><br>
+Interpretación: “en la peor variable, difieren 10”.</p>
+</div>
+</div>
+</div></li>
+<li><p><strong>Distancia coseno</strong> <span class="math display">\[\text{sim}_{\cos}(\mathbf{x},\mathbf{y})=\frac{\mathbf{x}\cdot \mathbf{y}}{\|\mathbf{x}\|\|\mathbf{y}\|},
+\quad d_{\cos}=1-\text{sim}_{\cos}\]</span> Se utiliza cuando importa el <strong>patrón relativo</strong> (dirección) más que la magnitud.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Mix de acciones</strong><br>
+Jugador A: proporción de acciones <span class="math inline">\(\mathbf{x}=(0.6\ \text{pases}, 0.3\ \text{conducciones}, 0.1\ \text{tiros})\)</span></p>
+<p>Jugador B: <span class="math inline">\(\mathbf{y}=(0.3,0.6,0.1)\)</span></p>
+<p>Producto escalar: <span class="math inline">\(0.6\cdot0.3 + 0.3\cdot0.6 + 0.1\cdot0.1 = 0.18+0.18+0.01=0.37\)</span><br>
+Normas: <span class="math inline">\(\|\mathbf{x}\|=\|\mathbf{y}\|=\sqrt{0.36+0.09+0.01}=\sqrt{0.46}\approx 0.678\)</span><br>
+<span class="math display">\[\text{sim}_{\cos}\approx \frac{0.37}{0.678^2}=\frac{0.37}{0.46}\approx 0.804,\quad d_{\cos}\approx 0.196\]</span> Interpretación: aunque “intercambian” pases y conducciones, siguen siendo relativamente parecidos.</p>
+</div>
+</div>
+</div></li>
+<li><p><strong>Distancia por correlación (forma, ignorando escala)</strong> <span class="math display">\[d_{\text{corr}}(\mathbf{x},\mathbf{y}) = 1 - \rho(\mathbf{x},\mathbf{y})\]</span> donde <span class="math inline">\(\rho\)</span> es la correlación de Pearson. Se aplica cuando interesa que dos perfiles <strong>suban/bajen juntos</strong> aunque uno tenga más volumen.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Rendimiento por partido, 5 partidos</strong><br>
+A: <span class="math inline">\(\mathbf{x}=(1,2,3,4,5)\)</span><br>
+B: <span class="math inline">\(\mathbf{y}=(2,4,6,8,10)\)</span></p>
+<p>Aquí <span class="math inline">\(\rho=1\)</span> (misma forma), así que <span class="math inline">\(d_{\text{corr}}=0\)</span>.<br>
+Interpretación: mismo patrón temporal, diferente escala.</p>
+</div>
+</div>
+</div></li>
 </ul>
-<p><strong>Distancias para datos binarios</strong></p>
+<p><strong>Distancias para datos binarios (conjuntos de elementos)</strong></p>
 <p>Cuando los datos son binarios se utilizan métricas especializadas para dicho tipo de datos para que reflejen correctamente la similitud entre las observaciones. Estas métricas se basan en las coincidencias entre los 0 y los 1 de las observaciones. En base a la siguiente tabla definimos:</p>
 <ul>
 <li><p><span class="math inline">\(a\)</span> es el número de variables binarias con valores simultáneos iguales a 1 para las observaciones <span class="math inline">\(i\)</span> y <span class="math inline">\(j\)</span>,</p></li>
@@ -483,11 +603,31 @@ d_{Hamming}(\mathbf{x},\mathbf{z})=\sum_{j=1}^{m} I(x_j \neq z_j)
 \mathbf{x}=(1,0,1,1) \ \ \ \mathbf{z}=(0,1,1,1)
 \]</span></p>
 <p>La distancia de Hamming es 2 porque hay dos diferencias.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Zonas del campo como set</strong></p>
+<p>Jaccard: A visita zonas: <span class="math inline">\(A=\{\text{carril izq}, \text{medio izq}, \text{frontal}\}\)</span><br>
+B visita zonas: <span class="math inline">\(B=\{\text{medio izq}, \text{frontal}, \text{carril dcho}\}\)</span><br>
+Intersección: 2, unión: 4 –&gt; <span class="math inline">\(J=2/4=0.5\)</span>, <span class="math inline">\(d_J=0.5\)</span>.</p>
+<p>Dice/Sørensen: <span class="math display">\[S_{\text{Dice}} = \frac{2\cdot 2}{3+3}=\frac{4}{6}\approx 0.667,\quad d\approx 0.333\]</span></p>
+</div>
+</div>
+</div>
 <p><strong>Distancias para datos categóricos</strong></p>
-<p>Cuando se tienen datos categóricos nominales, es común medir la similitud entre las observaciones en términos de las frecuencias observadas en las distintas categorías (tablas de contingencia). Un ejemplo sería la <strong>distancia de Goodall</strong> <span class="citation" data-cites="goodall1966new">(<a href="references.html#ref-goodall1966new" role="doc-biblioref">Goodall 1966</a>)</span>. Otra opción para este tipo de datos es utilizar la distancia de Hamming.</p>
+<p>Cuando se tienen datos categóricos nominales, es común medir la similitud entre las observaciones en términos de las frecuencias observadas en las distintas categorías (tablas de contingencia). Un ejemplo sería la <strong>distancia de Goodall</strong> <span class="citation" data-cites="goodall1966new">(<a href="#ref-goodall1966new" role="doc-biblioref">Goodall 1966</a>)</span>. Otra opción para este tipo de datos es utilizar la distancia de Hamming.</p>
 <p>Si las variables son ordinales, hay que tener en cuenta el orden de los datos. En estos casos hay distintas alternativas: utilizar la correlación de Spearman, pasar los datos a rangos y normalizarlos al intervalo <span class="math inline">\([0,1]\)</span> y usar distancias para datos de intervalo. <!--# Para datos ordinales: estandarizar (poner en escala [0,1] haciendo: replace an ordinal variable value by its rank r_{ij} \in \{1,2,...,M_f\}, la transformación sería z_{ij}=\frac{r_{ij}-1}{M_{f}-1}) y usar una distancia para datos continuos. Correlación de spearman. También se puedent tratar directamente como continuas. --></p>
 <p><strong>Distancias para datos mixtos</strong></p>
-<p>Cuando el conjunto de datos incluye variables continuas y categóricas, una posibilidad es utilizar la distancia de Gower <span class="citation" data-cites="gower1971general">(<a href="references.html#ref-gower1971general" role="doc-biblioref">Gower 1971</a>)</span>. La distancia de Gower entre dos observaciones <span class="math inline">\(\mathbf{x}\)</span> y <span class="math inline">\(\mathbf{z}\)</span> se define como</p>
+<p>Cuando el conjunto de datos incluye variables continuas y categóricas, una posibilidad es utilizar la distancia de Gower <span class="citation" data-cites="gower1971general">(<a href="#ref-gower1971general" role="doc-biblioref">Gower 1971</a>)</span> que combina diferencias normalizadas en numéricos con coincidencia/no-coincidencia en categóricos. La distancia de Gower entre dos observaciones <span class="math inline">\(\mathbf{x}\)</span> y <span class="math inline">\(\mathbf{z}\)</span> se define como</p>
 <p><span class="math display">\[
 d_{Gower}(\mathbf{x},\mathbf{z}) = 1-\frac{\sum_{t=1}^{m_1}(1-|x_{t}-z_{t}|/R_t) + a + a'}{m_1 + (m_2 - d) + m_3}
 \]</span></p>
@@ -497,6 +637,155 @@ d_{Gower}(\mathbf{x},\mathbf{z}) = 1-\frac{\sum_{t=1}^{m_1}(1-|x_{t}-z_{t}|/R_t)
 d_{Mixta}(\mathbf{x},\mathbf{z})=\frac{\sum_{j=1}^{m} w_{j}^{(f)} d_{j}^{(f)}}{w_{j}^{(f)}}
 \]</span></p>
 <p>En esta fórmula, <span class="math inline">\(d_{j}^{(f)}\)</span> dependerá de la tipología de la variable <span class="math inline">\(f\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Jugador A: (altura=185, edad=24, posición=DF)<br>
+Jugador B: (altura=175, edad=30, posición=DF)<br>
+- Altura normalizada (rango 160–200): <span class="math inline">\(|185-175|/40=0.25\)</span><br>
+- Edad normalizada (rango 18–38): <span class="math inline">\(|24-30|/20=0.30\)</span><br>
+- Posición: DF vs DF –&gt; 0<br>
+<span class="math display">\[d_G=(0.25+0.30+0)/3 \approx 0.183\]</span></p>
+</div>
+</div>
+</div>
+<p><strong>Métricas basadas en distribuciones (histogramas, heatmaps, densidades)</strong></p>
+<p>En deporte aparecen constantemente: mapas de calor, distribución de tiros por distancia, distribución de pases por longitud, ocupación espacial, etc.</p>
+<ul>
+<li>Divergencia de Jensen–Shannon (JS) Para dos distribuciones <span class="math inline">\(\mathbf{p},\mathbf{q}\)</span>: <span class="math display">\[ JS(\mathbf{p},\mathbf{q})=\tfrac{1}{2}KL(\mathbf{p}\|\mathbf{m})+\tfrac{1}{2}KL(\mathbf{q}\|\mathbf{m}),\quad     \mathbf{m}=\tfrac{1}{2}(\mathbf{p}+\mathbf{q})\]</span> Se usa cuando se quiere comparar formas de distribuciones (probabilidades). Es simétrica y está acotada.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Distribución de tiros por distancia en 3 bins</strong> Bins: cerca/medio/lejos<br>
+<span class="math display">\[\mathbf{p}=(0.6,0.3,0.1),\quad \mathbf{q}=(0.2,0.5,0.3)\]</span> Interpretación cualitativa: A tira mucho cerca; B reparte más hacia lejos. JS será alta (distribuciones diferentes).</p>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Distancia de Wasserstein-1 (Earth Mover’s Distance, EMD) La idea es: cuánto “trabajo” cuesta transformar una distribución en otra. Se usa cuando importa está la masa (p.ej., desplazamiento espacial), no solo diferencia bin a bin.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Distribución de tiros por distancia, bins ordenados</strong> Bins (de cerca a lejos): 1,2,3,4<br>
+Jugador A: <span class="math inline">\(\mathbf{p}=(1,0,0,0)\)</span> (solo cerca)<br>
+Jugador B: <span class="math inline">\(\mathbf{q}=(0,0,0,1)\)</span> (solo lejos)</p>
+<p>Mover 1 unidad de masa del bin 1 al bin 4 cuesta “3 pasos”.<br>
+Entonces: Wasserstein/EMD <span class="math inline">\(\approx\)</span> 3.</p>
+<p><strong>Otro ejemplo</strong> <span class="math display">\[\mathbf{p}=(0.5,0.5,0,0),\quad \mathbf{q}=(0,0.5,0.5,0)\]</span> Aquí solo hay que mover 0.5 de masa “un paso” (de bin 1 a 3 pasando por 2, en 1D el coste depende de cómo definas posiciones). Cualitativamente: distancia moderada. :::</p>
+</div>
+</div>
+</div></li>
+</ul>
+<p><strong>Métricas para series temporales</strong></p>
+<ul>
+<li><p>Euclídea punto a punto (misma longitud y alineación) <span class="math display">\[d(\mathbf{x},\mathbf{y})=\sqrt{\sum_{t=1}^T (x_t-y_t)^2}\]</span> Se usa cuando las series están alineadas en el tiempo (misma duración, mismo inicio).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Velocidad en 5 instantes</strong> <span class="math display">\[\mathbf{x}=(6,7,8,7,6),\quad \mathbf{y}=(6,6,7,6,6)\]</span> Diferencias: <span class="math inline">\((0,1,1,1,0)\)</span> → <span class="math inline">\(d=\sqrt{3}\approx1.73\)</span>. Problema: si un sprint ocurre 2 segundos más tarde, esta distancia puede decir “son distintos” aunque sean el mismo patrón desplazado.</p>
+</div>
+</div>
+</div></li>
+<li><p>Distancia DTW (Dynamic Time Warping) DTW alinea series permitiendo estirar/contraer el eje temporal para encontrar el emparejamiento de menor coste. Se usa cuando interesa la forma y se aceptan desfases temporales (p.ej., respuesta de FC a cargas, sprints que ocurren con pequeño retraso).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Mismo sprint desplazado</strong> <span class="math display">\[\mathbf{x}=(0,0,5,0,0),\quad \mathbf{y}=(0,5,0,0,0)\]</span> Euclídea es grande (picos no coinciden).<br>
+DTW puede “alinear” el pico de 5 con el de 5 y dar una distancia pequeña → captura que ambos tienen un sprint.</p>
+</div>
+</div>
+</div></li>
+<li><p>Soft-DTW (suavizada) Soft-DTW es una versión diferenciable/suavizada de DTW.<br>
+Se utiliza cuando luego se quiere promediar series (barycenters) o integrarlo en optimización.</p></li>
+</ul>
+<p>Si hay dos alineamientos casi igual de buenos, DTW elige uno “a cuchillo”; Soft-DTW combina varios alineamientos, dando una medida más estable ante ruido.</p>
+<ul>
+<li><p>Distancia basada en correlación sobre series Mismo concepto que antes pero ahora para series: <span class="math display">\[d_{\text{corr}}(\mathbf{x},\mathbf{y})=1-\rho(\mathbf{x},\mathbf{y})\]</span> Se aplica en series con misma tendencia/patrón pero distinta amplitud (p.ej., mismo ritmo de carga con diferente nivel).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\mathbf{x}=(10,12,14,16),\quad \mathbf{y}=(20,24,28,32)\]</span> <span class="math inline">\(\rho=1\)</span> → distancia 0 (patrón idéntico, escala distinta).</p>
+</div>
+</div>
+</div></li>
+<li><p>Series categóricas / secuencias: distancia de edición (Levenshtein) Para secuencias de eventos (p.ej., <code>Pase → Conducción → Pase → Tiro</code>), puede usarse distancia de edición: nº mínimo de inserciones/borrados/sustituciones para transformar una secuencia en otra (por ejemplo, patrones de juego como secuencias discretas).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ejemplo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Secuencia de acciones</strong></p>
+<ul>
+<li>A: <code>Pase, Pase, Tiro</code></li>
+<li>B: <code>Pase, Conducción, Pase, Tiro</code> Transformación: insertar <code>Conducción</code> tras el primer <code>Pase</code> → distancia 1.</li>
+</ul>
+</div>
+</div>
+</div></li>
+</ul>
+<!--# Recomendaciones rápidas (para decidir en práctica) Perfiles tabulares (por jugador/partido): $L_2$ / $L_1$ con escalado; coseno si son proporciones. Datos mixtos (num + cat): Gower. Sets (zonas/tipos presentes): Jaccard/Dice. Distribuciones (heatmaps/histogramas): JS para “forma”; Wasserstein/EMD si importa la geometría (desplazamiento). Series temporales: Euclídea si están alineadas; DTW/Soft-DTW si hay desfases; correlación si importa forma ignorando amplitud.Secuencias discretas: distancia de edición (Levenshtein).  -->
 </section>
 </section>
 <section id="parámetros-de-un-modelo-de-ml" class="level2" data-number="5.2">
@@ -504,7 +793,7 @@ d_{Mixta}(\mathbf{x},\mathbf{z})=\frac{\sum_{j=1}^{m} w_{j}^{(f)} d_{j}^{(f)}}{w
 <p>Un parámetro es un valor que el algoritmo del modelo de ML ajusta durante el proceso de entrenamiento para hacer que el modelo se adapte mejor a los datos de entrenamiento y, en última instancia, haga predicciones más precisas en datos no vistos (datos de prueba o datos en producción). Los parámetros son esenciales para definir la estructura y el comportamiento del modelo.</p>
 <p>En ocasiones se diferencia entre dos tipos de parámetros en un modelo de ML:</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Parámetros del modelo">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -513,14 +802,14 @@ Parámetros del modelo
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Estos son los componentes internos del modelo que definen su estructura y su capacidad para representar relaciones en los datos. Por ejemplo, en una red neuronal, los pesos y sesgos en las capas de neuronas son parámetros del modelo. En una regresión lineal, los coeficientes son parámetros del modelo.</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Hiperparámetros del modelo">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -529,7 +818,7 @@ Hiperparámetros del modelo
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A diferencia de los parámetros del modelo, los <strong>hiperparámetros</strong> son valores que se establecen antes del proceso de entrenamiento y controlan aspectos más generales del modelo. Ejemplos de hiperparámetros incluyen la tasa de aprendizaje, la cantidad de capas ocultas en una red neuronal, el valor <span class="math inline">\(k\)</span> en el modelo de <span class="math inline">\(k\)</span> vecinos, la profundidad de un árbol de decisión, etc. Los hiperparámetros afectan cómo se ajustan los parámetros del modelo durante el entrenamiento.</p>
 </div>
@@ -610,7 +899,7 @@ W(S) = \sum_{k=1}^{K} W(S_k) = \sum_{k=1}^{K}\sum_{\mathbf{x}_i \in S_k} \sum_{j
 <p>e igualar a 0: <span class="math inline">\(\frac{\partial W(S_k, \textbf{c}_{\textbf{k}}) }{\partial c_{kj}}=0 \Longleftrightarrow c_{kj}= \frac{1}{|S_k|}\sum_{\textbf{x}_{\textbf{i}} \in S_k}x_{ij}\)</span></p>
 <p>siendo <span class="math inline">\(|S_k|\)</span> el cardinal de <span class="math inline">\(S_k\)</span>.</p>
 <p>Los centroides óptimos para minimizar la función <span class="math inline">\(W(S)\)</span> es la media de cada cluster.</p>
-<p>Existen varios algoritmos para entrenar un modelo de <span class="math inline">\(k\)</span>-medias. El algoritmo original puede encontrarse en <span class="citation" data-cites="hartigan1979algorithm">(<a href="references.html#ref-hartigan1979algorithm" role="doc-biblioref">Hartigan y Wong 1979</a>)</span>, y define la variabilidad total dentro del clúster como la suma de distancias Euclídeas al cuadrado entre las observaciones y el correspondiente centroide.</p>
+<p>Existen varios algoritmos para entrenar un modelo de <span class="math inline">\(k\)</span>-medias. El algoritmo original puede encontrarse en <span class="citation" data-cites="hartigan1979algorithm">(<a href="#ref-hartigan1979algorithm" role="doc-biblioref">Hartigan y Wong 1979</a>)</span>, y define la variabilidad total dentro del clúster como la suma de distancias Euclídeas al cuadrado entre las observaciones y el correspondiente centroide.</p>
 <ol type="1">
 <li>El algoritmo comienza con <span class="math inline">\(k\)</span> medias seleccionadas aleatoriamente del conjunto original de observaciones. Es decir, se escogen al azar <span class="math inline">\(k\)</span> centroides del conjunto de datos.</li>
 </ol>
@@ -635,7 +924,7 @@ Atención
 <p>Los clústeres están representados por su centroide, entendiendo éste como un punto de referencia.</p>
 <p>Despliega los paneles siguientes para averiguar las principales ventajas y desventajas de este modelo de ML.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Ventajas">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -644,14 +933,14 @@ Ventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Las principales ventajas del algoritmo de las <span class="math inline">\(k\)</span>-medias son su <strong>sencillez</strong> y su <strong>escalabilidad</strong> (aplicable con facilidad a grandes conjuntos de datos).</p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Desventajas">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -660,7 +949,7 @@ Desventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Las principales desventajas son la necesidad de elegir <span class="math inline">\(k\)</span> manualmente y la alta <strong>dependencia</strong> de los valores iniciales, las medias con las que comienza el algoritmo. Para evitar esta última desventaja se suele replicar el algoritmo varias veces con distintas inicializaciones. Además, los centroides pueden verse fuertemente influidos por <strong>valores atípicos</strong>.</p>
 </div>
@@ -674,11 +963,120 @@ Desventajas
 <li><p>Una vez formado los clusters, se recalculan los medoides <span class="math inline">\(\mathbf{m}_k =argmin_{\mathbf{x}_i \in S_k} \sum_{\mathbf{x'}_i \in S_k} d(\mathbf{x}_i,\mathbf{x'}_i), \forall k=1,\dots,K\)</span></p></li>
 <li><p>Se repiten los pasos 2 y 3 hasta que no haya cambios</p></li>
 </ol>
-<p>Los clústeres están representados por su medoide, entendiendo éste como un punto de referencia</p>
+<p>Los clústeres están representados por su medoide, entendiendo éste como un punto de referencia.</p>
+</section>
+<section id="clustering-basado-en-densidad-dbscan" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="clustering-basado-en-densidad-dbscan"><span class="header-section-number">5.3.2</span> Clustering basado en densidad: DBSCAN</h3>
+<p>DBSCAN (<em>Density-Based Spatial Clustering of Applications with Noise</em>) agrupa puntos que forman regiones densas y marca como ruido/outliers los puntos aislados. Es especialmente útil cuando:</p>
+<ul>
+<li>Los clústeres no son “esféricos” (p.&nbsp;ej., trayectorias, zonas de calor con formas raras).</li>
+<li>Hay outliers reales (acciones raras, partidos anómalos, jugadores con rol extremo).</li>
+<li>No se quiere fijar el número de clústeres <span class="math inline">\(k\)</span> a priori.</li>
+</ul>
+<p><strong>Intuición en contexto deportivo</strong></p>
+<p>Imagina que cada observación es una acción (pase, presión, tiro) descrita por dos variables (p.&nbsp;ej., coordenadas (x,y) en el campo, o velocidad y aceleración). DBSCAN busca “manchas densas” de puntos: por ejemplo, zonas donde un equipo presiona mucho o regiones donde un jugador recibe con frecuencia.</p>
+<p><strong>Parámetros y conceptos clave</strong></p>
+<p>DBSCAN se define con dos hiperparámetros:</p>
+<ul>
+<li><span class="math inline">\(\varepsilon\)</span> (<code>eps</code>): radio de vecindad.</li>
+<li><code>min_samples</code>: número mínimo de puntos en la vecindad para considerar que hay densidad suficiente.</li>
+</ul>
+<p>Con ellos, clasifica cada punto como:</p>
+<ul>
+<li>Core point (punto núcleo): tiene al menos <code>min_samples</code> puntos (incluido él) dentro de su vecindad de radio <span class="math inline">\(\varepsilon\)</span>.</li>
+<li>Border point (punto frontera): no cumple la condición de núcleo, pero cae dentro de la vecindad de un núcleo.</li>
+<li>Noise / outlier: no es núcleo ni frontera (no pertenece a ningún clúster).</li>
+</ul>
+<p><strong>Vecindad <span class="math inline">\(\varepsilon\)</span></strong>: <span class="math inline">\(N_\varepsilon(p)=\{q: d(p,q)\le \varepsilon\}\)</span></p>
+<p><strong>Algoritmo DBSCAN</strong></p>
+<p>Input: dataset <span class="math inline">\(X\)</span>, distancia <span class="math inline">\(d(\cdot,\cdot)\)</span>, parámetros <span class="math inline">\(\varepsilon\)</span> y <code>min_samples</code><br>
+Output: etiquetas de clúster y ruido (habitualmente <code>-1</code> para ruido)</p>
+<ol type="1">
+<li>Inicializa todas las observaciones como no visitadas y sin etiqueta.</li>
+<li>Para cada punto <span class="math inline">\(p\)</span> no visitado:
+<ol type="1">
+<li>Marca <span class="math inline">\(p\)</span> como visitado.<br>
+</li>
+<li>Calcula <span class="math inline">\(N = N_\varepsilon(p)\)</span> (sus vecinos).<br>
+</li>
+<li>Si <span class="math inline">\(|N| &lt; \text{min\_samples}\)</span>:
+<ul>
+<li>Marca <span class="math inline">\(p\)</span> como ruido (provisional; puede pasar a frontera más adelante).</li>
+</ul></li>
+<li>Si no:
+<ul>
+<li>Crea un nuevo clúster <span class="math inline">\(C\)</span> y asigna <span class="math inline">\(p\)</span> a <span class="math inline">\(C\)</span>.</li>
+<li>Inicializa una lista/cola <code>S = N</code> para expandir el clúster.</li>
+<li>Mientras <code>S</code> no esté vacía:
+<ul>
+<li>Extrae un punto <span class="math inline">\(q\)</span> de <code>S</code>.</li>
+<li>Si <span class="math inline">\(q\)</span> no está visitado:
+<ul>
+<li>Marca <span class="math inline">\(q\)</span> como visitado.</li>
+<li>Calcula <span class="math inline">\(N_q = N_\varepsilon(q)\)</span>.</li>
+<li>Si <span class="math inline">\(|N_q| \ge \text{min\_samples}\)</span>, añade <span class="math inline">\(N_q\)</span> a <code>S</code> (expansión).</li>
+</ul></li>
+<li>Si <span class="math inline">\(q\)</span> no tiene clúster asignado (o era ruido), asígnalo a <span class="math inline">\(C\)</span>.</li>
+</ul></li>
+</ul></li>
+</ol></li>
+<li>Devuelve las etiquetas.</li>
+</ol>
+<p>Idea clave: un clúster crece a partir de núcleos y va “absorbiendo” fronteras conectadas.</p>
+<p><strong>Elección de parámetros (<code>eps</code>, <code>min_samples</code>)</strong></p>
+<ul>
+<li>Regla práctica para <code>min_samples</code>:
+<ul>
+<li>Para datos tabulares: <code>min_samples</code><span class="math inline">\(\approx 2d\)</span> (<span class="math inline">\(d\)</span> = dimensión) como punto de partida.</li>
+<li>Si hay mucho ruido: se aumenta <code>min_samples</code> para exigir más densidad.</li>
+</ul></li>
+<li>Para <code>eps</code>. Se puede elegir con el <span class="math inline">\(k\)</span>-distance plot: 1. Se fija <code>k = min_samples</code>. 2. Para cada punto, se calcula la distancia a su <span class="math inline">\(k\)</span>-ésimo vecino más cercano. 3. Se ordena esas distancias y se busca el “codo”: ese valor suele ser un buen <code>eps</code>. Interpretación: <code>eps</code> controla cuán “cerca” deben estar las acciones/perfiles para considerarse del mismo patrón.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Ventajas">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ventajas
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>No necesita fijar <span class="math inline">\(k\)</span>.</li>
+<li>Encuentra clústeres no convexos.</li>
+<li>Identifica outliers de forma natural.</li>
+<li>Funciona bien con ruido espacial.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Desventajas">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Desventajas
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Difícil si hay densidades muy diferentes entre clústeres (un <span class="math inline">\(\varepsilon\)</span> único no va bien).</li>
+<li>Sensible a escalado: es casi obligatorio estandarizar o definir una métrica acorde.</li>
+<li>En alta dimensión, las distancias tienden a “parecerse” (problema de concentración).</li>
+</ul>
+</div>
+</div>
+</div>
 <p>Estos algoritmos son <strong>no-jerárquicos</strong>, pues una observación puede cambiar de clúster durante la ejecución del mismo. Dos observaciones cualesquiera pueden pertenecer al mismo o a diferente grupo en diferentes iteraciones del algoritmo.</p>
 </section>
-<section id="k-medias-en-r" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="k-medias-en-r"><span class="header-section-number">5.3.2</span> <span class="math inline">\(k\)</span>-medias en R</h3>
+<section id="k-medias-en-r" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="k-medias-en-r"><span class="header-section-number">5.3.3</span> <span class="math inline">\(k\)</span>-medias en R</h3>
 <p>Para ilustrar el funcionamiento del algoritmo de las <span class="math inline">\(k-medias\)</span> en R, vamos a emplear datos reales de partidos de tenis femenino (WTA). En este caso, cada observación corresponde a un partido, y las variables describen características básicas de las jugadoras implicadas. El objetivo del análisis no es predecir un resultado, sino explorar si existen perfiles diferenciados de partidos en función de estas variables.</p>
 <p>Trabajaremos con las siguientes variables cuantitativas:</p>
 <ul>
@@ -785,16 +1183,16 @@ Desventajas
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(k2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ cluster     : int [1:300] 1 2 1 1 1 1 2 1 2 2 ...
- $ centers     : num [1:2, 1:8] 0.1929 -0.1986 0.2284 -0.3088 0.0378 ...
+ $ cluster     : int [1:300] 2 2 1 1 2 2 1 1 1 2 ...
+ $ centers     : num [1:2, 1:8] 0.416 -0.329 0.185 -0.168 0.398 ...
   ..- attr(*, "dimnames")=List of 2
   .. ..$ : chr [1:2] "1" "2"
   .. ..$ : chr [1:8] "winner_rank" "loser_rank" "winner_age" "loser_age" ...
- $ totss       : num 2373
- $ withinss    : num [1:2] 1499 546
- $ tot.withinss: num 2045
- $ betweenss   : num 328
- $ size        : int [1:2] 198 102
+ $ totss       : num 2534
+ $ withinss    : num [1:2] 1194 1007
+ $ tot.withinss: num 2200
+ $ betweenss   : num 333
+ $ size        : int [1:2] 145 155
  $ iter        : int 1
  $ ifault      : int 0
  - attr(*, "class")= chr "kmeans"</code></pre>
@@ -817,30 +1215,30 @@ Tarea
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>k2 </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>K-means clustering with 2 clusters of sizes 198, 102
+<pre><code>K-means clustering with 2 clusters of sizes 145, 155
 
 Cluster means:
-  winner_rank loser_rank winner_age  loser_age winner_rank_points
-1   0.1929297  0.2283611 0.03780373 -0.0395994         -0.1165739
-2  -0.1985986 -0.3087638 0.02192554  0.3594313          0.1040267
+  winner_rank loser_rank winner_age   loser_age winner_rank_points
+1   0.4159532  0.1848130  0.3984882  0.09496287         -0.2924138
+2  -0.3291555 -0.1677774 -0.2817274 -0.06319045          0.3635850
   loser_rank_points   w_1stWon   l_1stWon
-1        -0.2518329 -0.4944153 -0.4582096
-2         0.1730643  0.9156036  0.9768778
+1        -0.1775788  0.6065954  0.5822545
+2         0.1807552 -0.6080682 -0.5354231
 
 Clustering vector:
-  [1] 1 2 1 1 1 1 2 1 2 2 1 1 1 1 1 2 1 1 1 1 1 2 2 2 1 2 1 1 1 2 1 1 1 1 2 1 1
- [38] 1 2 1 1 1 2 1 1 2 1 1 2 1 2 1 1 1 1 1 1 2 2 1 1 1 2 1 1 1 1 1 2 1 2 1 1 2
- [75] 2 1 2 2 1 2 1 1 1 2 1 2 2 2 1 1 1 1 1 1 1 1 1 2 1 2 1 1 1 1 2 2 2 1 2 2 1
-[112] 1 1 1 2 1 2 1 1 2 1 2 1 1 1 1 1 1 1 2 1 2 2 2 1 1 1 1 1 2 2 1 1 2 1 1 2 2
-[149] 1 1 1 2 1 1 1 2 1 2 1 2 1 1 1 2 2 2 2 2 1 1 1 1 2 1 1 1 1 1 1 2 1 1 1 1 1
-[186] 1 1 2 2 1 1 2 1 1 1 2 1 1 2 2 1 1 1 2 1 1 2 1 2 1 1 1 1 2 1 1 1 1 1 1 2 1
-[223] 2 1 1 2 2 2 2 1 2 1 1 2 1 1 1 1 2 1 2 1 1 2 1 1 2 2 2 1 2 1 1 1 2 1 1 1 1
-[260] 1 2 2 1 1 2 1 1 1 1 2 1 2 1 2 2 2 1 1 1 1 2 1 1 1 1 2 1 1 1 1 1 2 1 2 2 1
-[297] 1 2 1 2
+  [1] 2 2 1 1 2 2 1 1 1 2 1 1 2 2 1 2 2 1 2 1 2 1 2 2 1 1 1 2 2 2 1 1 1 1 1 1 1
+ [38] 1 1 2 2 1 2 2 2 2 1 2 2 2 2 1 2 2 1 2 2 1 2 2 1 1 1 2 1 1 1 1 2 1 1 2 1 1
+ [75] 2 2 1 1 1 1 2 2 2 2 1 1 1 1 2 1 1 2 1 2 2 2 1 1 1 1 2 1 2 2 1 2 2 1 2 1 1
+[112] 2 1 2 1 2 1 2 2 1 1 2 2 1 1 1 1 1 2 2 1 2 1 2 1 1 2 2 2 1 1 2 2 1 2 1 2 1
+[149] 2 1 2 2 2 1 2 1 2 1 2 2 2 1 2 1 1 1 2 2 1 2 1 2 1 1 1 2 2 1 2 2 2 1 1 2 2
+[186] 2 2 1 2 2 2 2 1 2 1 1 2 1 2 2 1 2 1 2 1 1 2 2 1 1 2 2 1 2 2 2 1 2 1 1 2 2
+[223] 1 1 1 1 2 2 1 2 1 2 1 2 1 1 2 2 2 2 1 2 2 1 2 2 1 1 1 2 1 2 2 2 1 2 1 2 2
+[260] 2 2 2 2 2 2 2 2 1 2 2 2 2 1 1 1 2 2 1 2 2 2 1 2 1 1 1 1 2 1 1 2 1 2 1 1 2
+[297] 1 1 1 1
 
 Within cluster sum of squares by cluster:
-[1] 1499.3203  545.5785
- (between_SS / total_SS =  13.8 %)
+[1] 1193.737 1006.631
+ (between_SS / total_SS =  13.2 %)
 
 Available components:
 
@@ -848,7 +1246,7 @@ Available components:
 [6] "betweenss"    "size"         "iter"         "ifault"      </code></pre>
 </div>
 </div>
-<p>Podemos representar gráficamente los resultados utilizando fviz_cluster. Dado que el conjunto de datos tiene más de dos variables, la función realiza internamente un PCA y proyecta los datos sobre las dos primeras componentes principales (ver <a href="reddim.html" class="quarto-xref"><span>Capítulo 4</span></a>).</p>
+<p>Podemos representar gráficamente los resultados utilizando fviz_cluster. Dado que el conjunto de datos tiene más de dos variables, la función realiza internamente un PCA y proyecta los datos sobre las dos primeras componentes principales (ver <a href="#sec-reddim" class="quarto-xref"><span class="quarto-unresolved-ref">sec-reddim</span></a>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(k2, <span class="at">data =</span> df_scaled2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -869,7 +1267,7 @@ Tarea
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿Qué información estamos perdiendo al representar únicamente dos dimensiones del conjunto de datos? (Repasa el capítulo <a href="reddim.html" class="quarto-xref"><span>Capítulo 4</span></a> sobre reducción de la dimensionalidad).</p>
+<p>¿Qué información estamos perdiendo al representar únicamente dos dimensiones del conjunto de datos? (Repasa el capítulo <a href="#sec-reddim" class="quarto-xref"><span class="quarto-unresolved-ref">sec-reddim</span></a> sobre reducción de la dimensionalidad).</p>
 </div>
 </div>
 <p><strong>Interpretación en el dominio deportivo</strong></p>
@@ -887,8 +1285,8 @@ Tarea
 </ul>
 <p>Este tipo de análisis resulta especialmente útil como paso previo a tareas más complejas, como la segmentación de jugadoras, el análisis de estilos de juego o la construcción de modelos supervisados.</p>
 </section>
-<section id="número-óptimo-de-clústeres" class="level3" data-number="5.3.3">
-<h3 data-number="5.3.3" class="anchored" data-anchor-id="número-óptimo-de-clústeres"><span class="header-section-number">5.3.3</span> Número óptimo de clústeres</h3>
+<section id="número-óptimo-de-clústeres" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="número-óptimo-de-clústeres"><span class="header-section-number">5.3.4</span> Número óptimo de clústeres</h3>
 <p>Como hemos comentado anteriormente, en numerosas ocasiones el número óptimo de clústeres de un problema no supervisado lo establece el dominio de aplicación, o más concretamente nuestra necesidad de comunicar los resultados y que estos tengan sentido y sean lo más explicables posibles.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -974,9 +1372,9 @@ Nombrar los grupos
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_silhouette</span>(sil)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  cluster size ave.sil.width
-1       1  178          0.17
-2       2   92          0.19
-3       3   30          0.01</code></pre>
+1       1  116          0.14
+2       2   19         -0.01
+3       3  165          0.19</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1009,17 +1407,17 @@ Nombrar los grupos
 clusGap(x = df_scaled2, FUNcluster = kmeans, K.max = 10, B = 50, nstart = 25)
 B=50 simulated reference sets, k = 1..10; spaceH0="scaledPCA"
  --&gt; Number of clusters (method 'firstmax'): 1
-          logW   E.logW       gap     SE.sim
- [1,] 5.610157 6.491873 0.8817160 0.01154074
- [2,] 5.525058 6.369603 0.8445446 0.01029144
- [3,] 5.459229 6.305949 0.8467195 0.01027638
- [4,] 5.389530 6.253101 0.8635711 0.01057318
- [5,] 5.331809 6.211349 0.8795406 0.01077999
- [6,] 5.295494 6.175493 0.8799987 0.01142516
- [7,] 5.244593 6.143985 0.8993924 0.01139349
- [8,] 5.204421 6.116014 0.9115926 0.01074288
- [9,] 5.178322 6.091192 0.9128700 0.01066251
-[10,] 5.147616 6.068864 0.9212486 0.01109973</code></pre>
+          logW   E.logW       gap      SE.sim
+ [1,] 5.628272 6.477696 0.8494241 0.011556495
+ [2,] 5.544366 6.348450 0.8040838 0.009595017
+ [3,] 5.484483 6.288852 0.8043690 0.009655653
+ [4,] 5.416787 6.240967 0.8241797 0.009635119
+ [5,] 5.373085 6.202818 0.8297329 0.009691620
+ [6,] 5.328144 6.169591 0.8414470 0.009506744
+ [7,] 5.272561 6.141302 0.8687402 0.009940862
+ [8,] 5.232580 6.115798 0.8832183 0.009887705
+ [9,] 5.204601 6.092450 0.8878488 0.009703950
+[10,] 5.172509 6.071169 0.8986604 0.009847633</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_gap_stat</span>(gap_stat)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1089,15 +1487,18 @@ Tarea
  
 ******************************************************************* 
 * Among all indices:                                                
-* 5 proposed 2 as the best number of clusters 
-* 6 proposed 3 as the best number of clusters 
-* 4 proposed 6 as the best number of clusters 
-* 5 proposed 8 as the best number of clusters 
-* 3 proposed 10 as the best number of clusters 
+* 4 proposed 2 as the best number of clusters 
+* 2 proposed 3 as the best number of clusters 
+* 5 proposed 4 as the best number of clusters 
+* 1 proposed 5 as the best number of clusters 
+* 1 proposed 6 as the best number of clusters 
+* 2 proposed 7 as the best number of clusters 
+* 2 proposed 8 as the best number of clusters 
+* 6 proposed 10 as the best number of clusters 
 
                    ***** Conclusion *****                            
  
-* According to the majority rule, the best number of clusters is  3 
+* According to the majority rule, the best number of clusters is  10 
  
  
 ******************************************************************* </code></pre>
@@ -1113,7 +1514,7 @@ Tarea
 <div class="cell-output cell-output-stdout">
 <pre><code># Method Agreement Procedure:
 
-The choice of 3 clusters is supported by 7 (24.14%) methods out of 29 (Elbow, Scott, Marriot, trcovw, Tracew, Cindex, Ball).</code></pre>
+The choice of 10 clusters is supported by 6 (20.69%) methods out of 29 (kl, CCC, DB, Dunn, SDindex, SDbw).</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(n_clust)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1136,9 +1537,9 @@ The choice of 3 clusters is supported by 7 (24.14%) methods out of 29 (Elbow, Sc
 <pre><code># A tibble: 3 × 9
   Cluster winner_rank loser_rank winner_age loser_age winner_rank_points
     &lt;int&gt;       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;              &lt;dbl&gt;
-1       1    -0.211       -0.175    -0.0439   -0.0131              0.128
-2       2    -0.00242     -0.216     0.0163    0.249              -0.208
-3       3     1.85         2.16      0.535     0.275              -0.538
+1       1     -0.0829    -0.275       0.244    0.106             -0.0538
+2       2      3.10       2.24        0.350    0.305             -0.780 
+3       3     -0.243     -0.0596     -0.126   -0.0856             0.212 
 # ℹ 3 more variables: loser_rank_points &lt;dbl&gt;, w_1stWon &lt;dbl&gt;, l_1stWon &lt;dbl&gt;</code></pre>
 </div>
 </div>
@@ -1316,7 +1717,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>hc2<span class="sc">$</span>ac</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9077203</code></pre>
+<pre><code>[1] 0.910563</code></pre>
 </div>
 </div>
 <p>El <strong>coeficiente aglomerativo</strong> mide la cantidad de estructura de agrupamiento encontrada (los valores más cercanos a <span class="math inline">\(1\)</span> sugieren una fuerte estructura de agrupamiento).</p>
@@ -1334,7 +1735,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(m, ac)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  average    single  complete      ward 
-0.8666477 0.8292432 0.9077203 0.9445404 </code></pre>
+0.8903354 0.8093615 0.9105630 0.9467255 </code></pre>
 </div>
 </div>
 <p>En ocasiones se emplea una representación gráfica en forma de árbol llamada <strong>dendrograma</strong> que ilustra las agrupaciones derivadas de la aplicación de una técnica de agrupamiento jerárquico. En el eje de ordenadas se presenta la distancia a la que se unen los diferentes clústeres. Las observaciones aparecen en el eje de abscisas.</p>
@@ -1378,7 +1779,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Coeficiente de división; cantidad de estructura de agrupación encontrada</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>hc4<span class="sc">$</span>dc</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.899507</code></pre>
+<pre><code>[1] 0.8996711</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8514345</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1430,7 +1831,7 @@ Atención
 <div class="cell-output cell-output-stdout">
 <pre><code>sub_grp
   1   2   3   4 
- 22 137  32 109 </code></pre>
+129 134  21  16 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualización</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(<span class="fu">list</span>(<span class="at">data=</span>df_scaled2,<span class="at">cluster=</span>sub_grp))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1519,7 +1920,7 @@ Atención
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Ventajas del clustering jerárquico">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-38-contents" aria-controls="callout-38" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1528,7 +1929,7 @@ Ventajas del clustering jerárquico
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div id="callout-38" class="callout-38-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><p><strong>Jerarquía de clusters</strong>: El clustering jerárquico crea una jerarquía de clusters que permite analizar los datos a diferentes niveles de granularidad. Es posible, por tanto, explorar tanto clusters globales como subgrupos más específicos. Al tener una jerarquía de clusters, puedes tomar decisiones a diferentes niveles de detalle. Esto es valioso para la segmentación de mercado, la taxonomía de especies, la organización de documentos, entre otros.</p></li>
@@ -1543,7 +1944,7 @@ Ventajas del clustering jerárquico
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Desventajas del clustering jerárquico">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-39-contents" aria-controls="callout-39" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1552,13 +1953,13 @@ Desventajas del clustering jerárquico
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div id="callout-39" class="callout-39-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><p><strong>Requiere definir un criterio de corte</strong>: Para convertir la jerarquía en clusters finales, es necesario definir un criterio de corte en el dendrograma. Esta elección puede ser subjetiva y afectar los resultados. Así mismo hay que definir el tipo de enlace a emplear (y la medida de disimilitud) Cada una de estas decisiones puede influir mucho en los resultados obtenidos. En la práctica, probamos varias opciones diferentes y buscamos la que ofrece la solución más útil o interpretable.</p></li>
 <li><p>Con estos métodos, <strong>no hay una única respuesta correcta</strong>: debe considerarse cualquier solución que exponga algunos aspectos interesantes de los datos.</p></li>
 <li><p><strong>No es óptimo para todos los tipos de datos</strong>: El clustering jerárquico funciona mejor cuando los clusters tienen una estructura jerárquica natural. En algunos casos, donde no existe una jerarquía clara, otros métodos de clustering pueden ser más apropiados.</p></li>
-<li><p><strong>No es adecuado para datos de alta dimensión</strong>: El rendimiento del clustering jerárquico puede disminuir en conjuntos de datos de alta dimensión debido a la maldición de la dimensionalidad. Este fenómeno significa que al aumentar el número de dimensiones de un problema se pueden agravar muchos de los problemas que aparecen en dimensiones bajas (curse of dimensionality, <span class="citation" data-cites="bellman1961reduction">Bellman y Kalaba (<a href="references.html#ref-bellman1961reduction" role="doc-biblioref">1961</a>)</span>).</p></li>
+<li><p><strong>No es adecuado para datos de alta dimensión</strong>: El rendimiento del clustering jerárquico puede disminuir en conjuntos de datos de alta dimensión debido a la maldición de la dimensionalidad. Este fenómeno significa que al aumentar el número de dimensiones de un problema se pueden agravar muchos de los problemas que aparecen en dimensiones bajas (curse of dimensionality, <span class="citation" data-cites="bellman1961reduction">Bellman y Kalaba (<a href="#ref-bellman1961reduction" role="doc-biblioref">1961</a>)</span>).</p></li>
 <li><p><strong>No siempre produce resultados reproducibles</strong>: La estructura jerárquica resultante puede variar según la métrica de distancia y el enfoque de enlace utilizado, lo que puede dar lugar a resultados no siempre reproducibles.</p></li>
 <li><p><strong>Sin capacidad de predicción</strong>: Las técnicas de agrupamiento jerárquicas no son útiles a la hora de predecir el clúster al que pertenecen nuevas observaciones.</p></li>
 </ul>
@@ -1567,8 +1968,22 @@ Desventajas del clustering jerárquico
 </div>
 </section>
 </section>
-<section id="mapas-auto-organizados" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="mapas-auto-organizados"><span class="header-section-number">5.5</span> Mapas auto-organizados</h2>
+<section id="clustering-en-streaming-ventanas-vs-microclústeres" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="clustering-en-streaming-ventanas-vs-microclústeres"><span class="header-section-number">5.5</span> Clustering en streaming: ventanas vs microclústeres</h2>
+<p>En deporte es habitual que los datos lleguen de forma continua (GPS/tracking, wellness diario, eventos en vivo). En <strong>streaming</strong> no siempre es viable recalcular el clustering desde cero ni guardar todo el histórico, y además puede aparecer deriva (cambios de patrón a lo largo de la temporada, por lesiones, cambios tácticos, etc.). Para esta casuística existen dos enfoques prácticos:</p>
+<p><strong>(1) Ventanas (batch por trozos).</strong><br>
+Se define una ventana temporal y se hace clustering “normal” sobre los datos de esa ventana. Puede ser: - Deslizante (sliding): siempre los últimos <span class="math inline">\(W\)</span> puntos/días/sesiones. - Por bloques (tumbling): clústering cada cierto intervalo (p.ej., semanal). - Con decaimiento: lo reciente pesa más que lo antiguo.</p>
+<p><em>Ventajas</em>: muy simple, fácil de explicar e implementar, alta interpretabilidad (“clústeres del último mes”).<br>
+<em>Inconvenientes</em>: recalcular puede ser costoso si llega mucho dato; con ventanas pequeñas los clústeres pueden ser inestables, y con ventanas grandes reaccionas tarde a la deriva.</p>
+<p><strong>Ejemplo</strong>: agrupar sesiones por tipo de carga (distancia, HSR, aceleraciones, RPE) usando una ventana de 21–28 días y actualizando semanalmente.</p>
+<p><strong>(2) Microclústeres (resumen incremental).</strong><br>
+En lugar de guardar todos los puntos, se mantienen <strong>microclústeres</strong>: resúmenes que condensan regiones densas (típicamente: número de puntos, centroide y dispersión, más un mecanismo para “envejecer” lo antiguo). Cuando llega un punto nuevo, se asigna al microclúster más cercano si encaja, se actualizan sus estadísticas y, si no, se crea uno nuevo (a menudo como candidato a ruido). Con el tiempo, microclústeres “de ruido” pueden volverse densos y pasar a ser clústeres reales, y microclústeres que dejan de recibir puntos pueden desaparecer.</p>
+<p><em>Ventajas</em>: actualizaciones online baratas, escalable, maneja outliers de forma natural y permite “olvidar” el pasado gradualmente.<br>
+<em>Inconvenientes</em>: más parámetros (radio/vecindad, densidad mínima, factor de decaimiento) y más complejidad conceptual que una ventana.</p>
+<p><strong>Ejemplo</strong>: en tracking (x,y,velocidad) a alta frecuencia, los microclústeres pueden representar “zonas de ocupación” o “regímenes de movimiento” (caminar/trotar/sprint) sin almacenar cada muestra.</p>
+</section>
+<section id="mapas-auto-organizados" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="mapas-auto-organizados"><span class="header-section-number">5.6</span> Mapas auto-organizados</h2>
 <p>Los Mapas Auto-organizados de Kohonen (SOM por sus siglas en inglés, “<em>Self-Organizing Maps</em>”) no solo son una poderosa herramienta para la <strong>reducción de la dimensión</strong>, sino que también son ampliamente utilizados como algoritmo de clustering. Aunque la reducción de la dimensión es una de sus aplicaciones más destacadas, los SOM también tienen la capacidad de agrupar datos de manera efectiva.</p>
 <p>El proceso de clustering con SOM implica organizar datos en grupos o clusters de manera que los elementos dentro de un mismo grupo sean similares entre sí en función de ciertas características. Un SOM consiste en una malla de neuronas organizadas en una estructura topológica bidimensional, usualmente una cuadrícula rectangular o hexagonal. Cada neurona tiene un vector de pesos asociado, de la misma dimensión que los datos de entrada.</p>
 <p>Sea un conjunto de datos de entrada <span class="math inline">\(\mathbf{X} \in \mathbb{R}^p\)</span>, el SOM está compuesto por una malla bidimensional de <span class="math inline">\(K\)</span> neuronas o prototipos. Cada neurona está “definida” por un vector de pesos <span class="math inline">\(\mathbf{w}_j \in \mathbb{R}^p\)</span>, donde <span class="math inline">\(j\)</span> es el índice de la neurona en la malla. Cada neurona representa una ubicación en el espacio SOM.</p>
@@ -1590,7 +2005,7 @@ Desventajas del clustering jerárquico
 </ol>
 <p>Después del entrenamiento, las neuronas en el mapa SOM que están cerca una de la otra representan clusters de datos. Los datos que se asignaron a estas neuronas durante el entrenamiento se consideran miembros de un mismo cluster. Los SOM tienen propiedades interesantes como la preservación topológica, garantizando que las neuronas cercanas en la malla tendrán pesos similares.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Función objetivo">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-40-contents" aria-controls="callout-40" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1599,7 +2014,7 @@ Función objetivo
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div id="callout-40" class="callout-40-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>El algoritmo de entrenamiento de los Mapas de Kohonen (SOM) puede entenderse como un proceso de minimización de una función de coste mediante descenso de gradiente.</p>
 <p>El objetivo del entrenamiento en los SOM es minimizar la siguiente función de coste: <span class="math display">\[    E = \sum_{x_i \in \mathbf{X}} \sum_{j} h_{j,j^*} \| \mathbf{x}_i - \mathbf{w}_j \|^2\]</span> donde:</p>
@@ -1626,7 +2041,7 @@ Función objetivo
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Ventajas">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1635,7 +2050,7 @@ Ventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div id="callout-41" class="callout-41-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><p><strong>Topología preservada</strong>: Una ventaja clave de los SOM en el clustering es que preservan la topología de los datos. Esto significa que los clusters en el SOM reflejan la estructura de vecindad en los datos originales, lo que facilita la interpretación de los resultados.</p></li>
@@ -1649,7 +2064,7 @@ Ventajas
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Desventajas">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-42-contents" aria-controls="callout-42" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1658,7 +2073,7 @@ Desventajas
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div id="callout-42" class="callout-42-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ul>
 <li><p><strong>Sensibilidad a la inicialización</strong>: Los SOM son sensibles a la inicialización de los pesos de las neuronas. Los resultados pueden variar significativamente según cómo se configuren los pesos iniciales, lo que significa que pueden converger a soluciones subóptimas si no se seleccionan adecuadamente los valores iniciales.</p></li>
@@ -1702,51 +2117,51 @@ Attaching package: 'kohonen'</code></pre>
 The number of data layers is 1.
 Distance measure(s) used: sumofsquares.
 Training data included: 300 objects.
-Mean distance to the closest unit in the map: 2.785.</code></pre>
+Mean distance to the closest unit in the map: 2.739.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clustering</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df.som<span class="sc">$</span>unit.classif)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  4  6 10 13 12 10</code></pre>
+<pre><code>[1]  3  3  7  9  4 10</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nombrar los clusters</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>df.som<span class="sc">$</span>codes</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-    winner_rank  loser_rank  winner_age   loser_age winner_rank_points
-V1  -0.27604767 -0.45794158 -0.32208732  0.82254035         0.13701233
-V2  -0.22921294 -0.74545667 -0.11299907  0.15676933        -0.11253497
-V3  -0.50835902 -0.50641895  0.25617441  1.29298701         0.19831835
-V4  -0.74823316 -0.35607352 -0.38587698  0.27267058         3.32252963
-V5  -0.19829253  0.20103335  0.07359370 -0.78511665        -0.17458574
-V6  -0.09255659 -0.29895390  1.27789572  0.29547943        -0.26308534
-V7   0.09158417 -0.01499387 -0.01830410  1.73219675        -0.39795833
-V8  -0.66838734 -0.32273668 -0.16945218  0.09078504         0.96487563
-V9   0.32392917  0.05637247 -0.78836340  0.34568982        -0.54508525
-V10  0.23660405 -0.01806126  1.26696412 -0.18075815        -0.40798541
-V11 -0.24018926 -0.26261412 -0.07294197 -0.63866905        -0.27235380
-V12  0.48653803 -0.10672885 -1.30368912 -0.20101556        -0.54421634
-V13  0.23450109  3.88922181  0.43822742  0.27069265        -0.13272911
-V14  5.21501406  0.40889181  1.39122699  0.57032304        -0.88736161
-V15 -0.32086648  0.26807902  0.71950531 -1.14832360        -0.07788664
-V16  0.03475218 -0.03370229 -1.09856877 -1.09712929        -0.37460006
+    winner_rank  loser_rank winner_age   loser_age winner_rank_points
+V1   -0.7576824 -0.43907227 -0.9715463 -0.11926605         3.98632467
+V2   -0.7064461 -0.21466636  0.4823533 -0.35084194         1.43418245
+V3   -0.4085536 -0.26319816  0.2779724  0.36744524         0.02161365
+V4    0.1040740 -0.17720048 -1.1865219  0.87964871        -0.37645856
+V5   -0.5066860 -0.76707082 -0.2283751 -0.88799857         1.36652095
+V6   -0.7105572 -0.09501783 -0.0468847  1.13124575         1.50592023
+V7   -0.1978219 -0.46164288  1.6865592  0.54181523        -0.26283636
+V8   -0.1229320  0.05337280 -1.0829200 -0.85538156        -0.36393747
+V9   -0.5323367 -0.42605416  0.7683038 -0.75631036         0.26003924
+V10  -0.2479317 -0.54610298 -0.4683824  0.58745731        -0.10888350
+V11   0.1056208  0.11019853  1.2050253 -0.96738348        -0.40543891
+V12   0.4020363  4.24941818 -0.1951217  0.49737876        -0.52264843
+V13   0.3817988  0.08384017 -0.6915061 -0.87113043        -0.58268168
+V14   0.1022273  0.00874291 -0.2149401  1.47252552        -0.40821982
+V15   0.5330603  0.03157285  0.4861314 -0.08454090        -0.60253568
+V16   5.4955639  0.43942074  0.2718823 -0.05079297        -0.90270643
     loser_rank_points    w_1stWon    l_1stWon
-V1         0.19190885  1.53046757  1.85040484
-V2         2.74307365  0.51151678  0.01946429
-V3         0.23036055  0.30394309  0.01230908
-V4         0.29347080 -0.32599361 -0.13994428
-V5        -0.41072702  1.80506677  2.00984962
-V6        -0.06327389  0.85974861  0.84127789
-V7        -0.31082224 -0.86531415 -0.59842809
-V8        -0.06996829 -0.67610052 -0.33332495
-V9        -0.37588812  0.26571252  0.53203106
-V10       -0.33336834 -0.52996097 -0.53219611
-V11       -0.02888228 -0.84516732 -0.87749078
-V12       -0.21469266 -0.93810917 -0.84102001
-V13       -0.91852302 -0.26941047 -0.59283637
-V14       -0.28863429 -0.05748325 -0.23630952
-V15       -0.47987736 -0.02808460 -0.09447832
-V16       -0.34297067 -0.05141429 -0.10754774</code></pre>
+V1        0.179458012 -0.49520916 -0.78195531
+V2        0.038523819 -0.60989051 -0.44738124
+V3       -0.149770306 -0.75504879 -0.63458508
+V4       -0.268516252 -0.84322149 -0.92742947
+V5        5.135994334 -0.31454113 -0.12687590
+V6       -0.221776227  0.93786160  0.77785641
+V7        0.280052371  0.05152643 -0.09407866
+V8       -0.394083634 -0.48258803 -0.39817390
+V9        0.229114781  1.44994572  1.05574200
+V10       0.536069247  0.09542454  0.35117927
+V11      -0.367346216 -0.56035764 -0.67629508
+V12      -0.921910763 -0.47151774 -0.28074227
+V13      -0.424804805  1.33144941  1.54533436
+V14      -0.268079280  0.98602816  0.83401673
+V15      -0.348376991  0.28711313  0.56348923
+V16      -0.006033911  0.41963377  0.25757215</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df.som, <span class="at">type=</span><span class="st">"codes"</span>)</span>
@@ -1770,7 +2185,7 @@ V16       -0.34297067 -0.05141429 -0.10754774</code></pre>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-bellman1961reduction" class="csl-entry" role="listitem">
 Bellman, Richard, y Robert Kalaba. 1961. <span>«Reduction of dimensionality, dynamic programming, and control processes»</span>.
 </div>

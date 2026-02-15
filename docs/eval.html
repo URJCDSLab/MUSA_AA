@@ -282,7 +282,7 @@ window.Quarto = {
 <li><p>El <strong>modelo</strong> es una representación <strong>simplificada</strong> de la realidad que proponemos para describirla e interpretarla más fácilmente.</p></li>
 <li><p>El <strong>error</strong> refleja la diferencia entre nuestra representación simplificada de la realidad (el modelo) y los datos que relamente describen esa realidad de forma precisa.</p></li>
 </ul>
-<p>Una vez elegido el modelo, o modelos de ML que vamos a emplear para analizar nuestros datos, y una vez que hemos entrenado dichos modelos sobre un conjunto de datos (empleando los algoritmos adecuados) surge la tarea de evaluar el rendimiento del modelo. Dentro del ciclo de vida de un proyecto de ciencia de datos (ver <a href="intro.html#fig-ds2" class="quarto-xref">Figura&nbsp;<span>1.2 (b)</span></a>) nos encontramos en la etapa de “<em>Evaluar y criticar el modelo</em>”. Podemos decir que estamos en la etapa de establecer si el <em>error</em> es aceptable o, por contra, es demasiado alto y no podemos aceptar el modelo como útil. En ese último caso, debemos buscar un modelo más preciso o que cometa un error asumible.</p>
+<p>Una vez elegido el modelo, o modelos de ML que vamos a emplear para analizar nuestros datos, y una vez que hemos entrenado dichos modelos sobre un conjunto de datos (empleando los algoritmos adecuados) surge la tarea de evaluar el rendimiento del modelo. Dentro del ciclo de vida de un proyecto de ciencia de datos (ver <a href="#fig-ds2" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-ds2</span></a>) nos encontramos en la etapa de “<em>Evaluar y criticar el modelo</em>”. Podemos decir que estamos en la etapa de establecer si el <em>error</em> es aceptable o, por contra, es demasiado alto y no podemos aceptar el modelo como útil. En ese último caso, debemos buscar un modelo más preciso o que cometa un error asumible.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Para recordar">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -323,7 +323,7 @@ George E.P. Box
 <img src="eval/overf.jpg" class="img-fluid figure-img" width="600">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eval1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;6.1: https://medium.com/<span class="citation" data-cites="kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700">(<a href="references.html#ref-kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700" role="doc-biblioref"><strong>kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700?</strong></a>)</span>
+Figura&nbsp;6.1: https://medium.com/<span class="citation" data-cites="kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700">(<a href="#ref-kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700" role="doc-biblioref"><strong>kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700?</strong></a>)</span>
 </figcaption>
 </figure>
 </div>
@@ -365,7 +365,7 @@ Figura&nbsp;6.2: https://nvsyashwanth.github.io/machinelearningmaster/bias-varia
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="eval/biasvariance.jpg" class="img-fluid figure-img" width="400"></p>
-<figcaption>https://medium.com/<span class="citation" data-cites="kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700">(<a href="references.html#ref-kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700" role="doc-biblioref"><strong>kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700?</strong></a>)</span></figcaption>
+<figcaption>https://medium.com/<span class="citation" data-cites="kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700">(<a href="#ref-kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700" role="doc-biblioref"><strong>kiprono_65591/regularization-a-technique-used-to-prevent-over-fitting-886d5b361700?</strong></a>)</span></figcaption>
 </figure>
 </div>
 <section id="evitar-el-sobreajuste" class="level4" data-number="6.2.0.1">
@@ -399,7 +399,7 @@ Validación cruzada
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Utiliza técnicas de validación cruzada, como la validación cruzada <span class="math inline">\(k\)</span>-fold, para evaluar el rendimiento del modelo en diferentes subconjuntos de datos de entrenamiento y prueba. Esto puede ayudar a identificar si el modelo está sobreajustando en una sola partición de los datos. Ver <a href="data.html" class="quarto-xref"><span>Capítulo 2</span></a> para una completa descripción.</p>
+<p>Utiliza técnicas de validación cruzada, como la validación cruzada <span class="math inline">\(k\)</span>-fold, para evaluar el rendimiento del modelo en diferentes subconjuntos de datos de entrenamiento y prueba. Esto puede ayudar a identificar si el modelo está sobreajustando en una sola partición de los datos. Ver <a href="#sec-data" class="quarto-xref"><span class="quarto-unresolved-ref">sec-data</span></a> para una completa descripción.</p>
 </div>
 </div>
 </div>
@@ -479,7 +479,7 @@ Partición de los datos
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Tal y como te explicamos en el <a href="data.html" class="quarto-xref"><span>Capítulo 2</span></a>, divide tus datos en tres conjuntos: entrenamiento, validación y prueba. Utiliza el conjunto de validación para ajustar los hiperparámetros del modelo y el conjunto de prueba solo para la evaluación final.</p>
+<p>Tal y como te explicamos en el <a href="#sec-data" class="quarto-xref"><span class="quarto-unresolved-ref">sec-data</span></a>, divide tus datos en tres conjuntos: entrenamiento, validación y prueba. Utiliza el conjunto de validación para ajustar los hiperparámetros del modelo y el conjunto de prueba solo para la evaluación final.</p>
 </div>
 </div>
 </div>
@@ -511,7 +511,7 @@ Ensemble Learning
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Combina múltiples modelos juntos, como <em>Random Forests</em> o <em>Gradient Boosting</em>, que pueden reducir el riesgo de sobreajuste al promediar las predicciones de varios modelos. Trataremos estas técnicas en el <a href="aprsup.html" class="quarto-xref"><span>Capítulo 7</span></a>.</p>
+<p>Combina múltiples modelos juntos, como <em>Random Forests</em> o <em>Gradient Boosting</em>, que pueden reducir el riesgo de sobreajuste al promediar las predicciones de varios modelos. Trataremos estas técnicas en el <a href="#sec-aprsup" class="quarto-xref"><span class="quarto-unresolved-ref">sec-aprsup</span></a>.</p>
 </div>
 </div>
 </div>
@@ -544,7 +544,7 @@ Ensemble Learning
 </section>
 <section id="métricas-para-clasificación" class="level3" data-number="6.3.2">
 <h3 data-number="6.3.2" class="anchored" data-anchor-id="métricas-para-clasificación"><span class="header-section-number">6.3.2</span> Métricas para Clasificación</h3>
-<p>Tal y como veremos en el <a href="aprsup.html" class="quarto-xref"><span>Capítulo 7</span></a>, los modelos de clasificación son una parte importante de las técnicas de ML. El objetivo de dichos modelos es hacer una división perfecta en diferentes clases, previamente definidas en base a las etiquetas de la variable respuesta. En este capítulo nos centramos en la más popular de todos los tipos de clasificación: la clasificación binaria. De hecho, cuando nos enfrentamos a un problema de clasificación multiclase una de las soluciones más habituales es convertirlo en varios problemas de clasificación binaria usando una de las clases como clase de referencia.</p>
+<p>Tal y como veremos en el <a href="#sec-aprsup" class="quarto-xref"><span class="quarto-unresolved-ref">sec-aprsup</span></a>, los modelos de clasificación son una parte importante de las técnicas de ML. El objetivo de dichos modelos es hacer una división perfecta en diferentes clases, previamente definidas en base a las etiquetas de la variable respuesta. En este capítulo nos centramos en la más popular de todos los tipos de clasificación: la clasificación binaria. De hecho, cuando nos enfrentamos a un problema de clasificación multiclase una de las soluciones más habituales es convertirlo en varios problemas de clasificación binaria usando una de las clases como clase de referencia.</p>
 <p>El propósito de la clasificación binaria es dividir las observaciones dadas en dos clases mutuamente excluyentes <em>{-1,+1}</em>. La elección de la métrica de evaluación del rendimiento de un modelo es relevante, ya que se utilizará para seleccionar o descartar los modelos de clasificación. En general, este conjunto de métricas se obtiene de la matriz de confusión que enfrenta las clases observadas y las predicciones realizadas por el modelo de ML.</p>
 <p>Definimos la matriz de confusión asociada a los valores predichos por un clasificador como:</p>
 <table class="caption-top table">
@@ -611,7 +611,7 @@ Para pensar
 </section>
 <section id="rendimiento-en-las-particiones" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="rendimiento-en-las-particiones"><span class="header-section-number">6.4</span> Rendimiento en las particiones</h2>
-<p>Tal y como se indicó en el <a href="data.html" class="quarto-xref"><span>Capítulo 2</span></a>, existen diversas formas de particionar los datos para llevar a cabo las labores de entrenamiento, prueba y validación. En este apartado nos vamos a centrar en realizar la evaluación de un modelo en las diferentes particiones. Para ello vamos a emplear el método de “<em>k-folds</em>”. La muestra de entrenamiento será dividida en <span class="math inline">\(k\)</span> grupos de entrenamiento. Cada uno de esos grupos queda fuera del entrenamiento una vez y se emplean las observaciones en el grupo para estimar el error. De este modo, se dispone de <span class="math inline">\(k\)</span> errores, medidos en la muestra de entrenamiento. Podemos calcular una media de los errores, junto con su desviación típica.</p>
+<p>Tal y como se indicó en el <a href="#sec-data" class="quarto-xref"><span class="quarto-unresolved-ref">sec-data</span></a>, existen diversas formas de particionar los datos para llevar a cabo las labores de entrenamiento, prueba y validación. En este apartado nos vamos a centrar en realizar la evaluación de un modelo en las diferentes particiones. Para ello vamos a emplear el método de “<em>k-folds</em>”. La muestra de entrenamiento será dividida en <span class="math inline">\(k\)</span> grupos de entrenamiento. Cada uno de esos grupos queda fuera del entrenamiento una vez y se emplean las observaciones en el grupo para estimar el error. De este modo, se dispone de <span class="math inline">\(k\)</span> errores, medidos en la muestra de entrenamiento. Podemos calcular una media de los errores, junto con su desviación típica.</p>
 </section>
 <section id="ajuste-de-parámetros-de-modelos-de-ml" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="ajuste-de-parámetros-de-modelos-de-ml"><span class="header-section-number">6.5</span> Ajuste de parámetros de modelos de ML</h2>
@@ -728,7 +728,7 @@ Para pensar
 </tbody>
 </table>
 <p>Vemos que, aunque la media de los errores es menor en <span class="math inline">\(k=1\)</span>, una elección como <span class="math inline">\(k=3\)</span>, o <span class="math inline">\(k=4\)</span> podría tener más sentido al obtener resultados similares con menor variabilidad (menos desviación estándar).</p>
-<p>A continuación, deberíamos de probar el modelo en la muestra de prueba (test). Por ejemplo, con <span class="math inline">\(k=1\)</span> vecino más cercanose obtiene un error similar al esperado, <span class="math inline">\(1,51\%\)</span>. Nótese que en este caso no hay desviación típica, pues es el error en una única partición. Cuando probamos el modelo elegido (<span class="math inline">\(k=3\)</span>) el resultado sí es algo mejor: <span class="math inline">\(1,47\%\)</span>. Normalmente el modelo del primer vecino más cercano no presenta un buen equilibrio entre el sesgo y la varianza, y elecciones de <span class="math inline">\(k&gt;1\)</span> suelen ser preferibles <span class="citation" data-cites="cover1967nearest">(<a href="references.html#ref-cover1967nearest" role="doc-biblioref">Cover y Hart 1967</a>)</span>.</p>
+<p>A continuación, deberíamos de probar el modelo en la muestra de prueba (test). Por ejemplo, con <span class="math inline">\(k=1\)</span> vecino más cercanose obtiene un error similar al esperado, <span class="math inline">\(1,51\%\)</span>. Nótese que en este caso no hay desviación típica, pues es el error en una única partición. Cuando probamos el modelo elegido (<span class="math inline">\(k=3\)</span>) el resultado sí es algo mejor: <span class="math inline">\(1,47\%\)</span>. Normalmente el modelo del primer vecino más cercano no presenta un buen equilibrio entre el sesgo y la varianza, y elecciones de <span class="math inline">\(k&gt;1\)</span> suelen ser preferibles <span class="citation" data-cites="cover1967nearest">(<a href="#ref-cover1967nearest" role="doc-biblioref">Cover y Hart 1967</a>)</span>.</p>
 <p>Entonces, cabe plantearse la duda ¿<em>cuál es la solución óptima para este problema</em>? La respuesta es que depende del objetivo y, en este caso, cualquier elección entre <span class="math inline">\(1\)</span> y <span class="math inline">\(3\)</span> vecinos parece razonable. Fíjate en la importancia de la medida de distancia elegida. El primer vecino más cercano, es el más cercano según esa media. Una medida diferente conduciría, probablemente, a otro vecino y en consecuencia a otros resultados de rendimiento.</p>
 <p>Supongamos que elegimos un modelo de <span class="math inline">\(k\)</span> vecinos más cercanos con <span class="math inline">\(k\)</span> igual <span class="math inline">\(3\)</span>. En estos momentos, estaríamos en disposición de llevar el modelo a “<em>producción</em>”. Es decir, si este fuera nuestro modelo elegido habríamos comprobado su buen funcionamiento en datos diferentes a aquellos sobre los que ha sido entrenado. El error esperado para nuevos datos está en torno al <span class="math inline">\(1,5\%\)</span>. Recordemos que aún hemos reservado una partición (validación) para simular este error. La partición de validación, no obstante, sólo debería de ser empleada con un modelo, sólo uno.</p>
 <div class="callout callout-style-default callout-important callout-titled" title="Para recordar">
@@ -774,7 +774,7 @@ Curva ROC
 </div>
 </div>
 </div>
-<p>Un ejemplo de una curva ROC aparece en la figura <a href="#fig-roc" class="quarto-xref">Figura&nbsp;<span>6.3</span></a>. Los valores de <em>False Positive Rate</em> y <em>True Positive Rate</em> de cada uno de los puntos de la curva se obtienen de las correspondientes matrices de confusión resultantes de modificar el umbral de decisión de clasificadores binarios. Es decir, se construye un modelo de clasificación que devuelve una probabilidad de clase para cada nuevo punto evaluado. Se establece un umbral. Se obtiene, para la partición correspondiente, la matriz de confusión. Se calculan las métricas de rendimiento y se grafica el punto. Este proceso se repite para una colección de umbrales, uniendo los puntos resultantes de la gráfica. De este modo se consigue la curva ROC.</p>
+<p>Un ejemplo de una curva ROC aparece en la figura <a href="#fig-roc" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-roc</span></a>. Los valores de <em>False Positive Rate</em> y <em>True Positive Rate</em> de cada uno de los puntos de la curva se obtienen de las correspondientes matrices de confusión resultantes de modificar el umbral de decisión de clasificadores binarios. Es decir, se construye un modelo de clasificación que devuelve una probabilidad de clase para cada nuevo punto evaluado. Se establece un umbral. Se obtiene, para la partición correspondiente, la matriz de confusión. Se calculan las métricas de rendimiento y se grafica el punto. Este proceso se repite para una colección de umbrales, uniendo los puntos resultantes de la gráfica. De este modo se consigue la curva ROC.</p>
 <div id="fig-roc" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -797,7 +797,7 @@ Figura&nbsp;6.3: https://machinelearningmastery.com/roc-curves-and-precision-rec
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-cover1967nearest" class="csl-entry" role="listitem">
 Cover, Thomas, y Peter Hart. 1967. <span>«Nearest neighbor pattern classification»</span>. <em>IEEE transactions on information theory</em> 13 (1): 21-27.
 </div>

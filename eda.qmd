@@ -3,7 +3,6 @@
 El análisis exploratorio de datos o (EDA, del inglés "Exploratory Data Analysis") representa un conjunto de técnicas que permiten resumir los aspectos más importantes de un conjunto de datos, normalmente con especial énfasis en el uso de métodos de visualización gráfica. El término fue popularizado, entre otros, por el estadístico norteamericano *John W. Tukey* como método para descubrir información importante (y no evidente) contenida en los datos [@tukey1977exploratory]. Estas técnicas se emplean habitualmente como paso previo a la inferencia estadística, orientada hacia un análisis confirmatorio. Así, con EDA se estudian los datos, se descubre cómo son y cómo se comportan y con la inferencia estadística se comprueba analíticamente si esos comportamientos y diferencias halladas son realmente significativos (desde un punto de vista estadístico). El EDA es, sin duda, fundamental para adquirir conocimiento de los datos, antes de emplearlos dentro de un modelo de ML como los que vais a aprendener a lo largo del grado en Ciencia e Ingeniería de Datos. Es un error muy típico de algunos analistas de datos aplicar modelos a sus datos en cuanto estos están disponibles sin pasar previamente por el necesario análisis exploratorio de los mismos.
 
 ::: {.callout-tip title="John Tukey"}
-## John Tukey
 
 "El análisis exploratorio de datos es una actitud, un estado de flexibilidad, una voluntad de buscar aquellas cosas que creemos que no están ahí, así como aquellas que creemos que están ahí."
 :::
@@ -31,8 +30,6 @@ Tu objetivo principal durante el EDA es adquirir una comprensión profunda de lo
 EDA es un proceso creativo y como tal, la clave para llevarlo a cabo consiste en el planteamiento de preguntas de calidad. ¿Qué preguntas son las correctas? La respuesta es que depende del conjunto de datos con el que se trabaje.
 
 ::: {.callout-tip title="John Tukey"}
-## John Tukey
-
 Mucho mejor una respuesta aproximada a la pregunta correcta, que a menudo es vaga, que una respuesta exacta a la pregunta incorrecta, que siempre se puede precisar
 :::
 
@@ -72,7 +69,7 @@ Algunas de las preguntas que, generalmente, deberían de abordarse durante el ED
 
 -   ¿Es posible identificar la distribución que siguen las variables?
 
--   Calcular estadísticos resumen (media, desviación típica, frecuencia,\...) de todas las variables de interés.
+-   Calcular estadísticos resumen (media, desviación típica, frecuencia,...) de todas las variables de interés.
 
 -   Detección y tratamiento de valores atípicos.
 
@@ -93,7 +90,6 @@ La comprensión del problema que estamos abordando representa una de las primera
 ![Jerarquía de Conocimiento](EDA/conocimiento.png){#fig-cono width="80%"}
 
 ::: {.callout-tip title="Claude Lévi-Strauss"}
-## Claude Lévi-Strauss
 
 "El científico no es una persona que da las respuestas correctas, sino una persona que hace las preguntas correctas."
 :::
@@ -104,11 +100,9 @@ En este tema vamos a trabajar con **datos reales de partidos de tenis (WTA)**. E
 
 Como ejemplo de problema, definimos una **tarea de clasificación**:
 
--   Variable objetivo: `winner_is_better_rank`, vale `1` si la ganadora tenía mejor ranking que la perdedora; `0` si ganó la jugadora peor rankeada, es decir, *upset*.
-Las variables que debemos estudiar son:
+-   Variable objetivo: `winner_is_better_rank`, vale `1` si la ganadora tenía mejor ranking que la perdedora; `0` si ganó la jugadora peor rankeada, es decir, *upset*. Las variables que debemos estudiar son:
 
 Esto es útil porque es una definición objetiva con la información disponible, y permite discutir “sorpresas” y contexto deportivo (superficie, edad, etc.).
-
 
 ::: {.callout-important title="Para recordar"}
 En deporte, la variable objetivo debe definirse con cuidado. “Rendimiento” puede significar cosas muy distintas según el contexto. En tenis, incluso “ganar” puede depender de superficie, nivel del torneo o emparejamiento.
@@ -156,15 +150,15 @@ str(tennis)
 
 En este ejemplo trabajaremos con un subconjunto de variables habituales en análisis deportivo:
 
-- `surface` (categórica)
+-   `surface` (categórica)
 
-- `draw_size` (numérica discreta)
+-   `draw_size` (numérica discreta)
 
-- `winner_rank`, `loser_rank` (numéricas discretas; cuanto menor, mejor ranking)
+-   `winner_rank`, `loser_rank` (numéricas discretas; cuanto menor, mejor ranking)
 
-- `winner_age`, `loser_age` (numéricas continuas)
+-   `winner_age`, `loser_age` (numéricas continuas)
 
-- variable objetivo construida a partir del ranking
+-   variable objetivo construida a partir del ranking
 
 Creamos el dataset de trabajo y eliminamos observaciones con faltantes en las variables seleccionadas.
 
@@ -220,13 +214,11 @@ dim(tennis.valid)
 ```
 
 ::: {.callout-caution title="Atrévete"}
-## Atrévete
 
-Antes de dibujar nada: ¿qué crees que pasará con los upsets?
-¿Son igual de frecuentes en todas las superficies? ¿Influye la diferencia de ranking?
+Antes de dibujar nada: ¿qué crees que pasará con los upsets? ¿Son igual de frecuentes en todas las superficies? ¿Influye la diferencia de ranking?
 :::
 
-**Preguntas (EDA en tenis)
+\*\*Preguntas (EDA en tenis)
 
 Por ejemplo, estas preguntas son típicas en deporte:
 
@@ -252,6 +244,7 @@ arrange(desc(upset_rate))
 ```
 
 ¿Cómo es la distribución de la **diferencia de ranking** (`rank_diff`) en partidos con y sin upset?
+
 ```{r}
 #| label: pregunta_tenis_2
 #| include: true
@@ -291,19 +284,17 @@ slice_head(n = 10)
 ```
 
 ::: {.callout-caution title="Repaso"}
-## Repaso
 
 `dplyr` es un paquete en R diseñado para facilitar la manipulación y transformación de datos de manera eficiente y estructurada. Fue desarrollado por **Hadley Wickham** y se ha convertido en una de las herramientas más populares en la ciencia de datos y análisis de datos.
 :::
 
 ## Variable objetivo
 
-En problemas de clasificación (Aprendizaje Supervisado, ver apartado @sec-metodosML) existe una variable de interés fundamental, es la variable respuesta o variable objetivo. 
-En este ejemplo la variable objetivo es `winner_is_better_rank`:
+En problemas de clasificación (Aprendizaje Supervisado, ver apartado @sec-metodosML) existe una variable de interés fundamental, es la variable respuesta o variable objetivo. En este ejemplo la variable objetivo es `winner_is_better_rank`:
 
-- 1: gana la jugadora con mejor ranking (resultado “esperable”)
+-   1: gana la jugadora con mejor ranking (resultado “esperable”)
 
-- 0: gana la jugadora con peor ranking (*upset*)
+-   0: gana la jugadora con peor ranking (*upset*)
 
 Vamos a estudiar la información que nos proporciona dicha variable.
 
@@ -325,7 +316,7 @@ xlab("Variable respuesta: winner_is_better_rank (1=mejor ranking gana)")
 
 ## Visualizar distribuciones
 
-La forma de visualizar la distribución de una variable dependerá de si la variable es categórica o continua. Una variable es categórica si sólo puede tomar uno de un pequeño conjunto de valores. En R, las variables categóricas suelen guardarse como factores o vectores de caracteres. Para examinar la distribución de una variable categórica, utiliza un gráfico de barras. 
+La forma de visualizar la distribución de una variable dependerá de si la variable es categórica o continua. Una variable es categórica si sólo puede tomar uno de un pequeño conjunto de valores. En R, las variables categóricas suelen guardarse como factores o vectores de caracteres. Para examinar la distribución de una variable categórica, utiliza un gráfico de barras.
 
 **Variable categórica: superficie**
 
@@ -418,7 +409,7 @@ ylab("Age_diff")
 
 ### Transformación de variables cuantitativas
 
-En algunos métodos de ML es necesario contar con variables que cumplan requisitos de normalidad. En deporte es frecuente que diferencias como `rank_diff` tengan colas largas (valores extremos). Una transformación logarítmica puede estabilizar escalas, pero requiere positividad. 
+En algunos métodos de ML es necesario contar con variables que cumplan requisitos de normalidad. En deporte es frecuente que diferencias como `rank_diff` tengan colas largas (valores extremos). Una transformación logarítmica puede estabilizar escalas, pero requiere positividad.
 
 ```{r}
 #| label: transform_rankdiff
