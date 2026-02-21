@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Nuevas tendencias – Aprendizaje Automático</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./conclusiones.html" rel="next">
+<link href="./reglas.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-23d6ac4f9a19bb637dc5af5d1e4747a8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./nuevas.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nuevas tendencias</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Aprendizaje Automático</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Datos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Análisis Exploratorio de Datos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reddim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Técnicas de reducción de la dimensionalidad</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aprnosup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aprendizaje no supervisado</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Medidas de rendimiento</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aprsup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reglas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reglas de asociación</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nuevas.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nuevas tendencias</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusiones.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conclusiones</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bibliografía</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#ética-en-el-aprendizaje-automático" id="toc-ética-en-el-aprendizaje-automático" class="nav-link active" data-scroll-target="#ética-en-el-aprendizaje-automático"><span class="header-section-number">9.1</span> Ética en el Aprendizaje Automático</a></li>
+  <li><a href="#aprendizaje-automático-explicable" id="toc-aprendizaje-automático-explicable" class="nav-link" data-scroll-target="#aprendizaje-automático-explicable"><span class="header-section-number">9.2</span> Aprendizaje Automático Explicable</a>
+  <ul class="collapse">
+  <li><a href="#contrafácticos" id="toc-contrafácticos" class="nav-link" data-scroll-target="#contrafácticos"><span class="header-section-number">9.2.1</span> Contrafácticos</a></li>
+  </ul></li>
+  <li><a href="#deriva-conceptual" id="toc-deriva-conceptual" class="nav-link" data-scroll-target="#deriva-conceptual"><span class="header-section-number">9.3</span> Deriva conceptual</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-nuevas" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nuevas tendencias</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="ética-en-el-aprendizaje-automático" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="ética-en-el-aprendizaje-automático"><span class="header-section-number">9.1</span> Ética en el Aprendizaje Automático</h2>
+<p>La ética en ML es un tema crucial en la actualidad, ya que el uso de algoritmos y modelos de aprendizaje automático está cada vez más presente, a veces sin darnos cuenta, en nuestra vida cotidiana. La toma de decisiones automatizada basada en datos plantea <strong>desafíos éticos y sociales</strong> que deben ser abordados de manera responsable.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ética
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Disciplina filosófica que estudia el bien y el mal y sus relaciones con la moral y el comportamiento humano.</li>
+<li>Conjunto de costumbres y normas que dirigen o valoran el comportamiento humano en una comunidad.</li>
+</ol>
+</div>
+</div>
+<p>La ética en ML se centra en garantizar que los sistemas de AI tomen <strong>decisiones justas, imparciales y éticas</strong>. Esto implica considerar la equidad en el tratamiento de diferentes grupos de personas, la transparencia en cómo se toman las decisiones y la privacidad de los datos utilizados en el entrenamiento de modelos.</p>
+<p>Uno de los desafíos clave en la ética del ML es la <strong>discriminación algorítmica</strong>. Los modelos de ML pueden aprender <strong>sesgos</strong> presentes en los datos de entrenamiento, lo que resulta en decisiones discriminatorias en áreas como la selección de candidatos, la concesión de créditos o la aplicación de la ley. Una de las vías de trabajo e investigación en ML es la de tratar de mitigar estos sesgos y garantizar una toma de decisiones más justa.</p>
+<p>La <strong>transparencia</strong> es otra preocupación importante. Comprender por qué un modelo de ML toma ciertas decisiones es esencial, especialmente en aplicaciones críticas como la atención médica. Los investigadores están desarrollando técnicas de explicabilidad, que veremos más adelante, que permiten a los usuarios comprender el razonamiento detrás de las decisiones de los algoritmos.</p>
+<p>La <strong>privacidad</strong> de los datos también es un aspecto fundamental de la ética en ML. La recopilación y el uso de datos personales deben realizarse de manera ética y respetando las normativas de protección de datos. Garantizar la <strong>seguridad</strong> de los datos es esencial para prevenir brechas de privacidad.</p>
+</section>
+<section id="aprendizaje-automático-explicable" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="aprendizaje-automático-explicable"><span class="header-section-number">9.2</span> Aprendizaje Automático Explicable</h2>
+<p>Los modelos computacionales han alcanzado niveles muy elevados de precisión y capacidad en la toma de decisiones. Sin embargo, a medida que estos modelos se vuelven más complejos, su falta de transparencia se ha convertido en un desafío crítico y probablemente, en uno de sus puntos débiles más críticos para su implantación en la sociedad. La necesidad de comprender cómo y por qué un modelo de ML toma ciertas decisiones se ha vuelto fundamental, especialmente en aplicaciones críticas, como el diagnóstico médico y la detección de fraudes financieros.</p>
+<p>El aprendizaje máquina explicable (<em>XML</em>, “Explainable Machine Learning” en inglés) se refiere a la capacidad de los modelos de ML para proporcionar explicaciones claras y comprensibles de sus decisiones. Esto implica no solo producir resultados precisos, sino también presentar una justificación o una razón para cada predicción o clasificación realizada. La <strong>transparencia</strong> es esencial porque permite a los usuarios, ya sean médicos, reguladores o consumidores, confiar en las decisiones del modelo y tomar decisiones informadas en consecuencia.</p>
+<p>Las técnicas de XML incluyen: La interpretabilidad y explicabilidad en el aprendizaje automático abarcan una variedad de modelos y métodos que permiten comprender cómo funcionan los modelos de machine learning y por qué toman ciertas decisiones. A continuación, proporcionamos una taxonomía de estos modelos y métodos:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Métodos basados en reglas
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Reglas de decisión</strong>: Estos modelos generan reglas lógicas que explican el razonamiento detrás de las predicciones del modelo.</li>
+<li><strong>Árboles de decisión</strong>: Los árboles muestran la secuencia de decisiones tomadas por el modelo en cada nodo, lo que facilita la interpretación.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Métodos basados en características
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Importancia de características</strong>: Calcula la importancia de cada característica en el modelo, lo que permite identificar las variables más influyentes en las predicciones.</li>
+<li><strong>Análisis de efectos parciales</strong>: Evalúa el impacto de una sola característica en las predicciones, manteniendo las demás constantes.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Métodos basados en ejemplos
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Prototipos</strong>: Encuentra ejemplos representativos o prototipos de datos que explican cómo el modelo toma decisiones.</li>
+<li><strong>Casos de prueba</strong>: Genera instancias que muestran cómo el modelo reacciona a diferentes escenarios.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Métodos de aproximación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Modelos locales interpretables</strong>: Crea modelos más simples (lineales, regresiones, etc.) en regiones locales del espacio de características para comprender decisiones en áreas específicas.</li>
+<li><strong>Regresiones lineales localmente ponderadas (LWLR)</strong>: Asigna pesos a las instancias cercanas para ajustar una regresión lineal local.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Métodos basados en atención
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Atención y atención saliente</strong>: Modelos basados en atención destacan características o regiones de interés que influyen en las predicciones.</li>
+<li><strong>Redes neuronales con atención</strong>: Las redes neuronales con mecanismos de atención permiten entender qué partes de la entrada son relevantes para la salida.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Métodos basados en métricas
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Métricas de proximidad</strong>: Evalúan la similitud entre entradas y cómo se relacionan con las predicciones.</li>
+<li><strong>SHAP (SHapley Additive exPlanations)</strong>: Utiliza conceptos de teoría de juegos para asignar valores de importancia a las características.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Métodos basados en resumen
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Reglas de decisión generadas por el modelo</strong>: El modelo crea reglas que resumen su comportamiento.</li>
+<li><strong>Análisis de componentes</strong>: Reduce la dimensión de los datos para visualizar y resumir características significativas.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Métodos de muestreo y generación de datos
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Perturbación de datos</strong>: Se modifican las características de entrada para entender cómo afectan a las predicciones.</li>
+<li><strong>Muestreo de datos contrapuestos</strong>: Se generan ejemplos que muestran cómo las predicciones cambiarían si los datos fueran diferentes.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Métodos de comparación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Modelos interpretables frente a modelos de caja negra</strong>: Compara modelos interpretables con modelos complejos en términos de rendimiento y capacidad de explicación.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Herramientas de visualización
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Gráficos interactivos</strong>: Visualizaciones que muestran cómo las características afectan a las predicciones.</li>
+<li><strong>Heatmaps y perfiles de importancia</strong>: Muestran la importancia de las características en un formato visual.</li>
+</ul>
+</div>
+</div>
+</div>
+<p>Usemos, a modo de ejemplo, alguna de estas técnicas en un ejemplo práctico. Buscamos una interpretación del modelo mediante la técnica <strong>SHAP</strong>. El objetivo de SHAP es proporcionar explicaciones claras y coherentes para las predicciones del modelo de ML, un modelo de <em>Random Forest</em> en el ejemplo. La técnica se basa en el principio de que cada característica o atributo de entrada de un modelo contribuye de alguna manera a la predicción final. SHAP cuantifica esta contribución para cada característica, permitiendo una interpretación más profunda de cómo el modelo llega a sus conclusiones.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DALEX)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>bank <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">'https://raw.githubusercontent.com/rafiag/DTI2020/main/data/bank.csv'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(bank)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11162    17</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bank<span class="ot">=</span><span class="fu">as.tibble</span>(bank)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Parciticionamos los datos</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2138</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="fu">dim</span>(bank)[<span class="dv">1</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>indices<span class="ot">=</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>indices.train<span class="ot">=</span><span class="fu">sample</span>(indices,<span class="at">size=</span>n<span class="sc">*</span>.<span class="dv">5</span>,<span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>indices.test<span class="ot">=</span><span class="fu">sample</span>(indices[<span class="sc">-</span>indices.train],<span class="at">size=</span>n<span class="sc">*</span>.<span class="dv">25</span>,<span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>indices.valid<span class="ot">=</span>indices[<span class="sc">-</span><span class="fu">c</span>(indices.train,indices.test)]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>bank.train<span class="ot">=</span>bank[indices.train,]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>bank.test<span class="ot">=</span>bank[indices.test,]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">128</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> bank.train <span class="sc">%&gt;%</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mutate</span>(<span class="at">fmarital=</span><span class="fu">as.factor</span>(marital))<span class="sc">%&gt;%</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(age,job,housing,fmarital,education,duration,poutcome,balance,deposit)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>df.test <span class="ot">&lt;-</span> bank.test <span class="sc">%&gt;%</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">fmarital=</span><span class="fu">as.factor</span>(marital))<span class="sc">%&gt;%</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span>(age,job,housing,fmarital,education,duration,poutcome,balance,deposit)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">randomForest</span>(<span class="fu">as.factor</span>(deposit)<span class="sc">~</span>., <span class="at">data=</span>df, <span class="at">importance=</span><span class="cn">TRUE</span>,<span class="at">proximity=</span><span class="cn">TRUE</span>) </span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>new.test <span class="ot">&lt;-</span> df.test[<span class="dv">1</span>,<span class="sc">-</span><span class="dv">9</span>]</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>new.test</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 8
+    age job        housing fmarital education duration poutcome balance
+  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;   &lt;fct&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;      &lt;int&gt;
+1    47 technician yes     single   secondary      973 unknown     -239</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>explain.rf <span class="ot">&lt;-</span> DALEX<span class="sc">::</span><span class="fu">explain</span>(<span class="at">model=</span>rf,<span class="at">data=</span>df[,<span class="sc">-</span><span class="dv">9</span>],<span class="at">y=</span>df[,<span class="dv">9</span>]<span class="sc">==</span><span class="st">"yes"</span>,<span class="at">label=</span><span class="st">"Random Forest"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Preparation of a new explainer is initiated
+  -&gt; model label       :  Random Forest 
+  -&gt; data              :  5581  rows  8  cols 
+  -&gt; data              :  tibble converted into a data.frame 
+  -&gt; target variable   :  5581  values 
+  -&gt; predict function  :  yhat.randomForest  will be used (  default  )
+  -&gt; predicted values  :  No value for predict function target column. (  default  )
+  -&gt; model_info        :  package randomForest , ver. 4.7.1.1 , task classification (  default  ) 
+  -&gt; model_info        :  Model info detected classification task but 'y' is a matrix . Converted to numeric.  (  NOTE  )
+  -&gt; predicted values  :  numerical, min =  0 , mean =  0.4759208 , max =  1  
+  -&gt; residual function :  difference between y and yhat (  default  )
+  -&gt; residuals         :  numerical, min =  -0.65 , mean =  0.003025623 , max =  0.764  
+  A new explainer has been created!  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(explain.rf, new.test)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.638</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>shap.new <span class="ot">&lt;-</span> <span class="fu">predict_parts</span>(<span class="at">explainer =</span> explain.rf, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">new_observation =</span> new.test, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">type =</span> <span class="st">"shap"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">B =</span> <span class="dv">25</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(shap.new,<span class="at">show_boxplots=</span><span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nuevas_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La predicción para la nueva observación es <code>yes</code> (<span class="math inline">\(probabilidad &gt; 0.5\)</span>). En el gráfico podemos observar los llamados valores <em>Shapley</em>, y encontramos los motivos para dicha predicción. Vemos como las dos variables que están asociadas con esa predicción positiva son la larga duración de la llamada y su estado civil (<code>single</code>). El resto de valores de las variables para ese individuo estarían indicando que la respuesta (predicha) es <code>no</code>.</p>
+<p>Si repetimos el experimento para el segundo de los datos en <code>test</code> podemos observar que la corta duración de la llamada, el no saber qué resultado tuvo la campaña de marketing anterior y el no tener casa en propiedad, son las variables más asociadas a la predicción <code>no</code> para el valor de la variable respuesta.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>new.test <span class="ot">&lt;-</span> df.test[<span class="dv">2</span>,<span class="sc">-</span><span class="dv">9</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>new.test</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 8
+    age job        housing fmarital education duration poutcome balance
+  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;   &lt;fct&gt;    &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;      &lt;int&gt;
+1    39 technician no      married  tertiary        70 unknown       94</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(explain.rf, new.test)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.176</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>shap.new <span class="ot">&lt;-</span> <span class="fu">predict_parts</span>(<span class="at">explainer =</span> explain.rf, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">new_observation =</span> new.test, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">type =</span> <span class="st">"shap"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">B =</span> <span class="dv">25</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(shap.new,<span class="at">show_boxplots=</span><span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="nuevas_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Puedes encontrar una taxonomía completa aquí: <span class="citation" data-cites="schwalbe2023comprehensive">(<a href="references.html#ref-schwalbe2023comprehensive" role="doc-biblioref">Schwalbe y Finzel 2023</a>)</span> y aquí <span class="citation" data-cites="molnar2020interpretable">(<a href="references.html#ref-molnar2020interpretable" role="doc-biblioref">Molnar 2020</a>)</span>. Es importante recordar que la elección de un método o modelo de interpretabilidad depende del contexto y los objetivos del análisis. La interpretabilidad y explicabilidad son esenciales para comprender y confiar en los modelos de ML, especialmente en aplicaciones críticas donde las decisiones tienen un alto impacto.</p>
+<p>Además, la <strong>regulación</strong> y las directrices <strong>éticas</strong> están comenzando a exigir la explicabilidad en ciertas aplicaciones críticas para garantizar la rendición de cuentas y la equidad.</p>
+<p>El XML no solo mejora la confianza en los modelos de ML, sino que también permite una colaboración más efectiva entre humanos y máquinas. Al comprender las razones detrás de las decisiones del modelo, los expertos pueden realizar ajustes cuando sea necesario y mejorar aún más la precisión y la utilidad de la IA en una variedad de campos.</p>
+<section id="contrafácticos" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="contrafácticos"><span class="header-section-number">9.2.1</span> Contrafácticos</h3>
+<p>En el contexto de la AI y la explicabilidad de modelos de ML, los contrafácticos (o contrafactuales) son una técnica utilizada para evaluar y comprender cómo los modelos toman decisiones al considerar escenarios hipotéticos o situaciones alternativas. Los contrafácticos son preguntas o declaraciones que plantean “¿Qué habría ocurrido si…?” con el propósito de analizar cómo un modelo habría respondido si las condiciones o las entradas hubieran sido diferentes. Esta técnica se utiliza para obtener información sobre cómo un modelo realiza sus predicciones y para explicar su razonamiento. Además, los contrafácticos contribuyen a garantizar la transparencia y la equidad en las aplicaciones de AI.</p>
+<p>Algunas características clave de los contrafácticos son:</p>
+<ul>
+<li><p><strong>Evaluación de modelos</strong>: Los contrafácticos permiten evaluar la coherencia y el comportamiento de un modelo de ML. Al plantear preguntas hipotéticas, se puede determinar si el modelo da respuestas razonables y lógicas en diferentes situaciones.</p></li>
+<li><p><strong>Comprensión de decisiones</strong>: Los contrafácticos ayudan a comprender por qué un modelo toma decisiones específicas. Al explorar cómo habría respondido el modelo en diferentes circunstancias, se puede inferir qué factores influyen en sus predicciones.</p></li>
+<li><p><strong>Validación de decisiones</strong>: Los contrafácticos se utilizan para validar o justificar las decisiones de un modelo. Al proporcionar explicaciones sobre cómo habría actuado en situaciones hipotéticas, se puede respaldar la idoneidad de las decisiones tomadas.</p></li>
+<li><p><strong>Sensibilidad a entradas</strong>: Los contrafácticos también ayudan a determinar la sensibilidad de un modelo a diferentes entradas. Pueden revelar si el modelo realiza predicciones consistentes cuando las variables de entrada cambian.</p></li>
+<li><p><strong>Detección de sesgos y fallos</strong>: Al plantear contrafácticos, es posible identificar sesgos o problemas en el modelo. Si las respuestas del modelo en situaciones hipotéticas parecen sesgadas o incoherentes, esto puede señalar áreas problemáticas que requieren atención.</p></li>
+</ul>
+<p>Por ejemplo, en un sistema de crédito que utiliza un modelo de ML para tomar decisiones de aprobación, se podría plantear la pregunta contrafáctica: “<em>¿Habría aprobado el crédito si el ingreso del solicitante fuera un 10% más alto?</em>” Esto permite evaluar si el modelo es sensible a los cambios en los ingresos y si realiza decisiones justas y coherentes.</p>
+<p>Si quieres aprender un poquito más sobre contrafácticos, prueba esta lectura <span class="citation" data-cites="fernandez2020random">(<a href="references.html#ref-fernandez2020random" role="doc-biblioref">Fernández et&nbsp;al. 2020</a>)</span>.</p>
+</section>
+</section>
+<section id="deriva-conceptual" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="deriva-conceptual"><span class="header-section-number">9.3</span> Deriva conceptual</h2>
+<p>En el mundo del ML, la deriva conceptual es un fenómeno crítico que se refiere a la <strong>evolución de los datos</strong> y la cambiante naturaleza de las relaciones entre las variables a lo largo del tiempo. A medida que se acumulan nuevos datos, los patrones subyacentes pueden cambiar, lo que puede afectar drásticamente la eficacia de los modelos de previamente entrenados.</p>
+<p>Este fenómeno es particularmente relevante en aplicaciones en las que los datos son dinámicos y cambian con el tiempo, como el <strong>monitoreo de sistemas</strong> en tiempo real, el análisis de tendencias de mercado o la detección de anomalías en redes informáticas. En tales casos, los modelos de ML que se entrenan inicialmente en un conjunto de datos pueden volverse obsoletos o ineficaces a medida que las condiciones cambian y las relaciones entre las variables evolucionan.</p>
+<p>La deriva conceptual puede manifestarse de varias formas:</p>
+<ul>
+<li>cambios en la <strong>distribución de los datos</strong></li>
+<li>cambios en la <strong>importancia relativa de las características</strong></li>
+<li>cambios en las <strong>relaciones entre variables</strong></li>
+<li>aparición de <strong>nuevos patrones</strong> que antes no estaban presentes.</li>
+</ul>
+<p>Reconocer y abordar la deriva conceptual es esencial para mantener la precisión y la relevancia de los modelos a lo largo del tiempo.</p>
+<p>Para abordar la deriva conceptual, es necesario implementar técnicas de <strong>adaptación</strong> de modelos que permitan a los algoritmos de ML ajustarse a los cambios en los datos. Esto puede implicar:</p>
+<ul>
+<li><strong>reentrenamiento periódico</strong> de los modelos</li>
+<li><strong>monitorización constante de la calidad</strong> del modelo</li>
+<li><strong>identificación de los momentos</strong> en que se produce una deriva conceptual significativa.</li>
+</ul>
+<p>La capacidad de adaptarse a esta deriva es esencial para garantizar que los modelos sigan siendo efectivos en entornos dinámicos y cambiantes.</p>
+<p>La deriva conceptual es un desafío continuo en ML y destaca la importancia de mantener los modelos actualizados y capaces de adaptarse a entornos de datos en constante evolución.</p>
+<p>Tener un equipo de científicos de datos dedicados para la monitorización de modelos en producción es esencial para garantizar que los modelos sigan siendo eficaces, justos, cumplidores y útiles a lo largo del tiempo. Además, este equipo puede proporcionar una capa adicional de seguridad y confiabilidad en el uso de la AI y el ML en aplicaciones del mundo real.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Rendimiento continuo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Los modelos de ML no son estáticos; tal y como se ha indicado, su rendimiento puede degradarse con el tiempo debido a cambios en los datos de entrada o en el entorno. Un equipo de científicos de datos puede monitorear de cerca el rendimiento del modelo y tomar medidas para mantener su eficacia.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Detección de deriva de datos
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Hemos visto que la deriva de datos es un fenómeno en el que las características de los datos de entrada cambian con el tiempo. Esto puede llevar a predicciones inexactas y, en algunos casos, a resultados desastrosos. Los científicos de datos pueden identificar la deriva de datos y ajustar o reentrenar el modelo en consecuencia.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Gestión de sesgo y equidad
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La equidad y la falta de sesgo son consideraciones críticas al implementar modelos en producción, especialmente en áreas como la toma de decisiones y la selección de personal. Un equipo de científicos de datos puede evaluar y abordar problemas de sesgo y equidad de manera proactiva.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Actualización de modelos
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Con el tiempo, es probable que se desee mejorar los modelos existentes o desarrollar nuevos. Los científicos de datos pueden dirigir el proceso de actualización y garantizar que los modelos reflejen las necesidades cambiantes del negocio.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Supervisión de errores y problemas técnicos
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Los errores pueden ocurrir, y es fundamental identificarlos y corregirlos rápidamente. Los científicos de datos pueden implementar sistemas de monitorización de errores y procesos de solución de problemas.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Cumplimiento normativo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>En sectores regulados, como la atención médica o las finanzas, se requiere un cumplimiento estricto con regulaciones específicas. Un equipo de científicos de datos puede garantizar que los modelos cumplan con las normativas vigentes.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Comunicación con partes interesadas
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Los resultados de los modelos deben comunicarse de manera efectiva a partes interesadas que pueden no estar familiarizadas con la ciencia de datos. Los científicos de datos pueden actuar como intermediarios y explicar los resultados de manera comprensible.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Optimización de recursos
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Los recursos computacionales y el tiempo de los científicos de datos son valiosos. Un equipo de científicos de datos puede optimizar la asignación de recursos, enfocándose en los aspectos más críticos de la monitorización y ajuste de modelos.</p>
+</div>
+</div>
+</div>
+<p>Puedes aprender sobre la deriva conceptual aquí: <span class="citation" data-cites="lu2018learning">(<a href="references.html#ref-lu2018learning" role="doc-biblioref">Lu et&nbsp;al. 2018</a>)</span>.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-fernandez2020random" class="csl-entry" role="listitem">
+Fernández, Rubén R, Isaac Martı́n De Diego, Vı́ctor Aceña, Alberto Fernández-Isabel, y Javier M Moguerza. 2020. <span>«Random forest explainability using counterfactual sets»</span>. <em>Information Fusion</em> 63: 196-207.
+</div>
+<div id="ref-lu2018learning" class="csl-entry" role="listitem">
+Lu, Jie, Anjin Liu, Fan Dong, Feng Gu, Joao Gama, y Guangquan Zhang. 2018. <span>«Learning under concept drift: A review»</span>. <em>IEEE transactions on knowledge and data engineering</em> 31 (12): 2346-63.
+</div>
+<div id="ref-molnar2020interpretable" class="csl-entry" role="listitem">
+Molnar, Christoph. 2020. <em>Interpretable machine learning</em>. Lulu. com.
+</div>
+<div id="ref-schwalbe2023comprehensive" class="csl-entry" role="listitem">
+Schwalbe, Gesina, y Bettina Finzel. 2023. <span>«A comprehensive taxonomy for explainable artificial intelligence: a systematic survey of surveys on methods and concepts»</span>. <em>Data Mining and Knowledge Discovery</em>, 1-59.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./reglas.html" class="pagination-link" aria-label="Reglas de asociación">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reglas de asociación</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./conclusiones.html" class="pagination-link" aria-label="Conclusiones">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conclusiones</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

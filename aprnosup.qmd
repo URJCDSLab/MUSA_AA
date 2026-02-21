@@ -1135,27 +1135,130 @@ fviz_gap_stat(gap_stat)
 
 ## Clustering en streaming: ventanas vs microclústeres
 
-En deporte es habitual que los datos lleguen de forma continua (GPS/tracking, wellness diario, eventos en vivo). En **streaming** no siempre es viable recalcular el clustering desde cero ni guardar todo el histórico, y además puede aparecer deriva (cambios de patrón a lo largo de la temporada, por lesiones, cambios tácticos, etc.). Para esta casuística existen dos enfoques prácticos:
+En deporte es habitual que los datos lleguen de forma continua (GPS/tracking, wellness diario, eventos en vivo). En este contexto, el clustering “clásico” (batch) puede volverse problemático por tres motivos:
 
-**(1) Ventanas (batch por trozos).**  
-Se define una ventana temporal y se hace clustering “normal” sobre los datos de esa ventana. Puede ser:
-- Deslizante (sliding): siempre los últimos $W$ puntos/días/sesiones.
-- Por bloques (tumbling): clústering cada cierto intervalo (p.ej., semanal).
-- Con decaimiento: lo reciente pesa más que lo antiguo.
+* Memoria: el flujo puede ser potencialmente infinito y no es viable guardar todo el histórico.
+* Tiempo: hay que actualizar el modelo rápido.
+* No estacionariedad: la distribución cambia (deriva conceptual) por fatiga, lesiones, cambios tácticos, rotaciones, congestión de partidos, fases de la temporada, etc.
 
-*Ventajas*: muy simple, fácil de explicar e implementar, alta interpretabilidad (“clústeres del último mes”).  
-*Inconvenientes*: recalcular puede ser costoso si llega mucho dato; con ventanas pequeñas los clústeres pueden ser inestables, y con ventanas grandes reaccionas tarde a la deriva.
+Para esta casuística existen dos enfoques prácticos: ventanas (batch por trozos) y microclústeres (resumen incremental).
 
-**Ejemplo**: agrupar sesiones por tipo de carga (distancia, HSR, aceleraciones, RPE) usando una ventana de 21–28 días y actualizando semanalmente.
+### Ventanas (batch por trozos)
+
+La idea es definir un subconjunto temporal de datos “relevantes”, que se denota ventana, y ejecutar un algoritmo de clustering estándar sobre ese subconjunto.
+
+**Tipos de ventana**
+
+Dado un stream $\{\mathbf{x}_t\}_{t\geq 1}$, existen los siguientes tipos de ventana.
+
+- Ventana deslizante (*sliding window*): solo se consideran los últimos $W$ puntos (o los últimos $W$ minutos/días/sesiones).
+$$\mathcal{W}_t = \{\mathbf{x}_{t-W+1},\dots,\mathbf{x}_t\}$$
+Se recalcula (o se actualiza) cada cierto número de llegadas.
+- Ventana por bloques (*tumbling window*): se divide el tiempo en bloques disjuntos y se agrupa cada bloque de forma independiente (por ejemplo, cada semana o cada partido).
+$$\mathcal{B}_j = \{\mathbf{x}_{(j-1)W+1},\dots, \mathbf{x}_{jW}\}$$
+- Ventana *landmark*: se fija un instante de inicio (landmark) y se consideran todos los datos desde ese instante hasta ahora (útil cuando nos interesa una fase concreta: por ejemplo "desde el cambio de entrenador", "desde la lesión", etc.)
+- Ventana con decaimiento (*damped/fading window*): se usan todos los datos, pero ponderando menos lo antiguo y más lo reciente. Un ejemplo típico es el decaimiento exponencial:
+$$w(\Delta t) = \exp(-\lambda \Delta t)$$
+donde $\Delta t$ es la antigüedad de una observación y $\lambda$ controla lo rápido que "olvidamos".
+
+::: {.callout-note title="Para recordar"}
+Las ventanas son una forma sencilla de gestionar la deriva: si el patrón cambia, al quedarnos con lo reciente (o darle más peso) el clustering se adapta sin necesidad de diseñar estructuras especiales.
+:::
 
 
-**(2) Microclústeres (resumen incremental).**  
-En lugar de guardar todos los puntos, se mantienen **microclústeres**: resúmenes que condensan regiones densas (típicamente: número de puntos, centroide y dispersión, más un mecanismo para “envejecer” lo antiguo). Cuando llega un punto nuevo, se asigna al microclúster más cercano si encaja, se actualizan sus estadísticas y, si no, se crea uno nuevo (a menudo como candidato a ruido). Con el tiempo, microclústeres “de ruido” pueden volverse densos y pasar a ser clústeres reales, y microclústeres que dejan de recibir puntos pueden desaparecer.
 
-*Ventajas*: actualizaciones online baratas, escalable, maneja outliers de forma natural y permite “olvidar” el pasado gradualmente.  
-*Inconvenientes*: más parámetros (radio/vecindad, densidad mínima, factor de decaimiento) y más complejidad conceptual que una ventana.
 
-**Ejemplo**: en tracking (x,y,velocidad) a alta frecuencia, los microclústeres pueden representar “zonas de ocupación” o “regímenes de movimiento” (caminar/trotar/sprint) sin almacenar cada muestra.
+::: {.callout-note collapse="true" title="Ventajas"}
+-   Simplicidad: fácil de explicar e implementar.
+
+- Alta interpretabilidad: “clústeres del último mes”, “clústeres de esta semana”.
+
+- Flexibilidad: se puede usar prácticamente cualquier algoritmo batch (k-medias, GMM, DBSCAN, clustering jerárquico, etc.).
+:::
+
+::: {.callout-note collapse="true" title="Inconvenientes"}
+-   Coste computacional: recalcular desde cero puede ser costoso si el ritmo de llegada es alto.
+
+- Inestabilidad: ventanas pequeñas $\rightarrow$ clústeres que “bailan” (alta varianza, inestabilidad); ventanas grandes  $\rightarrow$ reacción lenta ante cambios reales.
+
+- Efectos de frontera: observaciones cerca del borde pueden entrar/salir y provocar saltos artificiales.
+
+- Dificultad para “resumir”: si el stream es muy grande, aunque usemos una ventana, puede seguir siendo enorme (p. ej., tracking a 10–25 Hz durante partidos enteros).
+:::
+
+
+**Ejemplo (carga de entrenamiento)**: agrupar sesiones por tipo de carga (distancia, HSR, aceleraciones, RPE) usando una ventana de 21–28 días y actualizando semanalmente para capturar cambios por congestión de partidos o microciclos.
+
+
+### Microclústeres (resumen incremental)
+En lugar de guardar todos los puntos, se mantienen **microclústeres**: estructuras compactas que representan regiones con datos similares y que se actualizan online. Un microclúster suele almacenar estadísticas suficientes para reconstruir (aproximadamente) lo que ocurre en una zona del espacio de características. Cuando llega un punto nuevo, se asigna al microclúster más cercano si encaja, se actualizan sus estadísticas y, si no, se crea uno nuevo (a menudo como candidato a ruido). Con el tiempo, microclústeres “de ruido” pueden volverse densos y pasar a ser clústeres reales, y microclústeres que dejan de recibir puntos pueden desaparecer.
+
+El **esquema general en 2 fases** es el siguiente:
+
+1. Fase online (microclustering). Cuando llega un nuevo punto $\mathbf{x}$:
+  - Se busca el microclúster más cercano (o mejor candidato),
+  - si "encaja" (distancia $\leq \varepsilon$, o mejora de densidad, etc.) se actualizan sus estadísticas,
+  - si no encaja, se crea un microclúster nuevo (a menudo inicialmente considerado ruido/outlier),
+  - periódicamente se poda: microclústeres viejos o de baja densidad se degradan o eliminan.
+
+2. Fase offline (macroclustering bajo demanda). De vez en cuando (o cuando el analista lo pide), se ejecuta un clustering sobre los microclústeres (mucho menos numerosos que los puntos): $k$-medias sobre centroides ponderados, DBSCAN sobre centroides, clustering jerárquico, grafos, etc.
+
+
+::: {.callout-note title="Para recordar"}
+En streaming, el objetivo no es “la partición exacta del histórico”, sino un modelo actualizado que resuma la estructura y permita reaccionar a la deriva con coste controlado.
+:::
+
+
+
+
+::: {.callout-note collapse="true" title="Ventajas"}
+-   Actualizaciones online baratas y escalables: coste por punto casi constante (dependiendo de la búsqueda del microclúster).
+
+- Memoria acotada: guardas microclústeres, no puntos.
+
+- Manejo natural de outliers: microclústeres “candidatos” pueden morir si no reciben apoyo.
+
+- Olvido gradual: con decaimiento, el modelo se adapta a cambios sin “resetear”
+:::
+
+::: {.callout-note collapse="true" title="Inconvenientes"}
+-   Más complejidad conceptual (y más fácil equivocarse en la implementación).
+
+- Más hiperparámetros: radio $\varepsilon$, umbrales de densidad, factor  decaimiento $\lambda$, frecuencia de poda/reclustering, etc.
+
+- Aproximación: el macroclustering se hace sobre un resumen; si el resumen es pobre, el resultado también.
+:::
+
+
+
+**Ejemplo (tracking en partido)**: Si $\mathbf{x}=(z,y,v,a)$ llega a alta frecuencia, los microclústeres pueden representar “zonas de ocupación” (posición) o “regímenes de velocidad” (caminar/trotar/sprint), patrones de presión (espacio-tiempo) sin almacenar cada muestra.
+
+
+### Ventanas vs microclústeres: guía de decisión
+
+- Frecuencia y volumen
+
+  - Baja frecuencia (wellness diario, test semanales, KPIs por partido): ventanas suelen bastar.
+
+  - Alta frecuencia (tracking a 10–25 Hz, IMU a 100–500 Hz): microclústeres suelen ser necesarios.
+
+- Necesidad de interpretabilidad inmediata
+
+  - “Quiero explicar a un staff que estos son los clústeres del último mes” $\rightarrow$ ventanas.
+
+  - “Quiero un modelo continuo que se actualice cada segundo” $\rightarrow$ microclústeres.
+
+- Deriva rápida
+
+  - Si esperamoss cambios bruscos (lesión, cambio táctico, vuelta tras parón), microclústeres con decaimiento suelen reaccionar mejor que ventanas grandes.
+
+  - Si la deriva es lenta y el volumen es moderado, ventanas con recalibración periódica funcionan bien.
+
+- Coste de ingeniería
+
+  - Ventanas: fácil y robusto.
+
+  - Microclústeres: más potencia, pero más tuning.
 
 
 
