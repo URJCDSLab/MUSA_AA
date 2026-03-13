@@ -15,6 +15,7 @@ book:
     - reddim.qmd
     - aprnosup.qmd
     - eval.qmd
+    - regresion.qmd
     - aprsup.qmd
     - reglas.qmd
     - nuevas.qmd

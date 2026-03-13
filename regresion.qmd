@@ -1,0 +1,1938 @@
+# Modelos de regresión {#sec-intro}
+
+## Introducción
+### Predecir vs. explicar en analítica deportiva {#sec-proposito}
+
+El modelado de regresión constituye una de las herramientas más utilizadas en el análisis de datos deportivos. Proporciona un marco estadístico riguroso para estudiar y cuantificar las relaciones entre variables relacionadas con el rendimiento, la táctica o la salud de los deportistas. Su aplicación abarca un amplio espectro de problemas en el deporte moderno: desde el análisis del rendimiento individual y colectivo, pasando por la predicción de resultados o probabilidades de gol, hasta la evaluación del riesgo de lesión o el impacto de determinadas estrategias de juego.
+
+En la actualidad, clubes profesionales, federaciones y departamentos de analítica emplean modelos estadísticos para apoyar la toma de decisiones en ámbitos tan diversos como el **scouting**, la **planificación de entrenamientos**, la **gestión de cargas**, la **evaluación de jugadores** o la **predicción de resultados de partidos**. En este contexto, los modelos de regresión permiten transformar grandes volúmenes de datos —procedentes de sistemas de seguimiento, sensores, estadísticas de partido o bases de datos históricas— en información útil para entrenadores, analistas y responsables deportivos.
+
+Aunque en la práctica ambos objetivos suelen aparecer combinados, conceptualmente el modelado estadístico puede orientarse hacia uno de dos propósitos principales, una distinción fundamental señalada por [@shmueli2010]: la **predicción** o la **inferencia (explicación)**. Comprender esta diferencia es especialmente importante en analítica deportiva, ya que algunos modelos se desarrollan principalmente para **anticipar eventos futuros** (por ejemplo, la probabilidad de victoria o de lesión), mientras que otros buscan **entender los factores que influyen en el rendimiento**, como el efecto de la carga de entrenamiento, la calidad del rival o la localía en el resultado de un partido.
+
+Distinguir entre estos dos objetivos es un paso clave para construir modelos estadísticos adecuados y para interpretar correctamente sus resultados en el contexto del deporte.
+
+
+1.  **Predicción**: El objetivo principal es la **precisión**. Se busca construir un modelo que pueda estimar con el menor error posible el valor de una variable de interés (la *respuesta*) basándose en la información proporcionada por otras variables (las *predictoras*). En este paradigma, el modelo puede ser tratado como una "caja negra" (*black box*). Su funcionamiento interno o la interpretabilidad de sus componentes son secundarios, siempre y cuando sus predicciones sean consistentemente fiables y robustas en datos no observados previamente.
+
+::: {.callout-tip title="Ejemplo" collapse="true"} 
+Un club deportivo quiere predecir la probabilidad de que un jugador sufra una lesión muscular durante la temporada. Para ello utilizan variables como la carga de entrenamiento reciente, los minutos jugados, la edad del jugador, el historial de lesiones y métricas físicas procedentes de sensores GPS (por ejemplo, número de sprints o distancia recorrida a alta intensidad).
+
+El cuerpo técnico y el departamento médico no necesitan necesariamente identificar la causa fisiológica exacta de cada lesión. Su principal interés es disponer de un modelo que identifique a los jugadores con mayor riesgo, de modo que puedan ajustar la carga de entrenamiento, modificar las rotaciones o aplicar medidas preventivas para reducir la probabilidad de lesión y mantener a los jugadores disponibles para la competición.
+:::
+
+2.  **Inferencia**: El foco se desplaza radicalmente hacia la **comprensión** y la **interpretación**. El objetivo no es solo predecir, sino dilucidar la naturaleza de las interdependencias entre las variables. Se busca cuantificar cómo un cambio en una variable predictora influye, ya sea de forma causal o asociativa, en la variable de respuesta. Aquí, la interpretabilidad del modelo es primordial. El interés reside en la magnitud, el signo y, crucialmente, la incertidumbre estadística (expresada mediante errores estándar, intervalos de confianza y p-valores) de los parámetros estimados.
+
+::: {.callout-tip title="Ejemplo" collapse="true"} 
+Un científico del deporte investiga los factores que influyen en el riesgo de lesión muscular en futbolistas profesionales. Para ello modela la probabilidad de lesión en función de variables como la carga de entrenamiento acumulada, los minutos disputados en competición, la edad del jugador y el historial previo de lesiones.
+
+Su objetivo no es únicamente predecir si un jugador se lesionará o no, sino entender y cuantificar la relación entre estas variables y el riesgo de lesión. Por ejemplo, podría plantear una pregunta como: “¿Cuánto aumenta, en promedio, la probabilidad de lesión cuando la carga de entrenamiento semanal se incrementa en un determinado porcentaje, manteniendo constantes la edad, los minutos jugados y el historial de lesiones?”
+
+Responder a este tipo de preguntas tiene implicaciones directas para la planificación del entrenamiento, la gestión de cargas y las estrategias de prevención de lesiones, ayudando a los equipos a optimizar el rendimiento y reducir el tiempo de indisponibilidad de los jugadores.
+:::
+
+::: {.callout-important title="Una relación simbiótica"}
+Aunque conceptualmente distintos, ambos objetivos no son mutuamente excluyentes; a menudo se benefician el uno del otro. Un modelo con una base inferencial sólida, que captura relaciones causales o asociativas verdaderas, suele tener un buen rendimiento predictivo. A la inversa, un modelo que demuestra una alta precisión predictiva en datos nuevos nos da confianza en que las relaciones que ha aprendido no son meras casualidades del conjunto de datos de entrenamiento, sino que probablemente reflejen patrones reales y generalizables. La tensión entre interpretabilidad y precisión es uno de los debates más fascinantes en la ciencia de datos moderna.
+:::
+
+### Anatomía de un modelo de regresión: los componentes axiomáticos {#sec-componentes}
+
+Todo modelo de regresión, desde el más simple hasta el más sofisticado, se construye sobre tres pilares fundamentales. Estos componentes, definidos en textos clásicos como el de [@kutner2005applied], son los ladrillos con los que edificaremos todo nuestro conocimiento.
+
+#### La variable de respuesta 
+
+También designada como **variable dependiente**, **variable de salida**, **target**, **variable objetivo** o **variable explicada**. Representa el fenómeno o la característica principal cuyo comportamiento se busca modelar, comprender o predecir. La naturaleza de esta variable es, quizás, el factor más determinante a la hora de elegir el tipo de modelo de regresión. Puede ser: 
+
+- **Continua**: Una variable que puede tomar cualquier valor dentro de un rango. Ej: temperatura, altura, precio de una acción, concentración de un compuesto químico. 
+- **Discreta de Conteo**: Una variable que representa un número de eventos. Ej: número de accidentes en una intersección, número de clientes que entran en una tienda, número de mutaciones en un gen. 
+- **Binaria o Dicotómica**: Una variable con solo dos resultados posibles. Ej: éxito/fracaso, enfermo/sano, compra/no compra, spam/no spam. 
+- **Categórica**: Una variable que representa grupos o categorías. Si no tiene orden, es **nominal** (ej: tipo de sangre, partido político); si tiene un orden intrínseco, es **ordinal** (ej: nivel de satisfacción "bajo/medio/alto", estadio de una enfermedad "I/II/III/IV").
+
+#### Las variables predictoras
+
+Conocidas indistintamente como **variables independientes**, **explicativas**, **regresoras**, **covariables** o **características** (*features*). Son las magnitudes, atributos o factores que se postula que influyen o están asociados con el comportamiento de la variable de respuesta. Al igual que la variable de respuesta, pueden ser de diversa naturaleza (continuas, categóricas, etc.). La selección de estas variables es una de las fases más críticas del modelado, requiriendo una combinación de conocimiento del dominio, análisis exploratorio de datos y técnicas estadísticas formales.
+
+#### El término de error aleatorio 
+
+Este componente, a menudo subestimado, es conceptualmente crucial. Simboliza la variabilidad intrínseca de la variable de respuesta que **no es capturada o explicada** por las variables predictoras incluidas explícitamente en el modelo. El término de error $\epsilon$ no es un simple "error" en el sentido de equivocación; es un componente estocástico que amalgama múltiples fuentes de variabilidad: 
+
+- **Variables Omitidas**: Ningún modelo es perfecto. Siempre habrá factores que influyen en $Y$ pero que no han sido medidos o incluidos en el modelo (variables latentes). 
+- **Error de Medición**: Las mediciones de $Y$ (y también de $X$) pueden no ser perfectamente precisas. 
+- **Aleatoriedad Intrínseca**: Muchos fenómenos naturales y sociales tienen un componente de variabilidad irreducible. Dos individuos con idénticos valores en todas las variables predictoras pueden, aun así, tener valores distintos en la variable de respuesta.
+
+Formalmente, la relación fundamental de la regresión se expresa como la descomposición de la variable de respuesta en una parte sistemática y una parte aleatoria:
+
+$$Y = \underbrace{f(X_1, \ldots, X_k)}_{\text{Componente Sistemática}} + \underbrace{\epsilon}_{\text{Componente Aleatoria}}$$
+
+donde $f(\cdot)$ denota la **componente sistemática** (o determinística) del modelo, que representa el valor esperado de $Y$ para unos valores dados de las $X$. La función $f$ es lo que intentamos estimar a partir de los datos. Por su parte, $\epsilon$ es la **componente aleatoria**, y gran parte del diagnóstico y la inferencia en regresión se basa en verificar los supuestos que hacemos sobre la distribución de este término (ej: que su media es cero, que su varianza es constante, etc.).
+
+::: {.callout-caution title="Linealidad en los parámetros, no en las variables" collapse="true"}
+
+Una característica que define a los **modelos de regresión lineal** (y que se extiende a muchos otros tipos de modelos) es que la función $f(\cdot)$ mantiene una relación lineal con respecto a sus **parámetros desconocidos** (los coeficientes beta, $\beta_j$). Es crucial enfatizar que esta "linealidad en los parámetros" **no impone una restricción de linealidad en las variables predictoras mismas**.
+
+Por el contrario, es común y metodológicamente válido incorporar transformaciones no lineales de los predictores o interacciones complejas entre ellos para capturar relaciones más sofisticadas. Por ejemplo, el siguiente modelo es un **modelo de regresión lineal**:
+
+$$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_1^2 + \beta_3 \log(X_2) + \beta_4 (X_1 \cdot X_2) + \epsilon$$
+
+Aunque la relación entre $Y$ y las variables $X_1$ y $X_2$ es claramente no lineal (es cuadrática en $X_1$, logarítmica en $X_2$ e incluye una interacción), el modelo es **lineal en los parámetros** $\beta_0, \beta_1, \beta_2, \beta_3, \beta_4$. La función $f$ es una combinación lineal de estos coeficientes. Esta flexibilidad es una de las razones de la enorme potencia de los modelos lineales.
+
+
+El siguiente bloque de código en R genera un ejemplo visual. Simulamos datos que siguen una relación cuadrática y luego ajustamos un modelo lineal que incluye un término cuadrático ($X^2$). Como se puede observar en la figura, la línea de regresión (azul) captura perfectamente la curvatura de los datos, demostrando que un modelo lineal en sus parámetros puede modelar relaciones no lineales en sus variables.
+
+```{r}
+#| label: fig-linear-params
+#| fig-cap: "Ejemplo de un modelo lineal en los parámetros que captura una relación no lineal (cuadrática) en los datos."
+#| echo: true
+#| warning: false
+
+# Cargar la librería necesaria para la visualización
+library(ggplot2)
+
+# 1. Simulación de datos
+set.seed(42) # Para reproducibilidad
+n <- 100 # Número de observaciones
+x <- runif(n, -5, 5)
+# La relación verdadera es cuadrática: y = 1.5 + 0.5*x + 0.8*x^2 + error
+y <- 1.5 + 0.5 * x + 0.8 * x^2 + rnorm(n, mean = 0, sd = 5)
+datos <- data.frame(x, y)
+
+# 2. Ajuste del modelo lineal
+# Usamos I(x^2) para indicar que tratamos x^2 como una variable
+modelo_cuadratico <- lm(y ~ x + I(x^2), data = datos)
+
+# 3. Visualización con ggplot2
+ggplot(datos, aes(x = x, y = y)) +
+  geom_point(alpha = 0.6, color = "gray40") + # Puntos de los datos originales
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), se = FALSE, color = "#0072B2", size = 1.2) + # Línea del modelo ajustado
+  labs(
+    title = "Modelo Lineal con Término Cuadrático",
+    x = "Variable Predictora (X)",
+    y = "Variable de Respuesta (Y)"
+  ) +
+  theme_classic(base_size = 14)
+```
+
+:::
+
+### Un viaje preliminar por el universo de los modelos de regresión {#sec-tipos-modelos}
+
+La regresión lineal ha sido estudiada en la asignatura de Análisis de Datos en el Deporte, siendo el punto de partida y la piedra angular sobre la cual se erige una prolífica y fascinante gama de metodologías estadísticas avanzadas.
+
+#### Modelos lineales (LMs)
+
+Constituyen el paradigma fundamental, el alfabeto sobre el que se escribe el lenguaje del modelado estadístico. Son mucho más que una simple técnica para ajustar una recta a una nube de puntos; son el laboratorio donde se forjan y se comprenden los conceptos esenciales que nos acompañarán durante todo nuestro viaje. Es aquí donde aprenderemos a:
+
+- **Estimar parámetros** e interpretar su significado en el contexto del problema.
+- **Cuantificar la incertidumbre** de nuestras estimaciones mediante errores estándar e intervalos de confianza.
+- **Realizar contrastes de hipótesis** para evaluar si la relación entre nuestras variables es estadísticamente significativa o fruto del azar.
+- **Diagnosticar la "salud" de un modelo**, examinando si los supuestos sobre los que se construye son razonables para nuestros datos.
+
+En su forma más clásica, el modelo lineal asume que la variable de respuesta (y, por consecuencia, el término de error aleatorio) sigue una distribución Normal o Gaussiana. Esta asunción es la clave que desbloquea todo el elegante aparato de la inferencia estadística, permitiéndonos realizar pruebas exactas y derivar propiedades matemáticas bien conocidas. Técnicas tan ubicuas en la ciencia como el Análisis de la Varianza (ANOVA) o el Análisis de la Covarianza (ANCOVA) no son más que casos particulares de la gran familia de los modelos lineales, un hecho que unifica campos de la estadística que históricamente se estudiaban por separado. Dominar los LMs es, sencillamente, un requisito indispensable.
+
+#### Modelos lineales generalizados (GLMs)
+
+Si los LMs son el alfabeto, los GLMs son la gramática que nos permite construir frases complejas y con significado en una variedad de contextos mucho más amplia. Introducidos en el influyente y verdaderamente revolucionario trabajo de [@nelder1972generalized], los GLMs representan un salto conceptual que expande de forma masiva el universo de problemas que podemos abordar. Suponen una generalización elegante que nos permite escapar de la "tiranía" de la distribución Normal y modelar respuestas con una variedad mucho más amplia de naturalezas y escalas.
+
+Esta flexibilidad se logra mediante la combinación de dos ingeniosos mecanismos que son el corazón de la teoría:
+
+1.  **La familia exponencial de distribuciones**: Los GLMs no funcionan con cualquier distribución, sino con aquellas que pertenecen a una "familia" matemática con propiedades muy convenientes: la **familia exponencial**. Este "club" de distribuciones es muy selecto, pero incluye a miembros tan importantes como la Normal, la Poisson (para datos de conteo), la Binomial (para datos de proporciones o binarios), la Gamma (para datos continuos positivos y asimétricos) o la Binomial Negativa. Su estructura matemática común permite desarrollar una teoría unificada para la estimación de parámetros, lo que es un logro teórico de primer orden.
+
+2.  **La función de enlace (link function)**: Este es el verdadero golpe de genialidad. El predictor lineal de nuestro modelo, $\boldsymbol{X\beta}$, puede tomar cualquier valor en la recta real, desde $-\infty$ hasta $+\infty$. Sin embargo, la media de nuestra variable de respuesta, $E[Y] = \mu$, a menudo está restringida. Por ejemplo, una probabilidad ($\mu$ en un modelo binomial) debe estar entre 0 y 1; un conteo ($\mu$ en un modelo de Poisson) debe ser positivo. La función de enlace, $g(\cdot)$, actúa como un **"traductor"** o un **"puente"** que conecta estos dos mundos. Transforma la media restringida de la respuesta para que pueda ser modelada por el predictor lineal no restringido. La relación fundamental es, por tanto, $g(E[Y]) = g(\mu) = \boldsymbol{X\beta}$.
+
+- Para datos de **conteo** (Poisson), se usa un **enlace logarítmico** ($g(\mu) = \log(\mu)$). Esto garantiza que, al invertir la función para obtener la media ($\mu = \exp(\boldsymbol{X\beta})$), el resultado será siempre positivo, como debe ser un conteo.
+- Para datos **binarios** (Binomial), se usa un **enlace logit** ($g(\mu) = \log(\frac{\mu}{1-\mu})$). Esta función toma una probabilidad $\mu$ en el rango (0, 1) y la proyecta sobre toda la recta real, permitiendo que sea modelada por $\boldsymbol{X\beta}$.
+
+Gracias a los GLMs, podemos usar el mismo marco conceptual de la regresión lineal para modelar una gama de fenómenos increíblemente diversa, desde predecir la cantidad de ciclistas en una ciudad (Poisson) hasta la probabilidad de que un paciente responda a un tratamiento (logística).
+
+#### Modelos de efectos mixtos (Mixed Models)
+
+Su desarrollo responde a la necesidad crítica de analizar datos que exhiben estructuras de dependencia o correlación, como agrupamientos, anidamientos o jerarquías. En datos estándar, asumimos que las observaciones son independientes, pero esta asunción se viola en casos como: 
+- **Medidas repetidas** sobre los mismos sujetos (ej: medir la presión arterial de un paciente cada mes). 
+ -**Datos longitudinales** (un tipo de medida repetida a lo largo del tiempo). 
+ - **Datos agrupados** (ej: estudiantes anidados dentro de clases, que a su vez están anidadas dentro de colegios). Estos modelos, detallados en obras como la de [@pinheiro2000], introducen explícitamente una estructura de correlación en el término de error mediante la incorporación de **efectos aleatorios**, que permiten capturar la variabilidad entre los diferentes grupos o individuos, además de los **efectos fijos** que representan a la población general.
+
+#### Modelos aditivos generalizados (GAMs)
+
+Representan una extensión natural y altamente flexible de los GLMs que relaja el supuesto de linealidad entre el predictor transformado y las covariables. Los GAMs, cuya implementación moderna se debe en gran parte al trabajo de [@wood2017], permiten modelar estas relaciones mediante **funciones suaves** no paramétricas (como *splines*), manteniendo al mismo tiempo la estructura aditiva del modelo. La forma general es $g(\mu) = \alpha + f_1(x_1) + f_2(x_2) + \ldots + f_p(x_p)$, donde las $f_i(\cdot)$ son funciones suaves de los predictores estimadas a partir de los datos. Esto permite capturar patrones no lineales complejos sin necesidad de especificar una forma funcional paramétrica a priori, logrando un equilibrio excepcional entre flexibilidad e interpretabilidad.
+
+
+::: {.callout-note title="R como lenguaje del modelado estadístico" collapse="true"}
+
+Este compendio no es un texto puramente teórico. Fusiona intrínsecamente la exposición de los conceptos con su aplicación computacional directa a través del lenguaje y entorno estadístico **R**. R se ha consolidado como el estándar de facto en la investigación estadística y la ciencia de datos académica por su potencia, flexibilidad y el inmenso ecosistema de paquetes contribuidos por la comunidad científica. Se presupone en el lector una familiaridad operativa básica con R, y se fomenta activamente el desarrollo de una fluidez progresiva mediante la reproducción, modificación y experimentación con los numerosos ejemplos y fragmentos de código presentados.
+
+La capacidad de ejecutar análisis en R es fundamental para todo el ciclo de vida del modelado: 
+
+- La **exploración de datos** y la visualización inicial. 
+- La **estimación de parámetros** y el ajuste de los modelos. 
+- El **diagnóstico riguroso** de la adecuación del modelo y la validación de sus supuestos. 
+- La **producción de gráficos** y tablas de alta calidad para comunicar los resultados.
+
+
+
+En R, las herramientas fundamentales para la regresión lineal (`lm()`) y los modelos lineales generalizados (`glm()`) están incluidas en el paquete **`stats`**, que es uno de los **paquetes base** y se carga automáticamente con cada sesión. Por lo tanto, no necesitamos instalarlo ni cargarlo.
+
+A lo largo del libro, extenderemos esta funcionalidad base con paquetes especializados que sí requieren instalación y carga. Entre los más importantes que usaremos se encuentran:
+
+* `mgcv`: La implementación de referencia para GAMs, mantenida por su creador, Simon Wood, y citada en [@wood2017].
+* `lme4` y `nlme`: Los dos paquetes fundamentales para el ajuste de modelos de efectos mixtos, desarrollados por los pioneros en el campo [@pinheiro2000; @bates2015].
+* `rms`: Un paquete y una filosofía de trabajo para implementar estrategias de modelado de regresión robustas, como se detalla en la obra de [@harrell2015].
+* `gamair`: Contiene numerosos conjuntos de datos que acompañan al libro de [@wood2017], ideales para practicar con GAMs.
+
+:::
+
+
+### Historia del desarrollo de la regresión {#sec-historia}
+
+#### Los orígenes: Galton y la "regresión a la mediocridad"
+
+La gestación de la metodología de regresión se traza hasta las investigaciones pioneras de Sir **Francis Galton**, un polímata de la era victoriana. A finales del siglo XIX, estudiando la herencia de la estatura, Galton recopiló datos de padres e hijos y notó un fenómeno curioso: los padres muy altos tendían a tener hijos altos, pero, en promedio, no tan altos como ellos. Análogamente, los padres muy bajos tenían hijos bajos, pero no tan bajos como ellos. Acuñó el término **"regresión a la mediocridad"** (hoy diríamos "regresión a la media") para describir esta tendencia de las características de la descendencia a "regresar" hacia la media de la población, en lugar de perpetuar los extremos de los progenitores [@galton1886].
+
+::: {.callout-tip title="Estudios de Galton sobre estatura" collapse="true"}
+
+**Datos recopilados**
+
+-   Galton recopiló datos sobre las estaturas de **928 hijos** y sus
+    respectivos **padres**.
+-   Las medidas fueron expresadas en pulgadas (1 pulgada = 2.54 cm).\
+-   En sus análisis, utilizó el promedio de las estaturas de ambos
+    padres, conocido como **estatura media parental**, para compararlo
+    con la estatura de los hijos.
+
+**Principales hallazgos**
+
+1.  **Relación lineal entre padres e hijos:**\
+    Galton observó que existe una relación positiva entre la estatura de
+    los padres y la de los hijos. Los padres altos tienden a tener hijos
+    altos, y los padres bajos tienden a tener hijos bajos. Esta relación
+    puede modelarse con una línea recta, lo que inspiró la formulación
+    de la regresión lineal.
+
+2.  **Regresión a la media:**
+
+    -   Aunque los hijos de padres altos son, en promedio, más altos que
+        el promedio general de la población, también tienden a ser
+        **menos altos que sus padres**.\
+    -   De manera similar, los hijos de padres bajos son más bajos que
+        el promedio general, pero suelen ser **menos bajos que sus
+        padres**.\
+    -   Este fenómeno, que Galton llamó "regresión a la media", ocurre
+        porque las características extremas tienden a suavizarse en la
+        siguiente generación debido a la influencia de múltiples
+        factores genéticos y ambientales.
+
+3.  **Ecuación de la recta de regresión:**\
+    Galton ajustó una recta para describir la relación entre la estatura
+    media parental ($X$) y la estatura de los hijos ($Y$): $$
+    Y = \beta_0 + \beta_1 X
+    $$ Donde:
+
+    -   $\beta_0$: Intercepto, representa la estatura promedio de los
+        hijos cuando la estatura parental es promedio.
+    -   $\beta_1$: Pendiente, indica cómo cambia la estatura de los
+        hijos por cada unidad de cambio en la estatura media parental.
+
+**Importancia en la Estadística**
+
+1.  **Regresión lineal:**\
+    Este estudio introdujo el concepto de **recta de regresión**, que
+    describe cómo varía la media de una variable dependiente en función
+    de una variable independiente.
+
+2.  **Correlación:**\
+    Galton también estudió el grado de relación entre variables,
+    precursor del concepto de **coeficiente de correlación**
+    desarrollado posteriormente por Karl Pearson, un discípulo suyo.
+
+3.  **Regresión a la media:**\
+    El término y la idea detrás de "regresión a la media" surgieron de
+    estos estudios y son hoy fundamentales en estadística y genética.
+
+**Ejemplo Gráfico**
+
+Galton representó sus datos en gráficos de dispersión, mostrando cómo
+los puntos (pares de estatura media parental y estatura de los hijos) se
+agrupan alrededor de la recta de regresión, ilustrando la tendencia
+general de la relación.
+
+```{r galtonn}
+#| fig-cap: "Datos históricos del estudio sobre la 'regresión a la media'."
+# Cargar los paquetes necesarios
+library(ggplot2)
+library(HistData)
+
+# Cargar los datos de Galton
+data("GaltonFamilies")
+
+# Crear el modelo de regresión lineal para obtener los coeficientes
+modelo <- lm(childHeight ~ midparentHeight, data = GaltonFamilies)
+
+# Crear la etiqueta para la ecuación de la recta de forma más limpia
+# Usamos sprintf() para un formato más controlado y legible
+eq_label <- sprintf("y = %.2f + %.2f * x", coef(modelo)[1], coef(modelo)[2])
+
+# --- Gráfico Mejorado ---
+# Usamos un tema más limpio y colores más suaves para una apariencia profesional.
+# geom_jitter() es mejor que geom_point() para estos datos, ya que evita la superposición de puntos.
+ggplot(GaltonFamilies, aes(x = midparentHeight, y = childHeight)) +
+  
+  # 1. Puntos de datos: Usamos geom_jitter para visualizar mejor los puntos superpuestos
+  #    y añadimos transparencia (alpha) para ver la densidad.
+  geom_jitter(alpha = 0.3, color = "gray50", width = 0.1, height = 0.1) +
+  
+  # 2. Línea de regresión: En un color azul profesional y más gruesa para que destaque.
+  geom_smooth(method = "lm", se = FALSE, color = "#0072B2", size = 1.2) +
+  
+  # 3. Anotación: Añadimos la ecuación de la recta de forma elegante,
+  #    usando el mismo color que la línea para crear cohesión visual.
+  annotate(
+    "text",
+    x = 66, y = 74, # Posición ajustada para mejor visibilidad
+    label = eq_label,
+    color = "#0072B2", # Mismo color que la línea
+    size = 4.5, # Tamaño de la fuente
+    fontface = "italic" # Cursiva para la ecuación
+  ) +
+  
+  # 4. Títulos y etiquetas: Mejorados para mayor claridad y contexto.
+  #    Añadimos un subtítulo y una fuente.
+  labs(
+    title = "Regresión de la Estatura de Hijos vs. Padres",
+    x = "Promedio de Estatura de los Padres (pulgadas)",
+    y = "Estatura del Hijo/a (pulgadas)",
+    caption = "Fuente: Paquete HistData de R"
+  ) +
+  
+  # 5. Tema: Usamos un tema limpio y profesional como base.
+  theme_classic(base_size = 14)
+```
+:::
+
+#### La formalización matemática: Legendre y Gauss
+
+Aunque Galton sentó las bases conceptuales e introdujo el término, la formalización matemática de la estimación de parámetros en modelos lineales se atribuye a dos de los más grandes matemáticos de la historia. **Adrien-Marie Legendre** publicó en 1805 el "Método de los mínimos cuadrados" como un procedimiento numérico para ajustar observaciones astronómicas. Pocos años después, **Carl Friedrich Gauss** no solo publicó que había desarrollado el mismo método de forma independiente años antes, sino que lo dotó de una profundidad teórica mucho mayor, conectándolo con la teoría de la probabilidad y derivándolo bajo el supuesto de errores distribuidos normalmente, convirtiéndolo en la técnica fundamental para la estimación en modelos lineales que sigue siendo hoy.
+
+#### El desarrollo moderno: la revolución de los GLMs
+
+A lo largo del siglo XX, la regresión experimentó un desarrollo explosivo. Sin embargo, el hito que probablemente más ha influido en la práctica estadística moderna fue la publicación del artículo sobre **Modelos Lineales Generalizados (GLMs)** por **John Nelder** y **Robert Wedderburn** en 1972 [@nelder1972generalized]. Esta obra seminal fue revolucionaria porque unificó bajo un mismo paraguas conceptual y computacional diversas clases de modelos que hasta entonces se trataban por separado: la regresión lineal para datos normales, la regresión logística para datos binarios y la regresión de Poisson para datos de conteo. Esto estimuló enormemente el desarrollo de software y la aplicación del modelado estadístico a una nueva y vasta gama de problemas.
+
+#### La evolución contemporánea
+
+Este legado continúa evolucionando a un ritmo vertiginoso, con la inclusión de modelos jerárquicos y bayesianos, métodos no paramétricos y de *machine learning* como los árboles de regresión, y la adaptación de la regresión al análisis de datos masivos (*big data*). La regresión ha evolucionado desde una observación sobre la herencia biológica hasta convertirse en una de las herramientas más versátiles y poderosas del arsenal analítico moderno.
+
+
+## Modelos de regresión generalizada {#sec-tema4}
+
+La regresión lineal es una herramienta poderosa para modelar la relación entre una variable dependiente continua y un conjunto de variables independientes. Sin embargo, en muchos contextos del mundo real, las suposiciones de la regresión lineal tradicional no son adecuadas. ¿Qué sucede si la variable dependiente es binaria, como en un diagnóstico médico (lesión/sano)? ¿O si estás modelando el número de eventos en una partido o la cantidad de ocasiones de gol de un equipo?
+
+Para abordar estos desafíos, se utilizan los llamados **Modelos Lineales Generalizados (GLM)**. Esta clase de modelos amplía la regresión lineal al permitir que la variable dependiente tenga distribuciones diferentes a la normal, como la binomial o la de Poisson. Además, los GLM utilizan funciones de enlace que transforman la relación entre la variable dependiente y los predictores, permitiendo una mayor flexibilidad en el modelado.
+
+Algunos de los modelos más comunes dentro de los GLM son:
+
+-   Regresión Logística: Ideal para variables dependientes binarias (sí/no, éxito/fracaso).
+-   Regresión de Poisson: Utilizada para modelar datos de conteo (número de eventos).
+-   Regresión Binomial Negativa: Una extensión de la regresión de Poisson para datos de conteo con sobredispersión.
+-   Modelos de Gamma y Inverso Gaussiano: Utilizados para modelar variables continuas positivas y sesgadas, como tiempos de espera o costos.
+
+En este capítulo, exploraremos cómo utilizar estos modelos para resolver problemas del mundo real, interpretar sus resultados y evaluar su ajuste.
+
+### Introducción a los GLM
+
+#### ¿Qué son los modelos lineales generalizados?
+
+Los **Modelos Lineales Generalizados (GLM)** son una extensión de los modelos de regresión lineal que permiten manejar una mayor variedad de tipos de datos y relaciones entre variables [@nelder1972generalized]. Mientras que la regresión lineal tradicional asume que la variable dependiente es continua y sigue una distribución normal, los GLM permiten trabajar con variables dependientes que:
+
+-   Son **binarias** (como éxito/fracaso o sí/no).
+-   Representan **conteos** de eventos (número de llamadas, accidentes, etc.).
+-   Son **continuas positivas** y no siguen una distribución normal (como tiempos o costos).
+
+Los GLM proporcionan una estructura flexible para modelar la relación entre una o más variables independientes y una variable dependiente que sigue alguna distribución de la **familia exponencial** (binomial, Poisson, gamma, entre otras).
+
+#### Componentes de un modelo lineal generalizado
+
+Un GLM se define por tres componentes clave:
+
+1.  **Componente Aleatorio:**
+
+    Este componente describe la distribución de la variable dependiente. En la regresión lineal, la variable dependiente sigue una distribución normal. En los GLM, puede seguir otras distribuciones de la **familia exponencial**, como:
+
+    -   **Distribución Binomial:** Para variables categóricas binarias (0/1, éxito/fracaso).
+    -   **Distribución de Poisson:** Para datos de conteo (número de eventos).
+    -   **Distribución Gamma:** Para variables continuas y positivas (como costos o tiempos).
+
+2.  **Componente Sistemático:**\
+    Este componente describe cómo las variables independientes se combinan linealmente en el modelo. Se define como:
+
+    $$
+    \eta = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+    $$
+
+    Donde $\eta$ es el **predictor lineal** y $\boldsymbol{\beta}$ representa los coeficientes del modelo.
+
+3.  **Función de Enlace:**\
+    La función de enlace conecta el componente sistemático con la media de la variable dependiente. Mientras que en la regresión lineal la relación es directa ($y = \eta$), en los GLM se utiliza una función de enlace $g(\mu)$ para transformar la media $\mu$ y ajustar diferentes tipos de datos.
+
+    $$
+    g(\mu) = \eta
+    $$
+
+**Ejemplos de funciones de enlace:**
+
+-   **Logística (Logit):** Para la regresión logística, que modela la probabilidad de un evento. $$
+    g(\mu) = \log\left(\frac{\mu}{1 - \mu}\right)
+    $$
+-   **Logarítmica:** Para la regresión de Poisson, que modela tasas de eventos. $$
+    g(\mu) = \log(\mu)
+    $$
+-   **Identidad:** Para la regresión lineal estándar. $$
+    g(\mu) = \mu
+    $$
+
+::: {.callout-note collapse="true" title="Aplicaciones"}
+Los GLM se utilizan en una amplia variedad de disciplinas para resolver problemas del mundo real:
+
+**Regresión logística (variables binarias)**
+
+La **regresión logística** se emplea cuando la variable respuesta tiene dos categorías, por ejemplo: éxito/fracaso, lesión/no lesión, victoria/derrota.
+
+-   **Modelos de goles esperados (xG) en fútbol:** estimación de la probabilidad de que un disparo termine en gol a partir de variables como distancia, ángulo, tipo de asistencia, parte del cuerpo, situación de juego y presión defensiva.
+-   **Modelos de tiro en baloncesto:** probabilidad de acierto de un lanzamiento según la localización, el tipo de tiro, el defensor más cercano, el tiempo restante de posesión o la fatiga acumulada.
+-   **Predicción de lesión deportiva:** probabilidad de que un jugador sufra una lesión en un horizonte temporal determinado usando carga aguda/crónica, minutos, historial médico, asimetrías y datos GPS.
+-   **Scouting y desarrollo de talento:** probabilidad de que un jugador de cantera alcance el primer equipo o de que un fichaje rinda por encima de un umbral.
+-   **Análisis arbitral o disciplinario:** probabilidad de recibir tarjeta roja, de cometer una falta táctica o de provocar penalti bajo determinadas condiciones de juego.
+
+En fútbol, un modelo logístico puede utilizarse para estimar la probabilidad de gol de cada disparo. Si definimos la variable respuesta como `gol = 1` y `no gol = 0`, el modelo permite relacionar esa probabilidad con características observables de la acción. Esta es la base de muchos sistemas de **expected goals (xG)** empleados por clubes, medios y proveedores de datos.
+
+**Regresión de Poisson (datos de conteo)**
+
+La **regresión de Poisson** se utiliza cuando la variable respuesta representa el número de veces que ocurre un evento en un intervalo de tiempo, espacio o exposición.
+
+-   **Número de goles por equipo en un partido:** modelo clásico en fútbol para relacionar goles anotados con fuerza ofensiva, fortaleza defensiva, localía, descanso y calidad del rival.
+-   **Conteo de tiros, córners o recuperaciones:** modelado del número de eventos técnicos o tácticos generados por un equipo en función del contexto competitivo.
+-   **Análisis de acciones por unidad de tiempo:** número de presiones, sprints o aceleraciones por partido o por 90 minutos.
+-   **Eventos discretos en tenis:** número de aces, dobles faltas o break points generados en un encuentro.
+-   **Modelado del marcador como proceso de conteo:** base de muchos modelos probabilísticos de predicción de resultados en fútbol y hockey.
+
+
+En analítica de partidos, la regresión de Poisson ha sido muy utilizada para modelar el número de goles que cada equipo puede marcar en un encuentro. A partir de esta idea se construyen modelos predictivos del resultado, probabilidades de victoria/empate/derrota y distribuciones completas del marcador.
+
+**Regresión binomial negativa (conteos con sobredispersión)**
+
+En muchos conjuntos de datos deportivos, la variabilidad observada es mayor que la que admite el modelo de Poisson. En esos casos, una alternativa habitual es la **regresión binomial negativa**.
+
+-   **Número de tiros de un jugador por partido:** algunos partidos tienen contextos tácticos muy distintos y generan una variabilidad elevada.
+-   **Acciones de alta intensidad:** número de sprints, aceleraciones o esfuerzos máximos en sesiones o partidos con gran heterogeneidad.
+-   **Incidencias médicas o físicas en una temporada:** microlesiones, molestias o episodios de indisponibilidad.
+-   **Eventos defensivos en fútbol o baloncesto:** entradas, intercepciones, duelos o rebotes cuando la dispersión excede claramente a la media.
+-   **Producción ofensiva individual:** puntos, tiros o posesiones finalizadas en jugadores con roles muy cambiantes entre partidos.
+
+Si el número de sprints de un jugador presenta una dispersión muy superior a su media, la Poisson puede resultar demasiado restrictiva. En ese caso, la binomial negativa suele proporcionar un ajuste más realista y estimaciones más fiables.
+
+**Ejemplos más avanzados usados realmente en analítica deportiva moderna**
+
+**Modelos de goles esperados (xG)**
+
+Aunque el xG suele presentarse como una aplicación simple de regresión logística, en la práctica moderna se enriquece con muchas más variables y, en ocasiones, con estructuras jerárquicas o interacciones.
+
+Variables habituales:
+
+-   distancia a portería
+-   ángulo de tiro
+-   tipo de jugada (abierta, contraataque, balón parado, penalti)
+-   parte del cuerpo
+-   tipo de asistencia
+-   número y proximidad de defensores
+-   posición del portero
+-   velocidad de la jugada
+
+En su formulación más básica:
+
+$$
+\log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_k x_{ik}
+$$
+
+donde $p_i$ es la probabilidad de que el disparo $i$ termine en gol.
+
+**Modelos Poisson bivariantes para resultados de partidos**
+
+En fútbol es frecuente modelar simultáneamente los goles del equipo local y visitante. Una extensión realista del enfoque clásico consiste en usar una **Poisson bivariante**, que permite capturar cierta dependencia entre ambos conteos.
+
+Aplicaciones:
+
+- estimación de probabilidades de marcador exacto
+- predicción de victoria, empate o derrota
+- simulación de temporadas
+- cálculo de probabilidades para mercados deportivos
+- evaluación del efecto de la localía y la fortaleza relativa de los equipos
+
+Este tipo de modelos aparece con frecuencia en la literatura de predicción de resultados y en sistemas de rating competitivos.
+
+**Modelos plus-minus en baloncesto**
+
+Muchos modelos **plus-minus ajustados** parten de una formulación lineal o generalizada para estimar el impacto de cada jugador en el diferencial de anotación del equipo cuando está en pista, controlando por compañeros, rivales y contexto.
+
+Aplicaciones:
+
+- estimar contribución individual más allá del box score
+- separar rendimiento propio del efecto de compañeros y rivales
+- construir métricas de impacto por posesión
+- apoyar decisiones de rotación y fichajes
+
+En versiones modernas, estos modelos suelen incorporar regularización, efectos aleatorios o estructuras bayesianas, pero conceptualmente están conectados con la idea de modelar una respuesta como función de covariables de contexto.
+
+**Modelos de supervivencia para tiempo hasta lesión o retorno**
+
+Aunque estrictamente van más allá del GLM clásico, en analítica de rendimiento y medicina deportiva es muy común trabajar con modelos relacionados, especialmente para estudiar el **tiempo hasta que ocurre un evento**.
+
+Ejemplos:
+
+- tiempo hasta la primera lesión
+- tiempo hasta recaída
+- tiempo hasta retorno a la competición
+- tiempo hasta fatiga o sustitución
+
+Aplicaciones:
+
+- planificación de cargas
+- gestión de riesgo de lesión
+- personalización del retorno al juego
+- comparación de protocolos de recuperación
+
+**Modelos jerárquicos o multinivel para rendimiento deportivo**
+
+En deporte es muy frecuente que las observaciones no sean independientes: tiros anidados en jugadores, jugadores anidados en equipos, partidos anidados en temporadas. Por ello, muchos modelos modernos incorporan estructura jerárquica.
+
+Ejemplos:
+
+- xG con efectos aleatorios por jugador o equipo
+- modelos de lanzamiento en baloncesto con interceptos aleatorios por tirador
+- modelos de rendimiento físico con medidas repetidas por jugador
+- modelos longitudinales de carga y fatiga
+
+Esto permite estimar mejor la heterogeneidad individual y mejorar la generalización.
+
+:::
+
+#### Diferencias clave entre la regresión lineal y los GLM
+
+| **Característica** | **Regresión Lineal** | **Modelos Lineales Generalizados (GLM)** |
+|------------------|---------------------------|---------------------------|
+| **Distribución de la variable dependiente** | Normal | Familia exponencial (binomial, Poisson, gamma, etc.) |
+| **Tipo de variable dependiente** | Continua | Binaria, de conteo, continua positiva |
+| **Relación entre las variables** | Lineal directa | Relación transformada mediante una función de enlace |
+| **Función de Enlace** | Identidad ($g(\mu) = \mu$) | Logit, logarítmica, inversa, etc. |
+
+------------------------------------------------------------------------
+
+Las ventajas principales de los GLM son:
+
+-   **Flexibilidad:** Los GLM permiten modelar diferentes tipos de variables dependientes, lo que amplía significativamente el rango de problemas que se pueden abordar.
+
+-   **Interpretación Coherente:** Aunque se utilizan funciones de enlace, los coeficientes de los GLM pueden interpretarse de manera similar a los modelos lineales, proporcionando información sobre el impacto de cada variable independiente.
+
+-   **Evaluación Estadística Robusta:** Los GLM permiten la realización de pruebas de hipótesis, la construcción de intervalos de confianza y la evaluación de la bondad del ajuste mediante medidas ya conocidas como el AIC o el BIC.
+
+Los **Modelos Lineales Generalizados** amplían el alcance de la regresión lineal clásica, proporcionando herramientas para modelar una amplia variedad de tipos de datos, desde variables binarias hasta datos de conteo y variables continuas no normales. A través del uso de funciones de enlace y distribuciones flexibles, los GLM permiten resolver problemas complejos del mundo real en campos tan diversos como la medicina, el marketing, la ingeniería y las ciencias sociales.
+
+En las próximas secciones, exploraremos en detalle cómo aplicar estos modelos específicos, como la **regresión logística** y la **regresión de Poisson**, y cómo interpretar sus resultados en diferentes contextos.
+
+### Estimación de parámetros en GLM
+
+La estimación de parámetros en los **Modelos Lineales Generalizados** representa un aspecto fundamental que diferencia estos modelos de la regresión lineal clásica. Mientras que en la regresión lineal utilizamos mínimos cuadrados ordinarios para obtener estimadores con propiedades óptimas, en los GLM necesitamos métodos más sofisticados debido a la naturaleza no normal de las distribuciones involucradas y las funciones de enlace no lineales.
+
+La estimación en GLM se basa en el **principio de máxima verosimilitud**, que proporciona un marco teórico unificado para todos los modelos de la familia exponencial. Este enfoque no solo garantiza propiedades estadísticas deseables de los estimadores, sino que también permite el desarrollo de algoritmos computacionales eficientes para encontrar las soluciones.
+
+En esta sección exploraremos los fundamentos teóricos de la estimación por máxima verosimilitud, el algoritmo iterativo IRLS (Iteratively Reweighted Least Squares) que implementan los software estadísticos, y los problemas prácticos que pueden surgir durante el proceso de estimación. Comprender estos aspectos es crucial para interpretar correctamente los resultados y diagnosticar posibles problemas en el ajuste de los modelos.
+
+#### Método de Máxima Verosimilitud
+
+A diferencia de la regresión lineal que utiliza el método de **Mínimos Cuadrados**, los GLM emplean el **Método de Máxima Verosimilitud** para estimar los parámetros del modelo. Este cambio metodológico es necesario debido a que las distribuciones de la familia exponencial no siempre tienen una relación lineal directa con los predictores, y además porque la varianza de la variable respuesta depende de su media, violando el supuesto de homocedasticidad que requieren los mínimos cuadrados.
+
+El principio de máxima verosimilitud consiste en encontrar los valores de los parámetros $\boldsymbol{\beta}$ que hacen más probable observar los datos que tenemos. Para una muestra de $n$ observaciones independientes $y_1, y_2, \ldots, y_n$, la **función de verosimilitud** se define como la probabilidad conjunta de observar estos datos dado un conjunto de parámetros:
+
+$$L(\boldsymbol{\beta}) = \prod_{i=1}^{n} f(y_i; \theta_i, \phi)$$
+
+donde $f(y_i; \theta_i, \phi)$ es la función de densidad (o masa) de probabilidad de la observación $i$. En la práctica, es más conveniente trabajar con el logaritmo de esta función, conocida como **log-verosimilitud**:
+
+$$\ell(\boldsymbol{\beta}) = \sum_{i=1}^{n} \log f(y_i; \theta_i, \phi)$$
+
+La ventaja de usar el logaritmo es que convierte productos en sumas, simplificando considerablemente los cálculos matemáticos y numéricos.
+
+La clave para entender los GLM radica en reconocer que todas las distribuciones que podemos usar (binomial, Poisson, gamma, etc.) pertenecen a la **familia exponencial**. Estas distribuciones pueden expresarse en una forma matemática unificada:
+
+$$f(y; \theta, \phi) = \exp\left\{\frac{y\theta - b(\theta)}{a(\phi)} + c(y, \phi)\right\}$$
+
+donde $\theta$ es el **parámetro natural** o canónico que está relacionado directamente con la media de la distribución, $\phi$ es el **parámetro de dispersión** que controla la variabilidad, y $b(\theta)$, $a(\phi)$ y $c(y, \phi)$ son funciones específicas de cada distribución que determinan sus propiedades particulares.
+
+Esta forma unificada tiene propiedades matemáticas muy convenientes que hacen que los GLM sean tanto elegantes teóricamente como computacionalmente eficientes. La esperanza de $Y$ se obtiene como $E(Y) = \mu = b'(\theta)$ (la derivada de $b$ respecto a $\theta$), y la varianza como $\text{Var}(Y) = a(\phi) b''(\theta) = a(\phi) V(\mu)$, donde $V(\mu)$ es la **función de varianza** que caracteriza cómo la varianza depende de la media en cada tipo de distribución.
+
+::: {.callout-note title="La Familia Exponencial: Un Vistazo General"}
+La elegancia de los GLM reside en que muchas distribuciones aparentemente distintas comparten una estructura matemática común. Esto permite una teoría unificada. Aquí están los miembros más importantes:
+
+| Distribución | Uso Típico | Función de Varianza $V(\mu)$ | Enlace Canónico $g(\mu)$ |
+|:-----------------|:-----------------|:-----------------|:-----------------|
+| **Normal** | Datos continuos simétricos | $1$ | Identidad: $\mu$ |
+| **Binomial** | Proporciones, datos binarios (éxito/fracaso) | $\mu(1-\mu)$ | Logit: $\log(\frac{\mu}{1-\mu})$ |
+| **Poisson** | Conteos de eventos | $\mu$ | Log: $\log(\mu)$ |
+| **Gamma** | Datos continuos positivos y asimétricos (tiempos, costos) | $\mu^2$ | Inverso: $1/\mu$ |
+| **Inversa Gaussiana** | Tiempos hasta un evento, datos muy asimétricos | $\mu^3$ | Inverso al cuadrado: $1/\mu^2$ |
+
+La **función de varianza** $V(\mu)$ es la "firma" de cada distribución, ya que define la relación teórica entre la media y la varianza de la respuesta. El **enlace canónico** es la función de enlace que surge de forma natural de la estructura matemática de la distribución, aunque en la práctica se pueden usar otros enlaces.
+:::
+
+Esta relación entre media y varianza es fundamental para entender las diferencias entre los diversos GLM. En la regresión lineal clásica, la varianza es constante ($V(\mu) = 1$), pero en otros GLM la función de varianza toma formas específicas:
+
+-   **Distribución binomial**: $V(\mu) = \mu(1-\mu)$, la varianza es máxima cuando $\mu = 0.5$ y mínima en los extremos.
+-   **Distribución de Poisson**: $V(\mu) = \mu$, la varianza aumenta linealmente con la media.
+-   **Distribución gamma**: $V(\mu) = \mu^2$, la varianza aumenta cuadráticamente con la media.
+
+Estas funciones de varianza no solo determinan la heterocedasticidad inherente de cada distribución, sino que también influyen directamente en los pesos del algoritmo IRLS y en la precisión de las estimaciones. Por ejemplo, en regresión logística, las observaciones con probabilidades cercanas a 0.5 tienen mayor varianza y, por tanto, menor peso en la estimación, mientras que en regresión de Poisson, las observaciones con conteos más altos contribuyen con mayor peso al ajuste del modelo.
+
+##### Algoritmo de Newton-Raphson (IRLS)
+
+Para encontrar los valores de $\boldsymbol{\beta}$ que maximizan la log-verosimilitud, los GLM utilizan un algoritmo iterativo conocido como **Iteratively Reweighted Least Squares (IRLS)**, que es una implementación especializada del método de Newton-Raphson. La necesidad de un algoritmo iterativo surge porque, a diferencia de la regresión lineal donde existe una solución analítica cerrada, en los GLM las ecuaciones de verosimilitud no tienen solución directa debido a la presencia de funciones no lineales.
+
+El algoritmo IRLS se basa en la idea de que podemos aproximar la función de enlace y la varianza de la distribución en torno a un valor central (la media) y luego aplicar mínimos cuadrados de manera iterativa para ajustar los parámetros del modelo. Los pasos básicos del algoritmo son:
+
+1.  **Inicialización:** Establecer valores iniciales para los parámetros $\boldsymbol{\beta}^{(0)}$.
+
+2.  **Iteración** $t$:
+
+    -   Calcular el predictor lineal: $\eta_i^{(t)} = \mathbf{x}_i^T \boldsymbol{\beta}^{(t)}$.
+    -   Calcular la media estimada: $\mu_i^{(t)} = g^{-1}(\eta_i^{(t)})$.
+    -   Calcular los pesos: $w_i^{(t)} = \frac{1}{\text{Var}(\mu_i^{(t)})} \left(\frac{d\mu_i}{d\eta_i}\right)^2$.
+    -   Calcular la variable dependiente ajustada: $z_i^{(t)} = \eta_i^{(t)} + (y_i - \mu_i^{(t)}) \frac{d\eta_i}{d\mu_i}$.
+
+3.  **Actualización:** Actualizar los parámetros del modelo:
+
+    $$\boldsymbol{\beta}^{(t+1)} = (\mathbf{X}^T \mathbf{W}^{(t)} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{W}^{(t)} \mathbf{z}^{(t)}$$
+
+4.  **Convergencia:** Repetir el proceso hasta que la diferencia entre iteraciones sucesivas sea menor que un umbral predefinido.
+
+::: {.callout-tip title="Ejemplo: Convergencia del algoritmo IRLS" collapse="true"}
+```{r irls_convergence}
+# Ejemplo de seguimiento de la convergencia en regresión logística
+library(MASS)
+data(Pima.tr)
+
+# Función para mostrar el proceso iterativo
+mostrar_convergencia <- function() {
+  # Ajustar modelo con seguimiento de iteraciones
+  modelo <- glm(type ~ glu + bmi, data = Pima.tr, family = binomial,
+                control = glm.control(trace = TRUE, maxit = 10))
+  
+  cat("Número de iteraciones necesarias:", modelo$iter, "\n")
+  cat("¿Convergió?", modelo$converged, "\n")
+  cat("Log-likelihood final:", logLik(modelo), "\n")
+  
+  return(modelo)
+}
+
+# Ejecutar y mostrar convergencia
+modelo_ejemplo <- mostrar_convergencia()
+```
+:::
+
+##### Propiedades de los estimadores de máxima verosimilitud
+
+Los estimadores de máxima verosimilitud en GLM poseen propiedades estadísticas muy atractivas que los convierten en la elección preferida para la estimación de parámetros. Estas propiedades son **asintóticas**, lo que significa que se cumplen cuando el tamaño de la muestra tiende a infinito, pero en la práctica proporcionan una excelente aproximación para muestras moderadamente grandes.
+
+**1. Consistencia:** $$\hat{\boldsymbol{\beta}} \xrightarrow{p} \boldsymbol{\beta} \text{ cuando } n \to \infty$$
+
+La **consistencia** garantiza que a medida que aumentamos el tamaño de la muestra, nuestros estimadores se acercan cada vez más al valor verdadero de los parámetros. Esto significa que con suficientes datos, los estimadores de máxima verosimilitud convergerán al valor real de $\boldsymbol{\beta}$, eliminando el sesgo de estimación. Esta propiedad es fundamental porque nos asegura que no estamos introduciendo errores sistemáticos en nuestras estimaciones.
+
+**2. Normalidad asintótica:** $$\sqrt{n}(\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}) \xrightarrow{d} N(\mathbf{0}, \mathbf{I}^{-1}(\boldsymbol{\beta}))$$
+
+La **normalidad asintótica** establece que la distribución de los estimadores, apropiadamente escalada, se aproxima a una distribución normal multivariada cuando el tamaño de la muestra es grande. Esta propiedad es crucial porque:
+
+-   Permite construir **intervalos de confianza** para los parámetros usando la distribución normal
+-   Facilita la realización de **pruebas de hipótesis** sobre los coeficientes
+-   Proporciona la base teórica para los **estadísticos de Wald** utilizados en las pruebas de significancia
+
+La matriz de covarianza asintótica $\mathbf{I}^{-1}(\boldsymbol{\beta})$ nos permite calcular los errores estándar de nuestras estimaciones, que son esenciales para la inferencia estadística.
+
+**3. Eficiencia:**
+
+Los estimadores MV alcanzan la **cota de Cramér-Rao**, siendo asintóticamente eficientes. Esto significa que:
+
+-   Entre todos los estimadores insesgados posibles, los de máxima verosimilitud tienen la **menor varianza asintótica**
+-   No existe otro método de estimación que, bajo las mismas condiciones, produzca estimadores con menor incertidumbre
+-   Utilizan la información disponible en los datos de manera **óptima**
+
+En términos prácticos, esta eficiencia se traduce en intervalos de confianza más estrechos y pruebas de hipótesis más poderosas comparado con otros métodos de estimación.
+
+##### Matriz de información y errores estándar
+
+La implementación práctica de estas propiedades teóricas requiere el cálculo de la **matriz de información**, que cuantifica la cantidad de información que contienen los datos sobre los parámetros del modelo.
+
+La **matriz de información de Fisher** se define teóricamente como:
+
+$$\mathbf{I}(\boldsymbol{\beta}) = E\left[-\frac{\partial^2 \ell}{\partial \boldsymbol{\beta} \partial \boldsymbol{\beta}^T}\right]$$
+
+Sin embargo, en la práctica utilizamos la **matriz de información observada**, que se calcula directamente de nuestros datos:
+
+$$\mathbf{I}(\hat{\boldsymbol{\beta}}) = -\frac{\partial^2 \ell}{\partial \boldsymbol{\beta} \partial \boldsymbol{\beta}^T}\bigg|_{\boldsymbol{\beta}=\hat{\boldsymbol{\beta}}}$$
+
+Esta matriz representa las segundas derivadas de la log-verosimilitud evaluadas en nuestras estimaciones. Intuitivamente, mide qué tan "puntiaguda" es la función de verosimilitud alrededor del máximo: una función más puntiaguda indica mayor información y, por tanto, menor incertidumbre en la estimación.
+
+Para los GLM, el algoritmo IRLS proporciona una aproximación computacionalmente eficiente:
+
+$$\mathbf{I}(\hat{\boldsymbol{\beta}}) \approx \mathbf{X}^T \mathbf{W} \mathbf{X}$$
+
+donde $\mathbf{W}$ es la matriz diagonal de pesos calculada en la última iteración del algoritmo. Esta aproximación es exacta para la distribución normal y muy buena para otras distribuciones de la familia exponencial.
+
+Los **errores estándar** de los coeficientes individuales se obtienen como las raíces cuadradas de los elementos diagonales de la matriz de covarianza:
+
+$$\text{SE}(\hat{\beta}_j) = \sqrt{[\mathbf{I}^{-1}(\hat{\boldsymbol{\beta}})]_{jj}}$$
+
+Estos errores estándar son fundamentales para:
+
+-   **Intervalos de confianza:** $\hat{\beta}_j \pm z_{\alpha/2} \cdot \text{SE}(\hat{\beta}_j)$
+-   **Estadísticos de prueba:** $z_j = \frac{\hat{\beta}_j}{\text{SE}(\hat{\beta}_j)}$
+-   **Evaluación de la precisión** de nuestras estimaciones
+
+Es importante recordar que estos errores estándar son válidos bajo los supuestos del modelo GLM y que violaciones serias de estos supuestos (como sobredispersión en modelos de Poisson) pueden hacer que sean inadecuados.
+
+### Bondad de ajuste en GLMs
+
+Los **Modelos Lineales Generalizados** requieren métodos específicos para evaluar la calidad del ajuste que van más allá de las métricas tradicionales de la regresión lineal. Mientras que en la regresión lineal clásica utilizamos el coeficiente de determinación ($R^2$) y la suma de cuadrados residuales como medidas principales de bondad de ajuste, en los GLMs estas métricas no son apropiadas debido a las diferentes distribuciones subyacentes y las funciones de enlace no lineales.
+
+La evaluación de la bondad de ajuste en GLMs se basa fundamentalmente en conceptos de **verosimilitud** y **deviance**, que proporcionan una base teórica sólida para comparar modelos y evaluar su calidad de ajuste. Esta aproximacion basada en la verosimilitud es coherente con el método de estimación utilizado en estos modelos.
+
+#### La deviance como medida de bondad de ajuste
+
+La **deviance** (o **desviación**) es la medida principal de bondad de ajuste en los **Modelos Lineales Generalizados**. Conceptualmente, representa una generalización de la suma de cuadrados residuales de la regresión lineal para distribuciones no normales, pero su interpretación y cálculo son fundamentalmente diferentes.
+
+La deviance se basa en el principio de **máxima verosimilitud** y mide qué tan bien el modelo propuesto se ajusta a los datos comparado con el mejor ajuste posible. Para entender este concepto, es importante distinguir entre dos tipos de modelos:
+
+1.  **Modelo Saturado**: Un modelo hipotético que tiene tantos parámetros como observaciones, por lo que puede predecir perfectamente cada valor observado. Este modelo representa el "ajuste perfecto" teórico.
+
+2.  **Modelo Propuesto**: El modelo que estamos evaluando, con un número limitado de parámetros basado en nuestras variables predictoras.
+
+La deviance mide la **diferencia en log-verosimilitud** entre estos dos modelos:
+
+$$
+D = 2 \sum_{i=1}^{n} \left[ \ell(y_i; y_i) - \ell(y_i; \hat{\mu}_i) \right]
+$$
+
+donde:
+
+-   $\ell(y_i; y_i)$ = Log-verosimilitud del modelo saturado para la observación $i$.
+-   $\ell(y_i; \hat{\mu}_i)$ = Log-verosimilitud del modelo propuesto para la observación $i$.
+-   El factor 2 se incluye para que la deviance siga aproximadamente una distribución chi-cuadrado bajo ciertas condiciones.
+
+**Interpretación práctica:**
+
+-   **Deviance = 0**: Modelo perfecto que ajusta exactamente todos los datos observados
+-   **Deviance baja**: Buen ajuste del modelo a los datos
+-   **Deviance alta**: Mal ajuste del modelo, sugiere que el modelo no captura adecuadamente los patrones en los datos
+
+**Comparación relativa**: La deviance es más útil para **comparar modelos** que para evaluación absoluta. Un modelo con menor deviance indica mejor ajuste, pero el valor absoluto depende del tamaño de la muestra y la naturaleza de los datos.
+
+**Deviance residual vs. deviance nula**:
+
+-   **Deviance nula**: Deviance del modelo que solo incluye el intercepto (sin predictores)
+-   **Deviance residual**: Deviance del modelo con todos los predictores incluidos
+-   La diferencia entre ambas indica cuánto mejora el modelo al incluir las variables predictoras
+
+#### Test de la razón de verosimilitudes
+
+El **test de la razón de verosimilitudes** es la herramienta principal para comparar modelos anidados en GLMs y para evaluar la significancia global del modelo. Se basa en el principio de que si un modelo más complejo no mejora significativamente el ajuste, debemos preferir el modelo más simple por parsimonia.
+
+Cuando comparamos dos modelos anidados (donde uno es un caso especial del otro), la diferencia en sus deviances sigue aproximadamente una distribución chi-cuadrado:
+
+$$
+LRT = D_{\text{modelo reducido}} - D_{\text{modelo completo}} \sim \chi^2_{df}
+$$
+
+donde $df$ es la diferencia en grados de libertad (número de parámetros) entre los modelos.
+
+**Interpretación del test:**
+
+-   **Hipótesis nula (**$H_0$): El modelo reducido es adecuado (los parámetros adicionales no son necesarios)
+-   **Hipótesis alternativa (**$H_1$): El modelo completo es significativamente mejor
+-   **Decisión**: Si $p$-valor \< $\alpha$ (típicamente 0.05), rechazamos $H_0$ y preferimos el modelo completo
+
+**Aplicaciones principales:**
+
+1.  **Significancia global del modelo:** Comparar el modelo completo con el modelo nulo (solo intercepto) para determinar si las variables predictoras aportan información significativa.
+
+2.  **Selección de variables:** Evaluar si la inclusión o exclusión de variables específicas mejora significativamente el ajuste del modelo.
+
+3.  **Comparación de especificaciones:** Decidir entre diferentes formas funcionales o distribuciones para el mismo conjunto de datos.
+
+::: {.callout-tip title="Ejemplo: Comparando Modelos con el Test de Razón de Verosimilitudes" collapse="true"}
+Supongamos que queremos determinar si añadir la variable `disp` (cilindrada) a un modelo de regresión logística que ya contiene `wt` (peso) mejora significativamente la predicción de si un coche tiene transmisión automática (`am`).
+
+```{r lrt_example}
+# Usaremos el dataset mtcars
+data(mtcars)
+
+# Modelo Reducido: solo contiene 'wt'
+modelo_reducido <- glm(am ~ wt, data = mtcars, family = binomial)
+
+# Modelo Completo: contiene 'wt' y 'disp'
+modelo_completo <- glm(am ~ wt + disp, data = mtcars, family = binomial)
+
+# Realizamos el Test de Razón de Verosimilitudes (LRT)
+# En R, esto se hace con la función anova() especificando el test
+lrt_resultado <- anova(modelo_reducido, modelo_completo, test = "LRT")
+
+# Mostramos los resultados
+print(lrt_resultado)
+```
+
+**Interpretación del resultado:**
+
+El test compara la **Deviance** de ambos modelos. La hipótesis nula ($H\_0$) es que el modelo reducido es suficiente (es decir, $\\beta\_{disp} = 0$).
+
+-   La diferencia en deviance es de `r round(lrt_resultado$Deviance[2], 3)` con `r lrt_resultado$Df[2]` grado de libertad (el parámetro adicional).
+-   El p-valor asociado es **`r round(lrt_resultado[["Pr(>Chi)"]][2], 3)`**.
+
+Dado que el p-valor es mayor que 0.05, **no rechazamos la hipótesis nula**. Esto significa que, una vez que tenemos en cuenta el peso del coche (`wt`), añadir la cilindrada (`disp`) no aporta una mejora estadísticamente significativa al modelo. Nos quedaríamos con el **modelo reducido** por el principio de parsimonia.
+:::
+
+### Diagnosis de GLMs
+
+La diagnosis de GLMs implica evaluar los supuestos del modelo y detectar problemas potenciales que puedan afectar la validez de las inferencias. A diferencia de la regresión lineal, donde los residuos ordinarios proporcionan información diagnóstica directa, los GLMs requieren herramientas especializadas debido a la heterocedasticidad inherente y las diferentes distribuciones subyacentes.
+
+En lugar de una simple lista de comprobación, abordaremos el diagnóstico respondiendo a tres preguntas clave que un analista se haría, utilizando diferentes tipos de **residuos** para obtener las respuestas.
+
+#### Tipos de Residuos en GLMs
+
+La elección del tipo de residuo apropiado es crucial. Los residuos "crudos" ($y_i - \hat{\mu}_i$) no son homocedásticos, por lo que se utilizan versiones estandarizadas. Los más importantes son:
+
+-   **Residuos Pearson:** Estandarizan el residuo crudo dividiendo por la desviación estándar predicha por el modelo. Son un análogo directo a los residuos estandarizados en regresión lineal. $$
+      r_i = \frac{y_i - \hat{\mu}_i}{\sqrt{V(\hat{\mu}_i)}}
+      $$
+
+-   **Residuos Estudentizados:** Son una mejora de los residuos Pearson que también tienen en cuenta el leverage ($h_i$) de cada observación. Son más fiables para la detección de outliers. $$
+      r_{S_i} = \frac{y_i - \hat{\mu}_i}{\sqrt{V(\hat{\mu}_i)(1-h_i)}}
+      $$
+
+-   **Residuos deviance:** Son los más recomendados para la inspección visual en gráficos diagnósticos. Su construcción, basada en la contribución de cada punto a la deviance total, les confiere propiedades muy deseables: su distribución se aproxima mejor a la normalidad y su varianza es más estable que la de otros residuos. $$
+      d_i = \text{sign}(y_i - \hat{\mu}_i) \sqrt{2[l_i(y_i) - l_i(\hat{\mu}_i)]}
+      $$
+
+#### ¿La forma del modelo es correcta? (Linealidad y Enlace)
+
+Esta primera pregunta evalúa si la estructura básica del modelo, $g(\mu) = X\beta$, es adecuada para los datos. Para ello, utilizamos varias herramientas de diagnóstico:
+
+-   El **gráfico de residuos vs. valores ajustados** es la herramienta fundamental. Se grafican los residuos (idealmente, deviance) contra los valores predichos en la escala del predictor lineal ($\hat{\eta}_i$). Si la forma del modelo es correcta, no deberíamos ver ningún patrón sistemático. Una tendencia curvilínea es una señal clara de que la forma funcional o la función de enlace son incorrectas.
+
+-   Los **gráficos de residuos parciales** son esenciales para evaluar si la función de enlace es apropiada para **cada predictor individualmente**. Un patrón no lineal en este gráfico sugiere que la relación de esa variable específica con la respuesta no es la que asume el modelo.
+
+-   El **test de especificación de enlace** (como el *Linktest* de Pregibon) ofrece una prueba formal. La idea es ajustar un segundo modelo que incluye el predictor lineal al cuadrado ($\hat{\eta}^2$) como una variable adicional. Si este término cuadrático resulta significativo, es una fuerte evidencia de que la función de enlace está mal especificada.
+
+Si estos diagnósticos revelan problemas, las estrategias de corrección incluyen aplicar **transformaciones** a los predictores (ej. logaritmo, términos polinómicos), **incluir términos de interacción** para capturar relaciones no aditivas, o directamente **cambiar la función de enlace** a una que se ajuste mejor a los datos.
+
+#### ¿La distribución que elegimos es la correcta? (Varianza y Normalidad)
+
+Esta pregunta evalúa si la elección de la familia de distribución (Poisson, Binomial, etc.) fue acertada, lo que implica verificar la relación entre la media y la varianza, así como la forma general de los errores.
+
+Un primer aspecto clave al verificar la distribución es la **sobredispersión**. Imagina que tu modelo es como una regla estricta sobre el comportamiento de los datos. El modelo de Poisson, por ejemplo, impone que la varianza de los conteos debe ser igual a su media ($Var(Y) = \mu$). La sobredispersión ocurre cuando tus datos reales son más "desordenados" o variables de lo que esta regla permite.
+
+Para detectar este problema de forma objetiva, calculamos el **Estadístico de dispersión (**$\hat{\phi}$), que compara la varianza observada (a través de los residuos Pearson) con la esperada: $$\hat{\phi} = \frac{X^2_{\text{Pearson}}}{n-p} = \frac{\sum r_i^2}{n-p}$$ La interpretación es directa:
+
+-   **Si** $\hat{\phi} \approx 1$: ¡Perfecto! La dispersión de los datos es la que el modelo esperaba.
+-   **Si** $\hat{\phi} > 1$: Tienes **sobredispersión**. El modelo está subestimando la variabilidad real de los datos, lo que invalida las inferencias (errores estándar, p-valores).
+
+La estrategia para corregirlo no es forzar los datos, sino cambiar a un modelo más flexible. El caso clásico es pasar del modelo de **Poisson** al modelo **Binomial Negativo**. Este último funciona porque su fórmula para la varianza incluye un parámetro de dispersión adicional ($\alpha$) que le permite modelar esa variabilidad extra que el modelo de Poisson no puede capturar: $$Var(Y) = \mu + \alpha\mu^2$$
+
+Este término adicional se ajusta a la variabilidad de los datos, proporcionando estimaciones y errores estándar mucho más fiables.
+
+Un segundo aspecto es la forma general de la distribución, que se evalúa con el **Gráfico Q-Q de residuos deviance**. Aunque los errores de un GLM no son estrictamente normales, los residuos deviance sí deberían tener una distribución aproximadamente normal si el modelo está bien especificado. Desviaciones sistemáticas de la línea diagonal en el gráfico Q-Q pueden indicar que la distribución asumida para los datos es incorrecta.
+
+#### ¿Hay observaciones que distorsionan el modelo? (Atípicos e Influyentes)
+
+Finalmente, buscamos identificar puntos individuales que tienen una influencia desproporcionada en el modelo. Las herramientas matemáticas para ello son generalizaciones de las vistas en regresión lineal:
+
+-   **Leverage generalizado (**$h_i$): Mide el potencial de una observación para ser influyente debido a su posición en el espacio de los predictores. $$
+      h_i = w_i \mathbf{x}_i^T (\mathbf{X}^T \mathbf{W} \mathbf{X})^{-1} \mathbf{x}_i
+      $$ donde $w_i$ y $\mathbf{W}$ son el peso y la matriz de pesos de la última iteración del algoritmo IRLS.
+
+-   **Distancia de Cook para GLMs (**$D_i$): Mide la influencia global de una observación en *todos* los coeficientes. Utiliza el residuo Pearson ($r_i$). $$
+      D_i = \frac{r_i^2 h_i}{p(1-h_i)^2}
+      $$
+
+-   **DFBETAS:** Mide la influencia de la observación $i$ en *cada coeficiente individual* $\beta_j$. Es útil para ver si un punto influyente está afectando a una variable de interés particular. $$
+      \text{DFBETA}_{j,i} = \frac{\hat{\beta}_j - \hat{\beta}_{j(-i)}}{\text{SE}(\hat{\beta}_{j(-i)})} \approx \frac{(\mathbf{X}^T\mathbf{W}\mathbf{X})^{-1}_{jj}x_{ij}(y_i-\hat{\mu}_i)}{\text{SE}(\hat{\beta}_j)\sqrt{1-h_i}}
+      $$
+
+La herramienta visual que consolida esta información es el **gráfico de residuos vs. leverage**. La estrategia ante estas observaciones no es eliminarlas automáticamente, sino **investigarlas** para entender su naturaleza.
+
+### Regresión logística
+
+La **regresión logística** es una herramienta fundamental para modelar la probabilidad de eventos binarios en una variedad de contextos, desde la medicina hasta la economía y el marketing [@hosmer2013applied]. La correcta interpretación de los coeficientes mediante **odds ratios**, así como la evaluación del ajuste del modelo mediante curvas **ROC** y matrices de confusión, son esenciales para extraer conclusiones válidas de los datos.
+
+#### Fundamentos de la regresión logística
+
+La **regresión logística** es una técnica estadística utilizada para modelar la probabilidad de ocurrencia de un evento binario, es decir, cuando la variable dependiente toma solo dos posibles valores (por ejemplo, **éxito/fracaso**, **sí/no**, **enfermo/sano**). A diferencia de la regresión lineal, que modela una relación lineal entre variables, la regresión logística utiliza una **función logística** para asegurar que las predicciones estén en el rango \[0,1\], lo cual es necesario para interpretar los resultados como probabilidades.
+
+**La función Logística (Sigmoide)**
+
+La función logística transforma cualquier valor real en un valor comprendido entre 0 y 1. La forma matemática de la función logística es:
+
+$$
+P(Y = 1 | X_1, \dots, X_p) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p)}}
+$$
+
+Donde:
+
+-   $P(Y = 1 | X_1, \dots, X_p)$ es la probabilidad de que el evento ocurra.
+-   $\beta_0$ es el intercepto y $\beta_1, \beta_2, \dots, \beta_p$ son los coeficientes asociados a las variables independientes $X_1, X_2, \dots, X_p$.
+
+La **curva sigmoide** que representa esta función tiene forma de "S", lo que refleja que para valores muy pequeños o muy grandes del predictor, la probabilidad se aplana hacia 0 o 1, respectivamente.
+
+**Función de enlace Logit**
+
+En la regresión logística, la relación entre el predictor lineal y la probabilidad se establece mediante la **función de enlace logit**. El logit de una probabilidad $p$ se define como:
+
+$$
+\text{logit}(p) = \log\left(\frac{p}{1 - p}\right)
+$$
+
+Esta transformación convierte una probabilidad en una escala que va de $-\infty$ a $+\infty$, lo que permite ajustar un modelo lineal a los datos. El modelo logístico puede expresarse como:
+
+$$
+\log\left(\frac{p}{1 - p}\right) = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p
+$$
+
+### Estimación por máxima verosimilitud en regresión logística
+
+La estimación de los parámetros en regresión logística se basa en el método de máxima verosimilitud, adaptado específicamente para la distribución binomial con función de enlace logit.
+
+Para una muestra de $n$ observaciones independientes, donde $y_i \in \{0,1\}$ representa el resultado binario para la observación $i$, la **función de verosimilitud** se define como:
+
+$$L(\boldsymbol{\beta}) = \prod_{i=1}^{n} p_i^{y_i}(1-p_i)^{1-y_i}$$
+
+donde $p_i = P(Y_i = 1|\mathbf{x}_i) = \frac{1}{1 + e^{-\mathbf{x}_i^T\boldsymbol{\beta}}}$ es la probabilidad estimada para la observación $i$.
+
+La **log-verosimilitud** correspondiente es:
+
+$$\ell(\boldsymbol{\beta}) = \sum_{i=1}^{n} \left[y_i \log(p_i) + (1-y_i) \log(1-p_i)\right]$$
+
+Sustituyendo la expresión de $p_i$ y simplificando:
+
+$$\ell(\boldsymbol{\beta}) = \sum_{i=1}^{n} \left[y_i \mathbf{x}_i^T\boldsymbol{\beta} - \log(1 + e^{\mathbf{x}_i^T\boldsymbol{\beta}})\right]$$
+
+Para encontrar los valores de $\boldsymbol{\beta}$ que maximizan la log-verosimilitud, derivamos respecto a cada parámetro:
+
+$$\frac{\partial \ell}{\partial \beta_j} = \sum_{i=1}^{n} x_{ij}(y_i - p_i) = 0$$
+
+donde $x_{ij}$ es el valor de la variable $j$ para la observación $i$.
+
+Esta ecuación tiene una interpretación intuitiva: los estimadores de máxima verosimilitud se obtienen cuando la suma de los residuos ponderados por cada variable predictora es igual a cero.
+
+##### Implementación del algoritmo IRLS
+
+Dado que las ecuaciones de verosimilitud no tienen solución analítica cerrada, se utiliza el algoritmo IRLS. Para regresión logística, los elementos específicos son:
+
+**Pesos:** $$w_i = p_i(1-p_i)$$
+
+**Variable dependiente ajustada:** $$z_i = \mathbf{x}_i^T\boldsymbol{\beta}^{(t)} + \frac{y_i - p_i^{(t)}}{p_i^{(t)}(1-p_i^{(t)})}$$
+
+**Actualización de parámetros:** $$\boldsymbol{\beta}^{(t+1)} = (\mathbf{X}^T \mathbf{W}^{(t)} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{W}^{(t)} \mathbf{z}^{(t)}$$
+
+::: {.callout-tip title="Ejemplo: Estimación paso a paso en regresión logística" collapse="true"}
+```{r logistic_mle}
+# ============================================
+# Ejemplo de regresión logística con datos deportivos
+# Probabilidad de que un disparo termine en gol
+# ============================================
+
+# Función para calcular log-verosimilitud manualmente
+log_likelihood_logistic <- function(beta, X, y) {
+  eta <- X %*% beta
+  p <- 1 / (1 + exp(-eta))
+  
+  # Evitar problemas numéricos
+  p <- pmax(pmin(p, 1 - 1e-15), 1e-15)
+  
+  sum(y * log(p) + (1 - y) * log(1 - p))
+}
+
+# -----------------------------
+# 1. Generar datos deportivos simulados
+# -----------------------------
+set.seed(123)
+
+n <- 300
+
+tiros <- data.frame(
+  distancia = runif(n, 5, 35),         # distancia a portería en metros
+  angulo = runif(n, 5, 80)             # ángulo de tiro en grados
+)
+
+# Generamos una probabilidad "realista":
+# - a mayor distancia, menos probabilidad de gol
+# - a mayor ángulo, más probabilidad de gol
+eta_real <- 1.5 - 0.12 * tiros$distancia + 0.03 * tiros$angulo
+p_real <- 1 / (1 + exp(-eta_real))
+
+# Variable binaria: gol / no gol
+tiros$gol <- rbinom(n, size = 1, prob = p_real)
+
+# Convertimos a factor para usar glm como ejemplo docente
+tiros$gol_factor <- factor(tiros$gol, levels = c(0, 1), labels = c("No", "Si"))
+
+# -----------------------------
+# 2. Preparar datos
+# -----------------------------
+X <- model.matrix(gol ~ distancia + angulo, data = tiros)
+y <- tiros$gol
+
+# -----------------------------
+# 3. Ajuste con glm para comparación
+# -----------------------------
+modelo_glm <- glm(gol ~ distancia + angulo, data = tiros, family = binomial)
+beta_glm <- coef(modelo_glm)
+
+cat("=== ESTIMACIÓN POR MÁXIMA VEROSIMILITUD ===\n")
+cat("Coeficientes estimados por glm():\n")
+print(beta_glm)
+
+# -----------------------------
+# 4. Verificar que maximizan la log-verosimilitud
+# -----------------------------
+ll_optimo <- log_likelihood_logistic(beta_glm, X, y)
+cat("\nLog-verosimilitud en el óptimo:", round(ll_optimo, 4), "\n")
+
+# Comparar con valores ligeramente perturbados
+beta_test <- beta_glm + c(0.1, 0, 0)
+ll_test <- log_likelihood_logistic(beta_test, X, y)
+
+cat("Log-verosimilitud con perturbación:", round(ll_test, 4), "\n")
+cat("Diferencia:", round(ll_optimo - ll_test, 4), "\n")
+
+# -----------------------------
+# 5. Información del algoritmo IRLS
+# -----------------------------
+cat("\nInformación del algoritmo IRLS:\n")
+cat("Iteraciones necesarias:", modelo_glm$iter, "\n")
+cat("¿Convergió?", modelo_glm$converged, "\n")
+
+# -----------------------------
+# 6. Matriz de información y errores estándar
+# -----------------------------
+vcov_matrix <- vcov(modelo_glm)
+cat("\nErrores estándar de los coeficientes:\n")
+print(sqrt(diag(vcov_matrix)))
+
+# -----------------------------
+# 7. Resumen del modelo
+# -----------------------------
+cat("\n=== RESUMEN DEL MODELO ===\n")
+print(summary(modelo_glm))
+
+```
+:::
+
+#### Interpretación de coeficientes y odds ratios
+
+Uno de los aspectos más importantes de la regresión logística es la interpretación de los coeficientes. Dado que los coeficientes están en la escala del logit, su interpretación directa no es tan intuitiva como en la regresión lineal. Sin embargo, podemos interpretarlos utilizando **odds** y **odds ratios**.
+
+El **odds** o razón de probabilidades de que ocurra un evento es el cociente entre la probabilidad de que ocurra el evento y la probabilidad de que no ocurra:
+
+$$
+\text{odds} = \frac{p}{1 - p}
+$$
+
+Por ejemplo, si la probabilidad de éxito es 0.8, el odds sería:
+
+$$
+\text{odds} = \frac{0.8}{1 - 0.8} = 4
+$$
+
+Esto significa que el evento es **4 veces más probable** que no ocurra.
+
+El **odds ratio (OR)** mide el cambio en los odds cuando una variable independiente aumenta en una unidad. Se calcula como el exponencial del coeficiente de la regresión logística:
+
+$$
+\text{OR} = e^{\beta}
+$$
+
+**Interpretación de OR:**
+
+-   Si **OR \> 1**, el evento es más probable a medida que aumenta la variable independiente.
+-   Si **OR \< 1**, el evento es menos probable a medida que aumenta la variable independiente.
+-   Si **OR = 1**, no hay efecto.
+
+::: {.callout-tip title="Ejemplo" collapse="true"}
+Supongamos que ajustamos un modelo de regresión logística para predecir la probabilidad de que un disparo termine en gol en función de la distancia a portería. El coeficiente asociado a distancia es −0.12.
+
+$$
+\text{OR} = e^{-0.12} \approx 0.887
+$$
+
+Esto significa que por cada incremento de 1 metro en la distancia al disparar, la odds de que el tiro termine en gol se multiplican por 0.887, es decir, disminuyen aproximadamente un 11.3%.
+
+En otras palabras, cuanto más lejos se dispara, menor es la probabilidad de marcar.
+:::
+
+#### Bondad de ajuste del modelo logístico
+
+La evaluación de la bondad de ajuste en regresión logística presenta desafíos únicos debido a la naturaleza binaria de la variable dependiente. A diferencia de la regresión lineal, donde el $R^2$ tradicional proporciona una medida directa de la varianza explicada, en la regresión logística necesitamos adoptar enfoques alternativos que se basen en la verosimilitud del modelo y que sean apropiados para datos categóricos.
+
+La bondad de ajuste en regresión logística se evalúa principalmente a través de dos enfoques complementarios: la **deviance** y los **pseudo R²**. Ambos métodos nos permiten cuantificar qué tan bien nuestro modelo captura los patrones subyacentes en los datos binarios.
+
+La **deviance** en regresión logística se calcula utilizando la distribución binomial subyacente. Para cada observación, comparamos la probabilidad que predice nuestro modelo con la "probabilidad perfecta" que asignaría un modelo saturado. Matemáticamente, esto se expresa como:
+
+$$D = 2 \sum_{i=1}^{n} \left[ y_i \log\left(\frac{y_i}{\hat{p}_i}\right) + (1-y_i) \log\left(\frac{1-y_i}{1-\hat{p}_i}\right) \right]$$
+
+donde $y_i \in \{0,1\}$ representa el resultado observado y $\hat{p}_i$ es la probabilidad estimada por nuestro modelo. Es importante notar que cuando $y_i = 0$ o $y_i = 1$, algunos términos en esta expresión se anulan automáticamente, lo que refleja la naturaleza discreta de los datos binarios.
+
+La interpretación de la deviance sigue principios similares a los discutidos anteriormente, pero es crucial recordar que ahora estamos tratando con datos binarios. La deviance nos ayuda a entender qué tan bien nuestro modelo logístico se ajusta a los datos de respuesta binaria en comparación con un modelo que simplemente predice la media.
+
+Los **pseudo R²** son medidas alternativas que intentan capturar la proporción de variabilidad explicada por el modelo, similar al $R^2$ en regresión lineal, pero adaptadas a la naturaleza de los datos binarios y la verosimilitud del modelo. Estas medidas son útiles para evaluar y comparar modelos, aunque su interpretación no es tan directa como el $R^2$ tradicional.
+
+El **McFadden's R²** es quizás el más utilizado y se define como:
+
+$$R^2_{\text{McFadden}} = 1 - \frac{\log L_{\text{modelo}}}{\log L_{\text{modelo nulo}}}$$
+
+Este pseudo R² compara la log-verosimilitud de nuestro modelo con la de un modelo que solo incluye el intercepto. Los valores típicamente oscilan entre 0 y 1, aunque raramente alcanzan valores tan altos como el $R^2$ en regresión lineal. En contextos aplicados, valores de McFadden entre 0.2 y 0.4 se consideran indicativos de un buen ajuste.
+
+El **Nagelkerke R²** representa una versión normalizada que garantiza que el valor máximo sea 1:
+
+$$R^2_{\text{Nagelkerke}} = \frac{1 - \left(\frac{L_{\text{nulo}}}{L_{\text{modelo}}}\right)^{2/n}}{1 - (L_{\text{nulo}})^{2/n}}$$
+
+Finalmente, el **Cox-Snell R²** se define como:
+
+$$R^2_{\text{Cox-Snell}} = 1 - \left(\frac{L_{\text{nulo}}}{L_{\text{modelo}}}\right)^{2/n}$$
+
+Aunque este último tiene la limitación de que su valor máximo teórico es menor que 1, razón por la cual Nagelkerke propuso su corrección.
+
+Es crucial entender que estos pseudo R² no deben interpretarse exactamente como el $R^2$ tradicional. Mientras que en regresión lineal el $R^2$ representa la proporción de varianza explicada, en regresión logística estos índices reflejan más bien la mejora en la verosimilitud que aporta nuestro modelo comparado con el modelo nulo. Sin embargo, proporcionan una herramienta valiosa para evaluar y comparar diferentes especificaciones de modelo.
+
+La evaluación integral de la bondad de ajuste en regresión logística requiere considerar tanto la deviance como los pseudo R² en conjunto, complementando esta información con pruebas de significancia global del modelo mediante tests de razón de verosimilitudes, que permiten determinar si la inclusión de las variables predictoras mejora significativamente el ajuste comparado con el modelo nulo.
+
+#### Validación del modelo logístico
+
+Una vez evaluada la bondad de ajuste del modelo logístico, el siguiente paso fundamental es validar su capacidad predictiva y su rendimiento en la clasificación de nuevas observaciones. La validación en regresión logística presenta características particulares debido a la naturaleza categórica de la variable dependiente, lo que requiere métricas y enfoques específicos que van más allá de las medidas tradicionales de error de predicción.
+
+La validación del modelo logístico se centra en dos aspectos complementarios: la **capacidad discriminativa** del modelo (qué tan bien puede distinguir entre las dos clases) y la **precisión de clasificación** (qué proporción de predicciones son correctas). Estas evaluaciones se realizan típicamente mediante la construcción de una **matriz de confusión** y el análisis de curvas **ROC**.
+
+La **matriz de confusión** constituye la herramienta fundamental para evaluar el rendimiento de clasificación en regresión logística. Esta matriz organiza las predicciones del modelo en una tabla de contingencia 2×2 que compara los resultados predichos con los valores reales observados. Para construir esta matriz, primero debemos convertir las probabilidades estimadas por el modelo en predicciones de clase mediante un umbral de decisión, típicamente 0.5.
+
+La clasificación de cada observación resulta en una de cuatro categorías:
+
+-   **Verdaderos Positivos (VP):** Predijo positivo y es positivo.
+-   **Falsos Positivos (FP):** Predijo positivo pero es negativo.
+-   **Verdaderos Negativos (VN):** Predijo negativo y es negativo.
+-   **Falsos Negativos (FN):** Predijo negativo pero es positivo.
+
+A partir de esta clasificación, podemos calcular métricas fundamentales de rendimiento:
+
+-   **Precisión (Accuracy):** $\frac{VP + VN}{\text{Total}}$ - representa la proporción total de predicciones correctas
+-   **Sensibilidad:** $\frac{VP}{VP + FN}$ - mide la capacidad del modelo para identificar correctamente los casos positivos\
+-   **Especificidad:** $\frac{VN}{VN + FP}$ - evalúa la capacidad para identificar correctamente los casos negativos
+
+Es importante reconocer que estas métricas pueden verse influenciadas por el umbral de decisión elegido y por el balance de clases en los datos. Un modelo puede tener alta precisión global pero pobre capacidad para detectar la clase minoritaria, especialmente en datasets desbalanceados.
+
+La **Curva ROC (Receiver Operating Characteristic)** proporciona una evaluación más comprehensiva del rendimiento del modelo al examinar la relación entre la sensibilidad y la especificidad a través de todos los posibles umbrales de decisión. Esta curva grafica la tasa de verdaderos positivos contra la tasa de falsos positivos (1 - especificidad) para cada umbral posible.
+
+Un modelo perfecto produciría una curva ROC que pasaría por la esquina superior izquierda del gráfico (100% sensibilidad, 0% falsos positivos), mientras que un modelo sin capacidad discriminativa produciría una línea diagonal de 45 grados. La **AUC (Área Bajo la Curva ROC)** cuantifica esta capacidad discriminativa en un solo número que varía entre 0.5 (sin capacidad discriminativa) y 1.0 (discriminación perfecta).
+
+La interpretación de la AUC sigue convenciones establecidas:
+
+-   **0.9 - 1.0:** Excelente discriminación
+-   **0.8 - 0.9:** Buena discriminación\
+-   **0.7 - 0.8:** Discriminación aceptable
+-   **0.6 - 0.7:** Discriminación pobre
+-   **0.5 - 0.6:** Sin capacidad discriminativa útil
+
+La validación efectiva del modelo logístico requiere considerar tanto las métricas puntuales derivadas de la matriz de confusión como la capacidad discriminativa global capturada por la curva ROC y la AUC. Además, es crucial evaluar estas métricas tanto en los datos de entrenamiento como en conjuntos de validación independientes para detectar posibles problemas de sobreajuste y asegurar que el modelo generalizará adecuadamente a nuevos datos.
+
+::: {.callout-tip title="Ejemplo" collapse="true"}
+Vamos a aplicar la regresión logística en R utilizando el conjunto de datos `Pima.tr` del paquete `MASS`, que contiene información sobre mujeres pima y si tienen o no diabetes.
+
+```{r log1}
+# ============================================
+# Regresión logística en datos deportivos
+# Predicción de gol / no gol
+# ============================================
+
+# -----------------------------
+# 1. Generar datos simulados
+# -----------------------------
+set.seed(123)
+
+n <- 400
+
+tiros <- data.frame(
+  distancia = runif(n, 5, 30),                  # metros a portería
+  angulo = runif(n, 5, 80),                     # ángulo de tiro
+  contraataque = rbinom(n, 1, 0.3)              # 1 = sí, 0 = no
+)
+
+# Modelo generador de la probabilidad real de gol
+eta <- 1.2 - 0.11 * tiros$distancia + 0.025 * tiros$angulo + 0.8 * tiros$contraataque
+p_gol <- 1 / (1 + exp(-eta))
+
+# Variable respuesta binaria
+tiros$gol <- rbinom(n, 1, p_gol)
+
+# Versión factor para clasificación y matriz de confusión
+tiros$gol_factor <- factor(tiros$gol, levels = c(0, 1), labels = c("No", "Si"))
+
+# -----------------------------
+# 2. Ajustar el modelo logístico
+# -----------------------------
+modelo_logistico <- glm(gol ~ distancia + angulo + contraataque,
+                        data = tiros,
+                        family = binomial)
+
+# Resumen del modelo
+summary(modelo_logistico)
+
+# -----------------------------
+# 3. Predicciones de probabilidad
+# -----------------------------
+predicciones_prob <- predict(modelo_logistico, type = "response")
+
+# Clasificación con umbral 0.5
+predicciones_clase <- ifelse(predicciones_prob > 0.5, "Si", "No")
+predicciones_clase <- factor(predicciones_clase, levels = c("No", "Si"))
+
+# -----------------------------
+# 4. Matriz de confusión
+# -----------------------------
+tabla_confusion <- table(Predicted = predicciones_clase,
+                         Actual = tiros$gol_factor)
+print(tabla_confusion)
+
+# -----------------------------
+# 5. Precisión
+# -----------------------------
+accuracy <- sum(diag(tabla_confusion)) / sum(tabla_confusion)
+print(paste("Precisión:", round(accuracy, 3)))
+
+# -----------------------------
+# 6. Curva ROC y AUC
+# -----------------------------
+library(pROC)
+
+roc_obj <- roc(tiros$gol_factor, predicciones_prob)
+plot(roc_obj, main = "Curva ROC para Regresión Logística (Gol / No gol)")
+
+auc_valor <- auc(roc_obj)
+print(paste("AUC:", round(auc_valor, 3)))
+
+```
+:::
+
+### Regresión de Poisson
+
+La **regresión de Poisson** es una técnica estadística utilizada para modelar **datos de conteo**, es decir, situaciones en las que la variable dependiente representa el número de veces que ocurre un evento en un período de tiempo o espacio específico [@coxe2009analysis]. Este tipo de modelo es adecuado cuando la variable dependiente toma valores enteros no negativos ($0, 1, 2, \dots$) y sigue una distribución de **Poisson**.
+
+La distribución de Poisson describe la probabilidad de que ocurra un número determinado de eventos en un intervalo fijo, dado que estos eventos ocurren de forma independiente y a una tasa constante.
+
+La **función de probabilidad** de la distribución de Poisson es:
+
+$$
+P(Y = y) = \frac{e^{-\lambda} \lambda^y}{y!}
+$$
+
+Donde:
+
+-   $Y$ es la variable aleatoria que representa el número de eventos.
+-   $\lambda$ es la **tasa media de ocurrencia** de los eventos (esperanza de $Y$).
+-   $y$ es el número de eventos observados ($y = 0, 1, 2, \dots$).
+
+#### Modelo de regresión de Poisson
+
+En la **regresión de Poisson**, el objetivo es modelar la relación entre la **tasa de ocurrencia de los eventos** ($\lambda$) y un conjunto de variables predictoras $X_1, X_2, \dots, X_p$.
+
+La **forma funcional** del modelo de Poisson es:
+
+$$
+\log(\lambda) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+$$
+
+Donde:
+
+-   $\log(\lambda)$ es la **función de enlace logarítmica** que asegura que la tasa $\lambda$ sea siempre positiva.
+-   $\beta_0, \beta_1, \dots, \beta_p$ son los coeficientes del modelo que describen la influencia de cada predictor sobre la tasa de eventos.
+
+El modelo puede expresarse en términos de la **tasa esperada de eventos** como:
+
+$$
+\lambda = e^{\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p}
+$$
+
+#### Supuestos y limitaciones de la regresión de Poisson
+
+Tal y como ocurre en el modelo de regresión lineal, para que la regresión de Poisson sea adecuada, se deben cumplir ciertos **supuestos**:
+
+-   **Independencia de los eventos:** Los eventos deben ocurrir de manera independiente unos de otros.
+
+-   **Distribución de Poisson de la variable dependiente:** La variable de respuesta debe seguir una distribución de Poisson, donde la **media** y la **varianza** son iguales:
+
+$$
+   E(Y) = Var(Y) = \lambda
+   $$
+
+-   **No sobredispersión:** Uno de los problemas comunes en los datos de conteo es la **sobredispersión**, que ocurre cuando la varianza de los datos es mayor que la media ($Var(Y) > E(Y)$). La presencia de sobredispersión indica que el modelo de Poisson puede no ser adecuado, y puede ser necesario considerar modelos alternativos como la **regresión binomial negativa**.
+
+-   **No exceso de ceros:** Si hay demasiados ceros en los datos (por ejemplo, en el número de accidentes en diferentes localidades donde muchas tienen cero accidentes), puede ser necesario utilizar modelos de **Poisson inflados en ceros (ZIP)** [@lambert1992zero].
+
+#### Interpretación de los resultados
+
+La interpretación de los coeficientes en la regresión de Poisson difiere de la regresión lineal debido al uso de la función de enlace logarítmica.
+
+Los coeficientes $\beta$ representan el **logaritmo de la tasa** de eventos asociados con un cambio en la variable independiente. Para interpretar en términos de la tasa de ocurrencia, se utiliza el **exponencial de los coeficientes**:
+
+$$
+  e^{\beta_i}
+$$
+
+Esto representa el **factor de cambio multiplicativo** en la tasa de eventos por cada unidad adicional en la variable $X_i$.
+
+::: {.callout-important title="Interpretando el coeficiente de Poisson: Incidence Rate Ratio (IRR)"}
+En la regresión de Poisson, el coeficiente $\beta_j$ está en la escala logarítmica de la tasa. Para una interpretación práctica, lo exponenciamos para obtener el **Incidence Rate Ratio (IRR)**:
+
+$$
+\text{IRR} = e^{\beta_j}
+$$
+
+El IRR es un **factor multiplicativo** que nos dice cuánto cambia la tasa de eventos esperada por cada incremento de una unidad en el predictor $X_j$.
+
+-   **Si IRR \> 1**: Un incremento en $X_j$ se asocia con un **aumento** en la tasa de eventos. Un IRR de 1.25 significa que por cada unidad que aumenta $X_j$, la tasa de eventos esperada se multiplica por 1.25 (es decir, aumenta un 25%).
+-   **Si IRR \< 1**: Un incremento en $X_j$ se asocia con una **disminución** en la tasa de eventos. Un IRR de 0.80 significa que por cada unidad que aumenta $X_j$, la tasa de eventos esperada se multiplica por 0.80 (es decir, disminuye un 20%).
+-   **Si IRR = 1**: La variable $X_j$ no tiene efecto sobre la tasa de eventos.
+:::
+
+::: {.callout-tip title="Ejemplo" collapse="true"}
+En este ejemplo modelamos el número de goles que marca un equipo en un partido usando un modelo de Poisson.
+
+- ataque_equipo representa la capacidad ofensiva del equipo.
+
+- defensa_rival representa la fortaleza defensiva del rival.
+
+- local indica si el equipo juega en casa.
+
+El modelo estima cómo estas variables afectan a la tasa esperada de goles. Debido al enlace logarítmico del modelo de Poisson, los coeficientes se interpretan como cambios multiplicativos en la tasa esperada de goles.
+
+```{r}
+# ============================================
+# Simulación de datos deportivos:
+# Número de goles por equipo en un partido
+# ============================================
+
+set.seed(456)
+n <- 100   # número de partidos
+
+# -----------------------------
+# Variables predictoras
+# -----------------------------
+
+# Fuerza ofensiva del equipo (rating)
+ataque_equipo <- rnorm(n, mean = 0, sd = 1)
+
+# Fortaleza defensiva del rival (rating)
+defensa_rival <- rnorm(n, mean = 0, sd = 1)
+
+# Localía (1 = juega en casa, 0 = visitante)
+local <- rbinom(n, 1, 0.5)
+
+# -----------------------------
+# Generar tasa esperada de goles
+# -----------------------------
+
+lambda_goles <- exp(
+  0.6 + 
+  0.5 * ataque_equipo - 
+  0.4 * defensa_rival + 
+  0.3 * local
+)
+
+# -----------------------------
+# Generar número de goles (Poisson)
+# -----------------------------
+
+goles <- rpois(n, lambda = lambda_goles)
+
+# Crear data frame
+datos_partidos <- data.frame(
+  goles,
+  ataque_equipo,
+  defensa_rival,
+  local
+)
+
+head(datos_partidos)
+
+# -----------------------------
+# Ajustar modelo de Poisson
+# -----------------------------
+
+modelo_goles <- glm(
+  goles ~ ataque_equipo + defensa_rival + local,
+  data = datos_partidos,
+  family = poisson
+)
+
+# Resumen del modelo
+summary(modelo_goles)
+
+```
+
+El coeficiente asociado a `ataque_equipo` indica cómo la capacidad ofensiva del equipo influye en la tasa esperada de goles que puede marcar en un partido.
+
+El coeficiente asociado a `defensa_rival` refleja cómo la fortaleza defensiva del rival afecta al número esperado de goles, reduciendo o aumentando la probabilidad de anotar según la calidad defensiva del oponente.
+
+El coeficiente asociado a `local` muestra el efecto de jugar en casa sobre la frecuencia de goles, capturando el posible efecto de la localía en el rendimiento ofensivo del equipo.
+:::
+
+#### Estimación por máxima verosimilitud en regresión de Poisson
+
+La estimación de parámetros en regresión de Poisson utiliza también el método de máxima verosimilitud, pero adaptado específicamente para la distribución de Poisson con función de enlace logarítmica. Este enfoque garantiza que las estimaciones aprovechen de manera óptima la información contenida en los datos de conteo.
+
+Para una muestra de $n$ observaciones independientes, donde $y_i$ representa el conteo de eventos para la observación $i$, la **función de verosimilitud** se define como:
+
+$$L(\boldsymbol{\beta}) = \prod_{i=1}^{n} \frac{e^{-\lambda_i} \lambda_i^{y_i}}{y_i!}$$
+
+donde $\lambda_i = e^{\mathbf{x}_i^T\boldsymbol{\beta}}$ es la tasa esperada para la observación $i$.
+
+La **log-verosimilitud** correspondiente es:
+
+$$\ell(\boldsymbol{\beta}) = \sum_{i=1}^{n} \left[y_i \log(\lambda_i) - \lambda_i - \log(y_i!)\right]$$
+
+Sustituyendo $\lambda_i = e^{\mathbf{x}_i^T\boldsymbol{\beta}}$:
+
+$$\ell(\boldsymbol{\beta}) = \sum_{i=1}^{n} \left[y_i \mathbf{x}_i^T\boldsymbol{\beta} - e^{\mathbf{x}_i^T\boldsymbol{\beta}} - \log(y_i!)\right]$$
+
+Para encontrar los valores de $\boldsymbol{\beta}$ que maximizan la log-verosimilitud, derivamos respecto a cada parámetro:
+
+$$\frac{\partial \ell}{\partial \beta_j} = \sum_{i=1}^{n} x_{ij}(y_i - \lambda_i) = 0$$
+
+Esta ecuación indica que los estimadores de máxima verosimilitud se obtienen cuando la suma de los residuos (observado menos esperado) ponderados por cada variable predictora es cero.
+
+##### Implementación del algoritmo IRLS
+
+Dado que las ecuaciones de verosimilitud no tienen solución analítica cerrada, se utiliza el algoritmo IRLS adaptado para regresión de Poisson. Los elementos específicos son:
+
+**Pesos:** $$w_i = \lambda_i$$
+
+**Variable dependiente ajustada:** $$z_i = \log(\lambda_i^{(t)}) + \frac{y_i - \lambda_i^{(t)}}{\lambda_i^{(t)}}$$
+
+**Actualización de parámetros:** $$\boldsymbol{\beta}^{(t+1)} = (\mathbf{X}^T \mathbf{W}^{(t)} \mathbf{X})^{-1} \mathbf{X}^T \mathbf{W}^{(t)} \mathbf{z}^{(t)}$$
+
+##### Propiedades específicas de la estimación Poisson
+
+La estimación por máxima verosimilitud en regresión de Poisson tiene características particulares que la distinguen de otros GLMs:
+
+1.  **Equidispersión**: El modelo asume que $E(Y_i) = \text{Var}(Y_i) = \lambda_i$, lo que significa que la varianza aumenta linealmente con la media.
+
+2.  **Convergencia**: Generalmente requiere menos iteraciones que la regresión logística debido a la naturaleza más estable de la función de enlace logarítmica.
+
+3.  **Estabilidad numérica**: La función de enlace logarítmica garantiza automáticamente que $\lambda_i > 0$, evitando problemas de valores negativos en las tasas estimadas.
+
+4.  **Interpretación multiplicativa**: Los coeficientes se interpretan como efectos multiplicativos sobre la tasa, lo que es natural para datos de conteo.
+
+::: {.callout-tip title="Ejemplo: Estimación paso a paso en regresión de Poisson" collapse="true"}
+```{r}
+# ============================================
+# Demostración del proceso de estimación por máxima verosimilitud
+# Ejemplo deportivo: número de goles en un partido
+# ============================================
+
+set.seed(123)
+
+n <- 100
+
+# -----------------------------
+# Variables predictoras
+# -----------------------------
+
+# Rating ofensivo del equipo
+ataque_equipo <- rnorm(n, mean = 0, sd = 1)
+
+# Rating defensivo del rival
+defensa_rival <- rnorm(n, mean = 0, sd = 1)
+
+# -----------------------------
+# Generar tasa esperada de goles
+# -----------------------------
+
+lambda <- exp(0.6 + 0.5*ataque_equipo - 0.4*defensa_rival)
+
+# Número de goles (Poisson)
+goles <- rpois(n, lambda)
+
+datos_goles <- data.frame(goles, ataque_equipo, defensa_rival)
+
+# --------------------------------
+# Función para calcular log-verosimilitud manualmente
+# --------------------------------
+
+log_likelihood_poisson <- function(beta, X, y) {
+  
+  eta <- X %*% beta
+  lambda <- exp(eta)
+  
+  sum(y * log(lambda) - lambda - lgamma(y + 1))
+}
+
+# -----------------------------
+# Preparar datos
+# -----------------------------
+
+X <- model.matrix(goles ~ ataque_equipo + defensa_rival, data = datos_goles)
+y <- datos_goles$goles
+
+# -----------------------------
+# Ajuste con glm
+# -----------------------------
+
+modelo_glm_pois <- glm(goles ~ ataque_equipo + defensa_rival,
+                       data = datos_goles,
+                       family = poisson)
+
+beta_glm_pois <- coef(modelo_glm_pois)
+
+cat("=== ESTIMACIÓN POR MÁXIMA VEROSIMILITUD - POISSON ===\n")
+cat("Coeficientes estimados por glm():\n")
+print(beta_glm_pois)
+
+# -----------------------------
+# Verificar optimización
+# -----------------------------
+
+ll_optimo_pois <- log_likelihood_poisson(beta_glm_pois, X, y)
+
+cat("\nLog-verosimilitud en el óptimo:", round(ll_optimo_pois, 4), "\n")
+
+# -----------------------------
+# Interpretación multiplicativa
+# -----------------------------
+
+cat("\nInterpretación multiplicativa (exp(coeficientes)):\n")
+
+exp_coefs <- exp(beta_glm_pois)
+print(exp_coefs)
+
+cat("\nInterpretación:\n")
+cat("- Intercepto: tasa base de goles =", round(exp_coefs[1], 3), "goles por partido\n")
+cat("- Ataque del equipo: por cada unidad adicional de calidad ofensiva, la tasa de goles se multiplica por",
+    round(exp_coefs[2], 3), "\n")
+cat("- Defensa rival: por cada unidad adicional de fortaleza defensiva del rival, la tasa de goles se multiplica por",
+    round(exp_coefs[3], 3), "\n")
+
+# -----------------------------
+# Información de convergencia
+# -----------------------------
+
+cat("\nInformación del algoritmo IRLS:\n")
+cat("Iteraciones necesarias:", modelo_glm_pois$iter, "\n")
+cat("¿Convergió?", modelo_glm_pois$converged, "\n")
+
+# -----------------------------
+# Verificar supuesto de equidispersión
+# -----------------------------
+
+media_y <- mean(y)
+var_y <- var(y)
+
+cat("\nVerificación de equidispersión:\n")
+cat("Media observada:", round(media_y, 3), "\n")
+cat("Varianza observada:", round(var_y, 3), "\n")
+cat("Razón varianza/media:", round(var_y/media_y, 3), "\n")
+
+```
+:::
+
+#### Bondad de ajuste en la regresión de Poisson
+
+Al igual que en la regresión logística, la bondad de ajuste en los modelos de Poisson se aleja del $R^2$ tradicional y se centra en medidas basadas en la verosimilitud. El objetivo es cuantificar si el modelo captura adecuadamente la estructura de los datos de conteo.
+
+La **deviance** sigue siendo la métrica fundamental. Para la regresión de Poisson, se calcula comparando la log-verosimilitud del modelo ajustado con la de un modelo saturado (donde $\hat{\mu}_i = y_i$). La fórmula específica es: $$D = 2 \sum_{i=1}^{n} \left[ y_i \log\left(\frac{y_i}{\hat{\mu}_i}\right) - (y_i - \hat{\mu}_i) \right]$$ Donde el término $y_i \log(y_i)$ se considera cero si $y_i = 0$. Al igual que en otros GLMs, la deviance es clave para comparar modelos anidados mediante el **Test de la Razón de Verosimilitudes (LRT)**.
+
+Sin embargo, para los modelos de Poisson, la prueba de bondad de ajuste más importante en la práctica es la evaluación de la **sobredispersión**. Un buen ajuste del modelo de Poisson implica que se cumple el supuesto de equidispersión ($Var(Y) = \mu$). Por lo tanto, el **estadístico de dispersión** ($\hat{\phi}$) se convierte en una medida de facto de la bondad de ajuste: $$\hat{\phi} = \frac{X^2_{\text{Pearson}}}{n-p}$$ Un valor de $\hat{\phi}$ cercano a 1 indica que el supuesto de la distribución de Poisson se cumple y que el ajuste del modelo es adecuado. Si $\hat{\phi}$ es significativamente mayor que 1, el modelo no se ajusta bien a la variabilidad de los datos, y este es el principal indicador para buscar alternativas como la regresión binomial negativa.
+
+Aunque los **pseudo R²** (como el de McFadden) pueden calcularse, son menos utilizados e informativos en el contexto de la regresión de Poisson en comparación con el análisis de la dispersión.
+
+#### Validación del modelo de Poisson
+
+A diferencia de la regresión logística, donde la validación se centra en la capacidad de *clasificación*, la validación de un modelo de Poisson se enfoca en su **capacidad de predicción**: ¿qué tan cerca están los conteos predichos por el modelo de los conteos reales observados?
+
+El proceso de validación suele implicar la división de los datos en un conjunto de **entrenamiento (train)** y uno de **prueba (test)**. El modelo se ajusta con los datos de entrenamiento y su rendimiento predictivo se evalúa sobre los datos de prueba, que el modelo no ha visto antes. Esto nos da una estimación honesta de cómo generalizará el modelo a nuevos datos.
+
+Las métricas de validación principales para modelos de conteo son:
+
+-   **Raíz del Error Cuadrático Medio (RMSE):** Es una de las métricas más comunes y mide la desviación estándar de los residuos. Penaliza más los errores grandes. $$
+    \text{RMSE} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{\mu}_i)^2}
+    $$
+
+-   **Error Absoluto Medio (MAE):** Mide la magnitud promedio de los errores, siendo menos sensible a valores atípicos que el RMSE. $$
+    \text{MAE} = \frac{1}{n}\sum_{i=1}^{n}|y_i - \hat{\mu}_i|
+    $$
+
+Ambas métricas se expresan en las mismas unidades que la variable de respuesta (por ejemplo, "accidentes", "compras"), lo que facilita su interpretación. Un modelo con valores de RMSE y MAE más bajos en el conjunto de prueba se considera que tiene un mejor rendimiento predictivo.
+
+Una herramienta visual clave para la validación es el **gráfico de valores predichos vs. valores reales** en el conjunto de prueba. En un modelo con buena capacidad predictiva, los puntos deberían agruparse cerca de la línea diagonal $y=x$, indicando que las predicciones ($\hat{\mu}_i$) son cercanas a los valores observados ($y_i$).
+
+### Otros GLMs
+
+La **regresión binomial negativa** y los **modelos basados en distribuciones como Gamma e Inversa Gaussiana** amplían la capacidad de los **Modelos Lineales Generalizados (GLM)** para adaptarse a una amplia variedad de situaciones del mundo real. Estos modelos son especialmente útiles cuando los datos presentan características como sobredispersión, sesgo o restricciones en el dominio (por ejemplo, solo valores positivos). La elección adecuada del modelo y la función de enlace garantiza predicciones precisas y válidas, contribuyendo a la toma de decisiones informadas en campos como la salud, la ingeniería y la economía.
+
+#### Regresión binomial negativa
+
+Tal y como hemos visto en apartados anteriores, la **sobredispersión** ocurre cuando la varianza de los datos de conteo es **mayor que la media**, lo cual viola uno de los supuestos clave de la regresión de Poisson, que asume que la media y la varianza son iguales ($E(Y) = Var(Y) = \lambda$). La sobredispersión puede surgir por varias razones:
+
+-   **Heterogeneidad no modelada:** Existen factores que afectan la variable dependiente pero no han sido incluidos en el modelo.
+-   **Dependencia entre eventos:** Los eventos no ocurren de forma independiente.
+-   **Exceso de ceros:** Hay más ceros en los datos de los que predice la distribución de Poisson.
+
+Cuando la sobredispersión está presente, la regresión de Poisson subestima los errores estándar, lo que puede llevar a conclusiones incorrectas sobre la significancia de los predictores.
+
+La **regresión binomial negativa** es una extensión de la regresión de Poisson que introduce un parámetro adicional para manejar la sobredispersión. Este modelo permite que la varianza sea mayor que la media:
+
+$$
+Var(Y) = \lambda + \alpha \lambda^2
+$$
+
+Donde $\alpha$ es el parámetro de dispersión. Si $\alpha = 0$, el modelo se reduce a la regresión de Poisson.
+
+La forma funcional del modelo binomial negativo es similar al de Poisson:
+
+$$
+\log(\lambda) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+$$
+
+Pero la varianza ahora incluye el término adicional $\alpha$ para capturar la sobredispersión.
+
+::: {.callout-tip title="Ejemplo" collapse="true"}
+```{r bin_neg_example}
+# ============================================
+# Regresión Binomial Negativa en datos deportivos
+# Número de goles por partido
+# ============================================
+
+# Instalar y cargar la librería MASS
+library(MASS)
+
+# Usar los datos simulados del ejemplo anterior
+# datos_goles contiene:
+# goles, ataque_equipo, defensa_rival
+
+# -----------------------------
+# Ajuste del modelo binomial negativo
+# -----------------------------
+
+modelo_binom_neg <- glm.nb(goles ~ ataque_equipo + defensa_rival,
+                           data = datos_goles)
+
+# Resumen del modelo
+summary(modelo_binom_neg)
+
+# -----------------------------
+# Comparar dispersión con Poisson
+# -----------------------------
+
+cat("Dispersión en Poisson (deviance/df.residual):",
+    round(modelo_glm_pois$deviance / modelo_glm_pois$df.residual, 3), "\n")
+
+cat("Parámetro theta en Binomial Negativa:",
+    round(modelo_binom_neg$theta, 3), "\n")
+
+# -----------------------------
+# Comparar AIC entre modelos
+# -----------------------------
+
+cat("AIC Poisson:",
+    round(AIC(modelo_glm_pois), 2), "\n")
+
+cat("AIC Binomial Negativa:",
+    round(AIC(modelo_binom_neg), 2), "\n")
+
+```
+:::
+
+**Interpretación del parámetro** $\theta$ en binomial negativa:
+
+-   El parámetro $\theta$ controla el grado de sobredispersión en el modelo
+-   **Valores altos de** $\theta$ (ej: $\theta > 100$): Poca sobredispersión, el modelo se aproxima a Poisson
+-   **Valores bajos de** $\theta$ (ej: $\theta < 10$): Mucha sobredispersión, diferencia significativa respecto a Poisson
+-   **Regla práctica**: Si $\theta$ es pequeño, confirma que había sobredispersión y que el modelo binomial negativa es más apropiado que Poisson
+
+**Comparación de modelos:**
+
+-   Si AIC de binomial negativa \< AIC de Poisson → preferir binomial negativa
+-   El modelo binomial negativa corrige la subestimación de errores estándar que ocurre en Poisson con sobredispersión
+
+#### Modelos para variables continuas no normales
+
+Existen situaciones en las que la variable dependiente es **continua**, pero **no sigue una distribución normal**. En estos casos, los **Modelos Lineales Generalizados (GLM)** permiten utilizar distribuciones alternativas como **Gamma** o **Inversa Gaussiana**, junto con funciones de enlace específicas.
+
+##### Regresión gamma para datos positivos y sesgados
+
+La **regresión Gamma** es adecuada para modelar variables continuas que son **positivas** y tienen una distribución **sesgada a la derecha**. Ejemplos típicos incluyen tiempos de espera, costos médicos o duración de procesos.
+
+-   La distribución Gamma asume que la variable dependiente es continua y positiva.
+-   La varianza de la variable dependiente aumenta proporcionalmente al cuadrado de la media.
+
+**Función de Enlace Común:** $$\log(\mu) = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p$$
+
+::: {.callout-tip title="Ejemplo" collapse="true"}
+```{r gamma_1}
+# Simulación de costos médicos
+set.seed(123)
+n <- 100
+ingresos <- rnorm(n, mean = 50000, sd = 10000)
+edad <- rnorm(n, mean = 45, sd = 10)
+costos <- rgamma(n, shape = 2, rate = 0.00005 * ingresos + 0.01 * edad)
+
+# Ajuste del modelo Gamma
+modelo_gamma <- glm(costos ~ ingresos + edad, family = Gamma(link = "log"))
+
+# Resumen del modelo
+summary(modelo_gamma)
+```
+
+-   Los coeficientes muestran cómo los ingresos y la edad afectan los costos médicos esperados.
+-   El enlace logarítmico asegura que las predicciones sean siempre positivas.
+:::
+
+##### Regresión inversa gaussiana
+
+La **regresión Inversa Gaussiana** es útil para modelar tiempos de respuesta o variables donde la varianza disminuye rápidamente a medida que la media aumenta. Este modelo se aplica en campos como la ingeniería, donde se analizan tiempos hasta fallas de sistemas.
+
+**Función de Enlace Común:** $$\frac{1}{\mu^2} = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p$$
+
+::: {.callout-tip title="Ejemplo" collapse="true"}
+```{r inv_1}
+# Instalar y cargar la librería correcta
+library(statmod)
+
+# Simulación de datos
+set.seed(123)
+n <- 100
+carga_trabajo <- rnorm(n, mean = 50, sd = 10)
+
+# Generar tiempos hasta el fallo usando la distribución inversa gaussiana
+# Aseguramos que los valores de carga_trabajo sean positivos para evitar problemas numéricos
+carga_trabajo[carga_trabajo <= 0] <- 1
+tiempo_fallo <- rinvgauss(n, mean = 100 / carga_trabajo, dispersion = 1)
+
+# Ajuste del modelo Inversa Gaussiana con enlace logarítmico
+modelo_inversa_gauss <- glm(tiempo_fallo ~ carga_trabajo, family = inverse.gaussian(link = "1/mu^2"),start = c(0.01, 0.01))
+
+# Resumen del modelo
+summary(modelo_inversa_gauss)
+
+
+```
+:::
+
+::: {.callout-warning title="¿Qué GLM debo usar?"}
+La elección del modelo correcto depende casi exclusivamente de la naturaleza de tu variable respuesta ($Y$). Aquí tienes una guía rápida:
+
+-   **¿Tu variable respuesta es binaria (Sí/No, 0/1, Éxito/Fracaso)?**
+    -   Usa **Regresión Logística**.
+-   **¿Tu variable respuesta es un conteo de eventos (nº de accidentes, nº de clientes, nº de fallos)?**
+    -   Empieza con una **Regresión de Poisson**.
+    -   **Importante:** Después de ajustar el modelo, comprueba si hay **sobredispersión**.
+    -   Si la hay (estadístico de dispersión $\hat{\phi} > 1.5$ o la teoría lo sugiere), cambia a una **Regresión Binomial Negativa**.
+-   **¿Tu variable respuesta es continua y estrictamente positiva, con una distribución asimétrica hacia la derecha (ej. tiempos, costos, reclamaciones de seguros)?**
+    -   Usa **Regresión Gamma**. Es una excelente alternativa a transformar la variable con logaritmos y usar un modelo lineal.
+-   **¿Tu variable respuesta es un tiempo hasta un evento y tiene una asimetría muy pronunciada?**
+    -   Considera una **Regresión Inversa Gaussiana**.
+:::
+
+## Modelos Aditivos Generalizados (GAMs) {#sec-gam}
+
+Los **Modelos Aditivos Generalizados** (**GAMs**, *Generalized Additive Models*) constituyen una extensión flexible de los **Modelos Lineales Generalizados (GLMs)** que permite modelar relaciones **no lineales** entre las variables predictoras y la variable de respuesta sin imponer una forma funcional paramétrica rígida.
+
+Mientras que en un GLM el predictor tiene la forma
+
+$$
+g(\mu) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+$$
+
+en un GAM esta estructura se generaliza como
+
+$$
+g(\mu) = \beta_0 + f_1(X_1) + f_2(X_2) + \dots + f_p(X_p)
+$$
+
+donde cada $f_j(\cdot)$ es una **función suave** estimada a partir de los datos. Esta formulación conserva la idea central del GLM —una distribución para la respuesta y una función de enlace—, pero reemplaza la relación estrictamente lineal de los predictores por una suma de efectos suaves.
+
+Esta característica resulta especialmente útil en analítica deportiva, donde muchas relaciones reales rara vez son estrictamente lineales. Por ejemplo, la probabilidad de gol no disminuye de manera lineal con la distancia a portería, el efecto de la carga de entrenamiento sobre el riesgo de lesión puede presentar umbrales o zonas críticas, y la relación entre edad y rendimiento suele mostrar fases de crecimiento, pico y declive.
+
+Los GAMs permiten capturar estos patrones complejos manteniendo un grado elevado de interpretabilidad. En lugar de obligarnos a decidir de antemano si una relación debe ser cuadrática, cúbica o logarítmica, el modelo estima directamente la forma más compatible con los datos, penalizando excesiva complejidad para evitar sobreajuste. La referencia moderna fundamental para este enfoque es [@wood2017].
+
+### ¿Por qué son útiles en analítica deportiva?
+
+En el análisis de datos deportivos, los GAMs son especialmente valiosos cuando sospechamos que el efecto de una variable no es lineal pero no conocemos su forma exacta. Algunos ejemplos típicos son:
+
+-   La relación entre **distancia de disparo** y **probabilidad de gol**.
+-   El efecto de la **carga acumulada** sobre el **riesgo de lesión**.
+-   La evolución del **rendimiento físico** según la **edad**.
+-   La relación entre **fatiga** y **precisión técnica**.
+-   El efecto de la **densidad competitiva** (partidos por semana) sobre el rendimiento.
+
+En todos estos casos, imponer una relación lineal puede ser demasiado restrictivo y conducir a interpretaciones pobres o directamente erróneas.
+
+### Estructura general de un GAM
+
+Un GAM mantiene los tres componentes esenciales de un GLM:
+
+1.  **Componente aleatorio**: especifica la distribución de la variable respuesta (normal, binomial, Poisson, etc.).
+2.  **Componente sistemático**: sustituye la combinación lineal de predictores por una suma de funciones suaves.
+3.  **Función de enlace**: conecta la media de la respuesta con el predictor aditivo.
+
+Por tanto, los GAMs no sustituyen a los GLMs, sino que los **extienden**. De hecho, un GLM puede verse como un caso particular de GAM en el que todos los efectos suaves son lineales.
+
+### Ejemplo en deporte: probabilidad de gol
+
+Un caso muy natural en analítica deportiva consiste en modelar la probabilidad de que un disparo termine en gol en función de variables espaciales como la **distancia** y el **ángulo de tiro**. En un modelo logístico convencional podríamos asumir:
+
+$$
+\log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + \beta_1 \text{distancia}_i + \beta_2 \text{ángulo}_i
+$$
+
+Sin embargo, esta formulación obliga a suponer que ambos efectos son lineales en la escala logit. Un GAM relaja esa restricción:
+
+$$
+\log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + f_1(\text{distancia}_i) + f_2(\text{ángulo}_i)
+$$
+
+donde $f_1$ y $f_2$ son funciones suaves estimadas a partir de los datos.
+
+### Ejemplo en R
+
+```{r gam_example}
+#| warning: false
+#| message: false
+
+library(mgcv)
+
+# -----------------------------
+# Simulación de datos deportivos
+# -----------------------------
+set.seed(123)
+
+n <- 500
+
+tiros <- data.frame(
+  distancia = runif(n, 5, 35),
+  angulo = runif(n, 5, 80)
+)
+
+# Relación no lineal simulada
+eta <- 1.5 - 0.08 * tiros$distancia + 0.002 * tiros$distancia^2 +
+  0.03 * tiros$angulo
+
+p <- 1 / (1 + exp(-eta))
+
+tiros$gol <- rbinom(n, 1, p)
+
+# -----------------------------
+# Ajuste del GAM
+# -----------------------------
+modelo_gam <- gam(
+  gol ~ s(distancia) + s(angulo),
+  family = binomial,
+  data = tiros
+)
+
+summary(modelo_gam)
+```
+
+En este ejemplo:
+
+- `family = binomial` indica que estamos modelando una variable binaria.
+
+- `s(distancia)` y `s(angulo)` especifican que estas variables entran en el modelo mediante funciones suaves.
+
+- El modelo estima automáticamente la forma funcional más adecuada para cada predictor, controlando su complejidad mediante penalización.
+
+### Visualización de los efectos suaves
+
+Una de las grandes ventajas de los GAMs es que permiten representar gráficamente el efecto estimado de cada predictor.
+
+```{r}
+#| fig-cap: "Efectos suaves estimados por el GAM para la distancia y el ángulo de tiro."
+#| warning: false
+
+plot(modelo_gam, pages = 1, shade = TRUE)
+```
+
+Estos gráficos muestran cómo cambia el predictor lineal en función de cada variable, manteniendo constantes las demás. En un contexto deportivo, esto permite identificar regiones donde el efecto cambia con mayor intensidad, detectar umbrales y visualizar patrones imposibles de captar con un modelo lineal simple.
+
+
+### Interpretación del resumen del modelo
+
+Al examinar `summary(modelo_gam)` suelen aparecer dos bloques principales:
+
+- **Coeficientes paramétricos**: corresponden a efectos lineales o términos introducidos de forma paramétrica.
+
+- **Términos suaves**: muestran, entre otros elementos, los grados de libertad efectivos (*effective degrees of freedom*, EDF).
+
+La interpretación del EDF es especialmente útil:
+
+- Si el EDF es aproximadamente 1, el efecto es casi lineal.
+
+- Si el EDF es claramente mayor que 1, existe evidencia de no linealidad.
+
+- Cuanto mayor sea el EDF, más compleja será la forma estimada, aunque siempre controlada por la penalización del modelo.
+
+Esto convierte a los GAMs en una herramienta excelente no solo para predecir, sino también para explorar si la hipótesis de linealidad resulta razonable.
+
+### Relación con los GLMs
+
+La conexión entre GLMs y GAMs es estrecha. Ambos comparten:
+
+- la posibilidad de trabajar con distribuciones de la familia exponencial,
+
+- el uso de funciones de enlace,
+
+- y una lógica común de estimación basada en máxima verosimilitud penalizada.
+
+La diferencia esencial es que el GAM sustituye el supuesto de linealidad estricta por una estructura aditiva flexible. En términos prácticos:
+
+- un GLM es preferible cuando la relación es aproximadamente lineal y buscamos máxima simplicidad;
+
+- un GAM es preferible cuando sospechamos no linealidades pero queremos conservar interpretabilidad.
+
+::: {.callout-note collapse="true" title="Aplicaciones"}
+En analítica deportiva, los GAMs aparecen con frecuencia en problemas como:
+
+- modelos de expected goals (xG) más flexibles;
+
+- análisis del efecto de la edad sobre el rendimiento;
+
+- modelado de la relación entre carga de entrenamiento y lesión;
+
+- estudio de patrones no lineales en métricas físicas como aceleraciones, sprints o distancia recorrida;
+
+- análisis de rendimiento en función del tiempo de juego, la fatiga acumulada o el contexto competitivo.
+:::
+
+
+### Ventajas y limitaciones
+
+Entre sus principales ventajas destacan:
+
+- gran flexibilidad para capturar relaciones no lineales;
+
+- interpretación visual clara;
+
+- mantenimiento del marco probabilístico de los GLMs;
+
+- capacidad para descubrir estructuras desconocidas en los datos.
+
+Sin embargo, también presentan limitaciones:
+
+- pueden resultar más difíciles de resumir con un único coeficiente;
+
+- requieren más cuidado en la validación;
+
+- una flexibilidad excesiva puede llevar a sobreajuste si no se controla adecuadamente.
+
+Por ello, en la práctica conviene comparar GAMs con modelos más simples y valorar si la mejora en ajuste justifica la mayor complejidad.
+
+::: {.callout-tip title="Idea clave"} 
+Los GAMs ocupan un lugar intermedio muy valioso entre los modelos paramétricos clásicos y enfoques más opacos de machine learning. En analítica deportiva moderna, esta combinación de flexibilidad, capacidad predictiva e interpretabilidad los convierte en una herramienta especialmente atractiva para modelar fenómenos complejos del rendimiento y la competición.
+:::
+
+---

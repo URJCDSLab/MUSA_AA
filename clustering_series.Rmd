@@ -1,0 +1,31 @@
+---
+title: "Clustering Series"
+author: "Isaac Martín"
+date: "2026-02-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Objetivo y datos
+
+En este documento vamos a:
+
+-   Leer un CSV con resultados de una carrera de 1500m.
+-   Extraer los *splits* cada 100m (columnas `100m`, `200m`, ..., `1500m`).
+-   Construir representaciones comparables entre corredores.
+-   Agrupar corredores por **estrategia** (forma del pacing) con clustering jerárquico.
+-   Resumir e interpretar cada grupo y **etiquetar automáticamente** estrategias.
+
+La idea clave es separar dos conceptos:
+
+-   **Nivel de rendimiento**: quién es más rápido en términos absolutos.
+-   **Estrategia (pacing)**: cómo distribuye el esfuerzo a lo largo de la carrera (salida fuerte, ritmo constante, kick final, etc.).
+
+Para agrupar por estrategia, compararemos **la forma del perfil**, no el tiempo absoluto.
+
+# Lectura del CSV
+
+
