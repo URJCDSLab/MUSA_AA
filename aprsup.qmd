@@ -1,283 +1,119 @@
 # Aprendizaje supervisado {#sec-aprsup}
 
-El aprendizaje automático supervisado es una disciplina fundamental en la ciencia de datos y la IA. En este enfoque, trabajamos con un conjunto de datos en el que conocemos la variable objetivo que deseamos predecir o clasificar. Esta variable objetivo contiene la información que queremos explicar o entender, y su comportamiento se basa en el resto de las variables o características del conjunto de datos. El objetivo principal del ML supervisado es desarrollar modelos que puedan capturar patrones y relaciones entre las variables con el fin de realizar predicciones precisas y clasificar observaciones.
+El aprendizaje automático supervisado constituye una de las herramientas más importantes dentro de la analítica deportiva moderna. En este enfoque, trabajamos con conjuntos de datos históricos en los que conocemos la variable objetivo que deseamos predecir o explicar. Esta variable objetivo puede representar distintos fenómenos relevantes en el deporte, como el resultado de un partido, la probabilidad de gol de un disparo, el rendimiento de un jugador o el riesgo de lesión. El resto de variables del conjunto de datos —como estadísticas de juego, métricas físicas o información contextual— actúan como variables predictoras, a partir de las cuales los modelos aprenden patrones que permiten realizar predicciones sobre nuevos casos.
 
-Uno de los aspectos más destacados del ML supervisado es su capacidad para resolver problemas de clasificación, donde se asignan observaciones a diferentes categorías o clases. Por ejemplo, podemos aplicar modelos de clasificación para predecir si un correo electrónico es spam o legítimo, si un paciente tiene una enfermedad específica o no, o si una transacción bancaria es fraudulenta o no.
+El objetivo principal del aprendizaje automático supervisado en el contexto deportivo es identificar relaciones entre variables que permitan anticipar eventos relevantes o comprender mejor el rendimiento. Para ello, los algoritmos se entrenan con datos históricos y aprenden a reconocer patrones que posteriormente pueden aplicarse a situaciones futuras, como partidos aún no disputados o acciones que ocurren durante el juego.
 
-Además de la clasificación, el ML supervisado también se utiliza para abordar problemas de regresión, donde la variable objetivo es una cantidad continua. Esto nos permite realizar predicciones numéricas, como predecir el precio de una casa en función de sus características, pronosticar la demanda de productos en función de variables de mercado, o estimar la duración de un proyecto en función de factores diversos.
+Uno de los usos más habituales del aprendizaje supervisado en analítica deportiva es la clasificación, donde el objetivo es asignar observaciones a diferentes categorías. Por ejemplo, podemos utilizar modelos de clasificación para predecir si un disparo terminará en gol o no gol, si un equipo ganará o perderá un partido, si un jugador presenta alto o bajo riesgo de lesión, o si una acción de juego puede clasificarse como ocasión clara de gol o como oportunidad de bajo peligro.
 
-En este tema, exploraremos diversos algoritmos de clasificación supervisada que permiten extraer patrones a partir de los datos y realizar predicciones precisas en una variedad de aplicaciones. Aprenderemos cómo entrenar modelos, evaluar su rendimiento y aplicarlos a situaciones del mundo real. El ML supervisado es una herramienta poderosa que puede proporcionar conocimientos valiosos y respuestas a preguntas importantes en una amplia gama de dominios.
+Además de los problemas de clasificación, el aprendizaje supervisado también se utiliza para abordar problemas de regresión, en los que la variable objetivo es una cantidad numérica continua. En el ámbito deportivo, estos modelos permiten estimar magnitudes como el número esperado de goles de un equipo en un partido, la distancia recorrida por un jugador durante el encuentro, el valor esperado de una acción ofensiva, o el rendimiento futuro de un jugador a partir de sus métricas actuales.
 
-## Modelos lineales
+A lo largo de este tema exploraremos diversos algoritmos de aprendizaje supervisado aplicados al análisis de datos deportivos. Aprenderemos cómo entrenar modelos utilizando datos históricos, cómo evaluar su rendimiento mediante métricas adecuadas y cómo interpretar sus resultados en contextos reales de análisis del rendimiento y toma de decisiones. En el ecosistema actual del deporte profesional, donde los clubes generan y almacenan grandes volúmenes de datos, el aprendizaje automático supervisado se ha convertido en una herramienta esencial para transformar datos en conocimiento accionable.
 
-Los modelos lineales representan uno de los pilares más robustos y extensamente empleados en el ámbito del aprendizaje supervisado en ML. Estos modelos constituyen la base de numerosas aplicaciones de predicción y clasificación, desempeñando un papel fundamental en la comprensión de los principios subyacentes de los algoritmos de ML.
+### Regresión logística como modelo base en clasificación
 
-La premisa fundamental de un modelo lineal es la suposición de que existe una relación lineal entre las variables de entrada (características) y la variable objetivo que se desea predecir. En otras palabras, se busca identificar una combinación lineal de las características ponderadas por coeficientes que se ajuste óptimamente a los datos observados. Los modelos lineales destacan por su alta interpretabilidad, lo que facilita un análisis claro sobre cómo cada característica influye en la variable objetivo.
+En el tema anterior estudiamos con detalle los **Modelos Lineales Generalizados (GLM)** y vimos cómo permiten modelar distintos tipos de variables respuesta mediante funciones de enlace y distribuciones adecuadas. En este tema no volveremos a desarrollar su teoría, sino que utilizaremos uno de los casos más importantes -la **regresión logística**- como **modelo de referencia en problemas de clasificación supervisada**.
 
-En este capítulo exploraremos los modelos lineales, iniciando con los modelos lineales generalizados, entre los cuales el modelo de regresión lineal representa un caso específico. Además, examinaremos modelos lineales de clasificación, como la regresión logística, que se emplean para abordar problemas de clasificación.
+En *aprendizaje automático*, la regresión logística se utiliza con frecuencia como **modelo base (*baseline model*)**, es decir, un modelo sencillo, interpretable y relativamente robusto frente al cual se comparan algoritmos más complejos como árboles de decisión, *random forests* o *gradient boosting*. A pesar de su simplicidad, la regresión logística sigue siendo una herramienta muy potente y ampliamente utilizada en analítica deportiva.
 
-### Modelos lineales generalizados
+Recordemos brevemente su estructura. Si $y$ es una variable respuesta binaria (por ejemplo, *lesión/no lesión*), el modelo logístico establece que
 
-Los Modelos Lineales Generalizados (**GLM**, de "*Generalized Linear Models*") son una extensión poderosa de los modelos lineales tradicionales que amplían su aplicabilidad a una variedad de problemas más complejos en el campo del ML. Si necesitáis una referencia completa a este tipo de modelos: [@mccullagh2019generalized].
+$$
+\log\left(\frac{\mu(x)}{1-\mu(x)}\right) = \beta_0 + \beta_1 x_1 + \ldots + \beta_p x_p
+$$
 
-Estos modelos son aplicables tanto a variables respuesta cuantitativas como cualitativas. De hecho, a diferencia de los modelos lineales simples, los GLM permiten manejar una amplia gama de situaciones, incluyendo variables de respuesta que no siguen una distribución normal, relaciones no lineales entre las características y la variable objetivo, y variables categóricas. Los GLM se basan en tres componentes clave:
+donde $\mu(x)=P(y=1|x)$ representa la probabilidad condicionada del evento de interés.
 
--   la función de enlace,
--   la distribución de probabilidad,
--   la estructura lineal.
+Equivalentemente, la probabilidad puede expresarse como
 
-Llamamos $y$ a la variable respuesta. Además, se define un predictor lineal con la combinación lineal ponderada de las $p$ variables explicativas $x_1, x_2, ..., x_p$:
+$$
+\mu(x)=\frac{1}{1+\exp(-(\beta_0+\beta_1x_1+\ldots+\beta_px_p))}
+$$
 
-$$\eta (x)=\beta_0+\beta_1x_1+\ldots+\beta_px_p. $$
+Los parámetros del modelo se estiman mediante **máxima verosimilitud**, y los coeficientes pueden interpretarse mediante la exponencial de los mismos, que corresponde a una **razón de ventajas (*odds ratio*)**.
 
-La **función de enlace** conecta la media de la variable respuesta con la combinación lineal de las características (el predictor lineal), lo que permite modelar relaciones no lineales y capturar la variabilidad de los datos. La elección de la función de enlace depende del tipo de problema que se esté abordando y puede incluir funciones como la logística para problemas de clasificación o la identidad para problemas de regresión.
+En analítica deportiva, la regresión logística se utiliza en numerosos problemas de clasificación, por ejemplo:
 
-La **estructura lineal** implica que las características se ponderan por coeficientes, similar a los modelos lineales tradicionales, pero con la capacidad de ajustar relaciones no lineales y manejar múltiples predictores, incluyendo variables categóricas.
+- predecir si un **disparo terminará en gol** (modelos tipo *expected goals*),
+- estimar la probabilidad de **victoria de un equipo**,
+- clasificar jugadores según **riesgo de lesión**,
+- identificar **acciones ofensivas de alto peligro**.
 
-::: callout-caution
-# Repaso
+---
 
-Quizás es un buen momento para repasar los modelos lineales (regresión) que hayas visto en otras asignaturas del máster, por ejemplo en Análisis de Datos Deportivos.
-:::
+**Ejemplo: probabilidad de gol**
 
-Definimos una función de enlace que relaciona el valor esperado de la variable respuesta dadas las variables explicativas $E(y|x)=\mu(x)$, con el predictor lineal:
-
-$$g(E(y|x))=\eta(x)$$
-
-La **distribución de probabilidad** (componente aleatoria) describe cómo se distribuyen los datos alrededor de la media y puede adaptarse a diferentes tipos de datos, como datos binarios, Poisson, binomiales o exponenciales, entre otros. Esto brinda flexibilidad para modelar una variedad de escenarios de datos. Por ejemplo, en el caso de la conocida *regresión lineal* se asume que la variable respuesta sigue una distribución *Normal*. Mediante la componente aleatoria determinamos cómo añadir el ruido o error aleatorio a la predicción que se obtiene de la función de enlace. La tabla siguiente, adaptada de [@agresti2015foundations], resume los GLM:
-
-| Modelo | Componente aleatoria | Función de enlace | Tipo de variables explicativas |
-|------------------|------------------|------------------|-------------------|
-| Regresión Lineal | Normal | Identidad | Cuantitativas |
-| ANOVA | Normal | Identidad | Cuantitativas |
-| ANCOVA | Normal | Identidad | Cuantitativas y Cualitativas |
-| Regresión Logística | Binomial | Logit | Cuantitativas y Cualitativas |
-| LogLinear | Poisson | Log | Cualitativas |
-| Regresión de Poisson | Poisson | Log | Cuantitativas y Cualitativas |
-
-::: callout-important
-# Para recordar
-
-Los GLM no asumen una relación lineal entre la variable respuesta y las variables explicativas (o independientes), pero sí suponen una relación lineal entre la variable respuesta transformada en términos de la función de enlace y las variables explicativas.
-:::
-
-
-### Regresión Logística
-
-El modelo de Regresión Logística es uno de los modelos lineales generalizados más empleado en la práctica por la facilidad en la interpretación de sus resultados. Es un modelo adecuado para modelar la relación entre una variable respuesta binaria ($0$ o $1$) y un conjunto de variables explicativas cuantitativas y/o cualitativas.
-
-::: callout-note
-# Multiclase
-
-Existe una versión de la Regresión Logística adaptada al caso de una variable respuesta con más de dos categorías, que recibe el nombre de Regresión Logística Politómica o Multinomial.
-:::
-
-Asumiremos que la variables explicativas son independientes entre sí y que la probabilidad de $1$ (a veces llamada probabilidad de éxito) solo depende de los valores de dichas variables. Si las variables explicativas no fueran independientes, podríamos añadir interacciones al modelo.
-
-Tratamos de modelar la probabilidad condicionada, $\mu(x)$, de que la variable respuesta sea un $1$ dados los valores de las variables explicativas. En este caso, la componente de la variables respuesta se corresponde con una distribución binomial, $Binomial(n,\pi)$, donde $\pi=\mu(x)$ es la probabilidad de éxito. Así,
-
-$$  g(E(y|x)=g(μ(x))=\eta(x) =$$ $$=logit(\mu(x))=log\left(\frac{\mu(x)}{(1-\mu(x))}\right)=log\left(\frac{E(y|x)}{1-E(y|x)}\right)$$ $$=\beta_0+\beta_1x_1+\ldots+\beta_px_p$$
-
-que modela la log odds de probabilidad de $1$ como función de las variables explicativas. Esto es, se modela el logaritmo de la probabilidad de $1$ dadas las variables explicativas, frente a la probabilidad de $0$ dadas las variables explicativas.
-
-De este modo:
-
-$$\mu(x)=\frac{1}{1+exp(-\eta(x))}=\frac{1}{1+exp(-(\beta_0+\beta_1x_1+...+\beta_px_p))}$$
-
-Se emplean métodos de Máxima Verosimilitud para la estimación de los parámetros $\beta_i, i=0,...,p$. Es posible realizar contrastes de hipótesis sobre dichos parámetros, tratando de eliminar del modelo las variables no significativas. Es decir, se contrasta si en los datos hay suficiente información contraria a la siguiente hipótesis nula, como para rechazarla: $$H_o:\beta_i=0$$ La interpretación de los coeficientes se realiza mediante una razón de ventajas ("*odds ratio*" en inglés), tomando la exponencial de los estimadores de los parámetros del modelo.
-
-Con los parámetros estimados, y sus desviaciones típicas, podremos hacer selección de variables, quedándonos con las más significativas (aquellas con un $p-valor$ por debajo de un umbral).
-
-Vamos a trabajar con el ejemplo de los bancos que se estudió en el @sec-eda. Como primera aproximación a la regresión logística, aplicamos un modelo con una única variable explicativa. En este caso elegimos la variable `housing`:
+Como ejemplo sencillo, supongamos que queremos modelar la probabilidad de que un disparo termine en gol utilizando información como la **distancia al arco** y el **ángulo de tiro**.
 
 ```{r}
-#| include: true
-#| warning: false
-#| echo: true
-#| 
-#Lectura de datos
+set.seed(123)
 
-library(tidyverse)
-bank = read.csv('https://raw.githubusercontent.com/rafiag/DTI2020/main/data/bank.csv')
-dim(bank)
-bank=as.tibble(bank)
+n <- 500
 
-# Parciticionamos los datos
-set.seed(2138)
-n=dim(bank)[1]
-indices=seq(1:n)
-indices.train=sample(indices,size=n*.5,replace=FALSE)
-indices.test=sample(indices[-indices.train],size=n*.25,replace=FALSE)
-indices.valid=indices[-c(indices.train,indices.test)]
+tiros <- data.frame(
+  distancia = runif(n, 5, 35),
+  angulo = runif(n, 5, 80)
+)
 
-bank.train=bank[indices.train,]
-bank.test=bank[indices.test,]
-bank.valid=bank[indices.valid,]
+eta <- 1.5 - 0.08*tiros$distancia + 0.03*tiros$angulo
+p <- 1/(1+exp(-eta))
 
-# Estudiamos la influencia de housing en deposit
-tabla1=xtabs(~housing+deposit,data=bank.train)
-tabla1
-chisq.test(tabla1)
+tiros$gol <- rbinom(n,1,p)
 ```
 
-Podemos observar que existe una relación relevante entre ambas variables. El $p-valor$ es, claramente, inferior al valor de referencia $0.05$. Empleamos la regresión logística para cuantificar la relación:
+Ajustamos un modelo logístico:
 
 ```{r}
-factor.deposit <- factor(bank.train$deposit)
-logit1 <- glm(factor.deposit ~ housing, data = bank.train, family = "binomial")
-summary(logit1)
+modelo_logit <- glm(gol ~ distancia + angulo,
+                    data = tiros,
+                    family = binomial)
+
+summary(modelo_logit)
 ```
 
-¿Qué vemos en la salida? En primer lugar, los 3 asteriscos (" \*\*\* ") en la fila correspondiente a la variable `housing` indican su alta significatividad estadística. En otras palabras, es una variable muy relacionada con la respuesta (como ya habíamos averiguado). El valor del parámetro $\beta_1$ es de $-0.82674$ con una error estándar de $0.05488$. ¿Qué significa? Es complicado interpretar valores negativos en los coeficientes. Para una mayor comprensión vamos a darle la vuelta. Es decir, el valor $-0.82674$ está asociado a"*housing=yes*", de modo que el valor $0.82674$ está asociado a "*housing=no*". La interpretación se realiza en base al exponente de dicho valor tal y como sigue: $$exp(.82674)=2.29$$ significa que el "riesgo" de contratar un depósito es $2.29$ veces mayor en aquellos que no tienen casa, en relación con el mismo riesgo para aquellos que sí tienen casa en propiedad. Si hubíeramos mantenido la interpretación original (con el valor del coeficiente negativo), el resultado sería: "el riesgo de contratar un depósito es $exp(-0.82674)=0.44$ veces menor en aquellos propietarios de su propia casa, respecto a otros clientes que no tienen casa. Como puede verse es mucho más sencillo interpretar coeficientes positivos (odds ratio mayor que $1$) que coeficientes negativos.
-
-En base al valor del parámetro y a su error, podemos obtener intervalos de confianza:
+Estudiamos en el capítulo anterior cómo la interpretación suele realizarse mediante *odds ratios*:
 
 ```{r}
-exp(cbind(OR=coef(logit1),confint.default(logit1)))
-confint.default(logit1)
+exp(coef(modelo_logit))
 ```
 
-Y por tanto, el riesgo de contratar un depósito es $2.29 \in [2.05,2.54]$ veces mayor en aquellos que no tienen casa, en relación con el mismo riesgo para aquellos que sí tienen casa en propiedad.
-
-Vamos ahora a trabajar en el caso multivariante. Como primer paso estudiemos, una a una las variables que se van a incluir en el modelo. A modo de ejemplo, consideramos las siguientes variables:
-
--   `housing`
-
--   `marital`
-
--   `education`
-
--   `impago`
-
--   `saldo`
+#### Predicción y clasificación
 
 ```{r}
-# para que la categoría de referencia sea "married"
-bank.train$marital=relevel(as.factor(bank.train$marital),ref=2)
+predicciones <- predict(modelo_logit, type="response")
+head(predicciones)
 
-logit2 <- glm(factor.deposit ~ marital, data = bank.train, family = "binomial")
-summary(logit2)
+clase.pred <- ifelse(predicciones > 0.5, 1, 0)
 ```
 
-La variable `marital` es estadísticamente significativa. Los clientes solteros tienen un riesgo del orden de $1.5$ veces mayor de `deposit=yes` respecto a los clientes casados. Los clientes divorciados tienen un riesgo del orden de $1.2$ veces mayor.
+**Evaluación del modelo**
 
 ```{r}
-logit2 <- glm(factor.deposit ~ education, data = bank.train, family = "binomial")
-summary(logit2)
-```
-
-La variable `education` es estadísticamente significativa. A medida que la educación aumenta, los clientes tienen un riesgo mayor de `deposit=yes` ($1$ categoría de referencia, $1.3$ educación secundaria, $1.8$ educación terciaria). Los clientes con nivel de educación desconocido también tienen un riesgo positivo. Aquí la interpretación es más complicada al desconocer el nivel real de educación de estos clientes.
-
-```{r}
-logit2 <- glm(factor.deposit ~ default, data = bank.train, family = "binomial")
-summary(logit2)
-```
-
-La variable `default` no es estadísticamente significativa. Su $p-valor$ es mayor que $0.05$. Sin embargo, está cerca de dicho valor de referencia. Eliminar esta variable del modelo en una etapa tan temprana puede ser un error.
-
-```{r}
-logit2 <- glm(factor.deposit ~ balance, data = bank.train, family = "binomial")
-summary(logit2)
-```
-
-La variable `saldo` es claramente significativa. Un incremento de una unidad en el `saldo` está asociado a un incremento de $1.00006$ en el riesgo de depóstivo. En variables continuas es muy habitual que un incremento tan bajo ($1$ dolar esté asociado a incrementos tan pequeños en el riesgo). Para mejorar la interpretación se suele multiplicar esta cantidad como sigue:
-
-```{r}
-exp(logit2$coefficients[2]*1000)
-```
-
-De este modo, la interpretación sería: los clientes con $1000$ dólares más en el salto incrementan su riesgo de depósito en $1.06$ respecto a los que tienen $1000$ dólares menos.
-
-::: callout-caution
-# Métodos Wrapper de selección de características
-
-En el @sec-reddim vimos algunas técnicas de reducción de la dimensión basadas en la selección de características de acuerdo con la calidad de las mismas. Esta calidad se evalua empleando algoritmos de ML.
-:::
-
-A continuación, ajustamos un modelo de regresión logística con todas las características significativas.
-
-```{r}
-logit2 <- glm(factor.deposit ~ housing+marital+education+default+ balance, data = bank.train, family = "binomial")
-summary(logit2)
-```
-
-Podemos ver como la variable `default` pierde significatividad estadística. Esto es normal. Al tener en consideración el efecto de otras variables, aquellas que estaban al límite de la significatividad pueden ser eliminadas. Entrenamos el modelo sin esa variable.
-
-```{r}
-logit2 <- glm(factor.deposit ~ housing+marital+education+ balance, data = bank.train, family = "binomial")
-summary(logit2)
-```
-
-Todas las variables del modelo son estadísticamente significativas. Si las variables fueran independientes, los coeficientes de la regresión múltiple coincidirían al 100% con los coeficientes de las regresiones simples. Por ejemplo, el coeficiente asociado a la variable `housing` era $2.29$ y ahora es $2.18$, muy similar. Podemos intuir la existencia de una pequeña correlación entre las variables del modelo.
-
-### Probabilidad de clase
-
-Podemos calcular la probabilidad que ofrece el modelo para cada una de las observaciones en la muestra de entrenamiento.
-
-```{r}
-predicciones <- predict(logit2, type="response")
-hist(predicciones)
-```
-
-Y podemos emplear esas predicciones, con un umbral de decisión (\$0.5\$ en el ejemplo), para clasificar.
-
-```{r}
-#| include: true
-#| warning: false
-#| echo: true
-#| 
 library(caret)
-clase.pred=ifelse(predicciones>0.5,"yes","no")
-confusionMatrix(data=as.factor(clase.pred),reference=as.factor(bank.train$deposit),positive="yes")
 
+confusionMatrix(as.factor(clase.pred),
+                as.factor(tiros$gol))
 ```
 
-En la salida tenemos algunas de las medidas de rendimiento estudiadas en el @sec-eval. Sin embargo, no aparece el $F_1-score$, media armónica de la Precisión y la Recuperación. En cualquier caso, es fácil de programar:
+También podemos evaluar el modelo mediante la curva ROC:
 
 ```{r}
-clase.pred=ifelse(predicciones>0.5,"yes","no")
-
-confmat1=confusionMatrix(data=as.factor(clase.pred),reference=as.factor(bank.train$deposit))
-Precision=confmat1$byClass[3]
-Recall=confmat1$byClass[1]
-F1score=2*Precision*Recall/(Precision+Recall)
-names(F1score)="F1Score"
-F1score
-```
-
-Este es el funcionamiento del modelo en entrenamiento, pero ¿cuál es su funcionamiento en la partición de prueba? Recuerda, si el valor es mucho menor entonces estamos sobreajustando el modelo de entrenamiento.
-
-```{r}
-predicciones <- predict(logit2, newdata=bank.test, type="response")
-clase.pred=ifelse(predicciones>0.5,"yes","no")
-confmat2=confusionMatrix(data=as.factor(clase.pred),reference=as.factor(bank.test$deposit))
-Precision=confmat2$byClass[3]
-Recall=confmat2$byClass[1]
-F1score=2*Precision*Recall/(Precision+Recall)
-names(F1score)="F1Score"
-F1score
-```
-
-Vemos que el valor es muy similar al obtenido en entrenamiento. No estamos sobreajustando el modelo.
-
-::: callout-caution
-# Tarea
-
-Dejamos como labor del estudiante la tarea de mejorar la capacidad predictiva del modelo. Puedes emplear algunas de las variables que no han sido consideradas y que puedes consultar en el @sec-eda.
-:::
-
-Podemos calcular la curva *ROC* presentada en el @sec-eval.
-
-```{r}
-#| include: true
-#| warning: false
-#| echo: true
-#| 
 library(pROC)
-roc_score=roc(bank.test$deposit, predicciones,plot=TRUE,print.auc=TRUE)
+
+roc_obj <- roc(tiros$gol, predicciones)
+plot(roc_obj)
+auc(roc_obj)
 ```
 
-Y ahora, podemos plantear si este modelo es adecuado. Es decir ¿estamos satisfechos con el rendimiento del modelo? ¿Es suficientemente bueno?
+#### Regresión logística en Machine Learning
+
+Aunque en analítica deportiva se utilizan modelos más complejos, la regresión logística sigue siendo un modelo fundamental porque:
+
+- es **fácil de interpretar**
+- es **rápida de entrenar**
+- funciona bien con conjuntos de datos moderados
+- sirve como **modelo base de referencia**
+
 
 ### Análisis Discriminante Lineal
 
@@ -414,7 +250,6 @@ par(mfrow = c(1, 1))
 :::
 
 ::: {.callout-note collapse="true" title="Ventajas"}
-## Ventajas
 
 -   **Simple y rápido**
 
@@ -426,7 +261,6 @@ par(mfrow = c(1, 1))
 :::
 
 ::: {.callout-note collapse="true" title="Desventajas"}
-## Desventajas
 
 -   **Asume normalidad y homocedasticidad**. LDA puede ser sensible a la falta de normalidad en las variables y a la diferente variabilidad en las mismas.
 
@@ -441,8 +275,7 @@ par(mfrow = c(1, 1))
 
 El método de los $k$ vecinos más cercanos ($k-NN$), abreviatura de "k nearest neighbors" en inglés, se cuenta entre los enfoques más simples y ampliamente utilizados en el campo del ML. Este método se basa en la noción de similitud (o distancia) entre observaciones.
 
-::: callout-important
-# Para recordar
+::: {.callout-important title="Para recordar"} 
 
 La principal asunción del modelo de los $k$ vecinos más cercanos es la existencia de un espacio de características en el cual observaciones similares se encuentran en proximidad.
 :::
@@ -464,7 +297,6 @@ En los ejemplos siguientes, se podrá observar que es habitual realizar pruebas 
 Para determinar el valor óptimo de $k$ en función de los datos, ejecutamos el algoritmo $k-NN$ múltiples veces, utilizando distintos valores de $k$, y seleccionamos aquel valor que minimice la tasa de errores, al mismo tiempo que preserva la capacidad del algoritmo para realizar predicciones precisas en datos no vistos previamente. Es importante destacar que valores muy bajos de $k$ pueden generar inestabilidad en el algoritmo, mientras que valores extremadamente altos de $k$ pueden aumentar el error en las predicciones. En este proceso, se busca el equilibrio adecuado que optimice el rendimiento del algoritmo en cada situación.
 
 ::: {.callout-note collapse="true" title="Ventajas"}
-## Ventajas
 
 -   **Sencillez y facilidad de implementación**: Es uno de los algoritmos más sencillos y fáciles de entender en ML. No requiere suposiciones complejas o entrenamientos prolongados.
 
@@ -482,7 +314,6 @@ Para determinar el valor óptimo de $k$ en función de los datos, ejecutamos el 
 :::
 
 ::: {.callout-note collapse="true" title="Desventajas"}
-## Desventajas
 
 -   **Sensibilidad a la elección de** $k$: La elección del parámetro que determina el número de vecinos puede ser crítica. Un valor demasiado pequeño puede hacer que el modelo sea sensible al ruido en los datos y cause sobreajuste, mientras que un valor demasiado grande puede hacer que el modelo sea demasiado suave y cause subajuste.
 
@@ -495,89 +326,270 @@ Para determinar el valor óptimo de $k$ en función de los datos, ejecutamos el 
 -   **Problemas en datos desbalanceados**: En problemas de clasificación con clases desequilibradas, donde una clase tiene muchas más muestras que otra, $k-NN$ tiende a sesgarse hacia la clase mayoritaria y puede no detectar bien la clase minoritaria.
 :::
 
-Aplicamos el algoritmo a nuestro problema de los datos bancarios.
+Aplicamos ahora el algoritmo a un problema de **analítica deportiva**. Utilizaremos un conjunto de datos simulados en el que queremos **predecir si un disparo termina en gol o no** a partir de varias características de la acción.
+
+Las variables predictoras que utilizaremos serán:
+
+- `distancia`: distancia del disparo a portería,
+- `angulo`: ángulo de tiro,
+- `velocidad`: velocidad del disparo,
+- `contraataque`: indica si la acción se produjo en transición rápida (`si` / `no`).
+
+La variable respuesta será:
+
+- `gol`: indica si el disparo terminó en gol (`si`) o no (`no`).
 
 ```{r}
 library(dplyr)
 library(tidyverse)
-# Usamos 10-fold cross validation 
-trainControl <- trainControl(method="repeatedcv", number=10, repeats=3)
+library(caret)
+
+# -----------------------------
+# Simulación de datos deportivos
+# -----------------------------
+set.seed(123)
+
+n <- 800
+
+tiros <- data.frame(
+  distancia = runif(n, 5, 35),
+  angulo = runif(n, 5, 80),
+  velocidad = runif(n, 50, 120),
+  contraataque = factor(rbinom(n, 1, 0.3), labels = c("no", "si"))
+)
+
+# Probabilidad simulada de gol
+eta <- 1.2 -
+  0.09 * tiros$distancia +
+  0.025 * tiros$angulo +
+  0.012 * tiros$velocidad +
+  0.6 * (tiros$contraataque == "si")
+
+p <- 1 / (1 + exp(-eta))
+
+tiros$gol <- factor(rbinom(n, 1, p), labels = c("no", "si"))
+
+# -----------------------------
+# Partición train / test
+# -----------------------------
+set.seed(128)
+idx_train <- sample(seq_len(nrow(tiros)), size = 0.7 * nrow(tiros))
+
+tiros.train <- tiros[idx_train, ]
+tiros.test  <- tiros[-idx_train, ]
+```
+
+Usamos **validación cruzada repetida de 10 bloques** para seleccionar el mejor valor de $k$ y estimar el rendimiento medio del modelo.
+
+```{r}
+# Usamos 10-fold cross validation
+trainControl <- trainControl(method = "repeatedcv", number = 10, repeats = 3)
 metric <- "Accuracy"
 
 set.seed(128)
-df <- bank.train %>%
-      dplyr::select(housing,marital,education,balance,deposit)
-df[,4] = scale(df[,4])
-fit.knn <- train(deposit~., data=df, method="knn",
-                 metric=metric ,trControl=trainControl)
-knn.k1 <- fit.knn$bestTune 
+
+df <- tiros.train %>%
+  dplyr::select(distancia, angulo, velocidad, contraataque, gol)
+
+# Escalamos solo las variables numéricas
+df[, c("distancia", "angulo", "velocidad")] <- scale(df[, c("distancia", "angulo", "velocidad")])
+
+fit.knn <- train(
+  gol ~ .,
+  data = df,
+  method = "knn",
+  metric = metric,
+  trControl = trainControl
+)
+
+knn.k1 <- fit.knn$bestTune
+
 print(fit.knn)
 plot(fit.knn)
 ```
 
-Según el gráfico anterior, podríamos elegir el mejor valor de $k$, si bien puede observarse pocas diferencias entre las diferentes opciones.
+Según el gráfico anterior, podemos elegir el mejor valor de $k$, aunque en ocasiones las diferencias entre varios valores cercanos pueden ser pequeñas.
 
-A continuación, obtenemos la predicción para el conjunto de datos de prueba e imprimimos la matriz de confusión.
+A continuación, obtenemos la predicción para el conjunto de datos de prueba e imprimimos la matriz de confusión. Para ello, debemos **escalar las variables numéricas del conjunto de prueba utilizando la media y desviación típica del conjunto de entrenamiento**, de modo que el preprocesado sea coherente.
 
 ```{r}
 set.seed(128)
-media=mean(bank.train$balance)
-stddev=sqrt(var(bank.train$balance))
-df.test <- bank.test %>%mutate(balance=(balance-media)/stddev)
 
-prediction <- predict(fit.knn,newdata=df.test)
-cf <- confusionMatrix(prediction, as.factor(df.test$deposit),positive="yes")
+media_dist <- mean(tiros.train$distancia)
+sd_dist <- sd(tiros.train$distancia)
+
+media_ang <- mean(tiros.train$angulo)
+sd_ang <- sd(tiros.train$angulo)
+
+media_vel <- mean(tiros.train$velocidad)
+sd_vel <- sd(tiros.train$velocidad)
+
+df.test <- tiros.test %>%
+  mutate(
+    distancia = (distancia - media_dist) / sd_dist,
+    angulo = (angulo - media_ang) / sd_ang,
+    velocidad = (velocidad - media_vel) / sd_vel
+  )
+
+prediction <- predict(fit.knn, newdata = df.test)
+
+cf <- confusionMatrix(
+  prediction,
+  as.factor(df.test$gol),
+  positive = "si"
+)
+
 print(cf)
 ```
 
-::: callout-caution
-# Tarea
+En este contexto, la matriz de confusión permite evaluar hasta qué punto el algoritmo k-NN clasifica correctamente los disparos como `gol` o `no gol`. Esta evaluación resulta especialmente útil cuando se compara el rendimiento de este modelo con otros métodos de clasificación supervisada más habituales en analítica deportiva, como la regresión logística, los árboles de decisión o los métodos *ensemble*.
 
-En el código anterior, ¿Porqué se calcula la media y la varianza de la variable `balance`?
-:::
 
 ## Grid search
 
-La "*grid search*" (búsqueda en cuadrícula) es una técnica comúnmente utilizada en ML para encontrar los **mejores hiperparámetros** para un modelo. Tal y como vimos en el @sec-aprnosup, los hiperparámetros son configuraciones que no se aprenden del conjunto de datos, sino que se establecen antes de entrenar el modelo. Estos hiperparámetros pueden incluir aspectos como la tasa de aprendizaje, la profundidad máxima de un árbol de decisión, el número de vecinos en el algoritmo de $k-NN$ y otros ajustes que afectan cómo se entrena y se ajusta el modelo.
+La **grid search** (búsqueda en cuadrícula) es una técnica muy utilizada en *machine learning* para encontrar los **mejores hiperparámetros** de un modelo. Recordemos que los hiperparámetros son configuraciones que **no se aprenden directamente de los datos**, sino que deben fijarse antes del entrenamiento. En el caso del algoritmo **k-Nearest Neighbours (k-NN)**, uno de los hiperparámetros más importantes es precisamente el número de vecinos, $k$.
 
-La *grid search* consiste en definir una "*cuadrícula*" de posibles valores para los hiperparámetros que se desean optimizar. Por ejemplo, si se está trabajando con un modelo de máquinas de vectores de soporte (SVM), se podría tener una cuadrícula para los hiperparámetros de la función kernel y el parámetro de regularización. Luego, se entrena y evalúa el modelo utilizando todas las combinaciones posibles de valores en la cuadrícula.
+En analítica deportiva, esta técnica resulta especialmente útil cuando queremos optimizar modelos predictivos aplicados a problemas como:
 
-El objetivo es encontrar la combinación de hiperparámetros que produce el mejor rendimiento del modelo según una métrica específica, como precisión, exactitud, $F1$-score, error cuadrático medio, etc.
+- predecir si un disparo terminará en gol o no,
+- clasificar jugadores según riesgo de lesión,
+- anticipar la victoria o derrota de un equipo,
+- identificar acciones de juego de alto peligro.
 
-::: callout-important
-# Para recordar
+La idea de la *grid search* es sencilla: se define una **cuadrícula de valores posibles** para uno o varios hiperparámetros y se evalúan sistemáticamente todas las combinaciones. Después, se selecciona la configuración que proporciona el mejor rendimiento según una métrica elegida, como **accuracy**, **precision**, **recall**, **F1-score** o **AUC**.
 
-La búsqueda en cuadrícula es un enfoque sistemático y automatizado que ahorra tiempo en comparación con probar manualmente diferentes combinaciones de hiperparámetros.
+::: {.callout-important title="Para recordar"}
+La búsqueda en cuadrícula es un procedimiento sistemático y automatizado para seleccionar hiperparámetros, evitando probar combinaciones manualmente de forma desordenada.
 :::
 
-Si se tiene una cuadrícula de búsqueda para dos hiperparámetros, cada uno con tres valores posibles, se probarían un total de nueve combinaciones diferentes (3x3). El proceso de *grid search* evaluaría el rendimiento del modelo en nueve configuraciones distintas y seleccionaría aquella que obtiene los mejores resultados según la métrica definida.
+Si, por ejemplo, un modelo tiene dos hiperparámetros y para cada uno consideramos tres valores posibles, el procedimiento evaluaría un total de nueve combinaciones distintas. Aunque este proceso puede ser costoso cuando la cuadrícula es grande, constituye una estrategia clara, reproducible y muy útil desde el punto de vista docente.
 
-Es importante mencionar exiten otras técnicas para la selección de hiperparámetros. Otros métodos, como la búsqueda aleatoria ("*random search*"), la optimización bayesiana y técnicas más avanzadas, también se utilizan en la selección de hiperparámetros en función de la complejidad y los recursos (computacionales, personales, temporales, etc) disponibles para la tarea.
+Es importante señalar que existen otras alternativas para la selección de hiperparámetros, como la **random search**, la **optimización bayesiana** o métodos adaptativos más avanzados. Sin embargo, la *grid search* sigue siendo una opción muy habitual cuando el número de hiperparámetros es reducido y queremos controlar con claridad el proceso de búsqueda.
 
-En el ejemplo que nos ocupa, buscamos el mejor valor del parámetro $k$ entre $1$ y $30$:
+En nuestro ejemplo deportivo, utilizaremos un problema de clasificación donde queremos **predecir si un disparo termina en gol o no** a partir de varias características de la acción. Buscaremos el mejor valor de $k$ entre 1 y 30.
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(caret)
+
+# -----------------------------
+# Simulación de datos deportivos
+# -----------------------------
+set.seed(123)
+
+n <- 800
+
+tiros <- data.frame(
+  distancia = runif(n, 5, 35),
+  angulo = runif(n, 5, 80),
+  velocidad = runif(n, 50, 120),
+  contraataque = factor(rbinom(n, 1, 0.3), labels = c("no", "si"))
+)
+
+# Probabilidad simulada de gol
+eta <- 1.2 -
+  0.09 * tiros$distancia +
+  0.025 * tiros$angulo +
+  0.012 * tiros$velocidad +
+  0.6 * (tiros$contraataque == "si")
+
+p <- 1 / (1 + exp(-eta))
+
+tiros$gol <- factor(rbinom(n, 1, p), labels = c("no", "si"))
+
+# -----------------------------
+# Partición train / test
+# -----------------------------
+set.seed(128)
+idx_train <- sample(seq_len(nrow(tiros)), size = 0.7 * nrow(tiros))
+
+tiros.train <- tiros[idx_train, ]
+tiros.test  <- tiros[-idx_train, ]
+
+# -----------------------------
+# Configuración del entrenamiento
+# -----------------------------
+trainControl <- trainControl(
+  method = "repeatedcv",
+  number = 10,
+  repeats = 3
+)
+
+metric <- "Accuracy"
+
+df <- tiros.train %>%
+  dplyr::select(distancia, angulo, velocidad, contraataque, gol)
+
+# Escalado de variables numéricas en entrenamiento
+df[, c("distancia", "angulo", "velocidad")] <- scale(df[, c("distancia", "angulo", "velocidad")])
+```
+
+A continuación, definimos la cuadrícula de búsqueda para el hiperparámetro $k$ y ajustamos el modelo.
 
 ```{r}
 set.seed(1271)
-grid <- expand.grid(.k=seq(1,30,by=1))
-fit.knn <- train(deposit~., data=df, method="knn",
-                 metric=metric, tuneGrid=grid, trControl=trainControl)
-knn.k2 <- fit.knn$bestTune 
+
+grid <- expand.grid(.k = seq(1, 30, by = 1))
+
+fit.knn <- train(
+  gol ~ .,
+  data = df,
+  method = "knn",
+  metric = metric,
+  tuneGrid = grid,
+  trControl = trainControl
+)
+
+knn.k2 <- fit.knn$bestTune
+
 print(fit.knn)
 plot(fit.knn)
 ```
 
-Encontramos óptimo $k= 24$, el número de instancias más cercanas que hay que recopilar para hacer una predicción óptima. Ahora, usamos el modelo ajustado para predecir la clase para nuestro conjunto de prueba, e imprimir la matriz de confusión:
+El resultado indica cuál es el valor de $k$ que maximiza la métrica de rendimiento elegida. En este contexto, ese valor representa el número óptimo de disparos “más parecidos” que deben considerarse para clasificar una nueva acción como `gol` o `no gol`.
+
+Una vez seleccionado el mejor modelo, lo aplicamos al conjunto de prueba. Para ello, debemos escalar las variables numéricas del conjunto de prueba utilizando la media y la desviación típica calculadas en el conjunto de entrenamiento.
 
 ```{r}
 set.seed(128)
-prediction.knn <- predict(fit.knn,newdata=df.test,type="prob")[,2]
-clase.pred.knn=ifelse(prediction.knn>0.5,"yes","no")
-cf <- confusionMatrix(as.factor(clase.pred.knn), as.factor(df.test$deposit),positive="yes")
+
+media_dist <- mean(tiros.train$distancia)
+sd_dist <- sd(tiros.train$distancia)
+
+media_ang <- mean(tiros.train$angulo)
+sd_ang <- sd(tiros.train$angulo)
+
+media_vel <- mean(tiros.train$velocidad)
+sd_vel <- sd(tiros.train$velocidad)
+
+df.test <- tiros.test %>%
+  mutate(
+    distancia = (distancia - media_dist) / sd_dist,
+    angulo = (angulo - media_ang) / sd_ang,
+    velocidad = (velocidad - media_vel) / sd_vel
+  )
+```
+
+Ahora generamos las predicciones para el conjunto de prueba e imprimimos la matriz de confusión.
+
+```{r}
+prediction.knn <- predict(fit.knn, newdata = df.test, type = "prob")[, 2]
+
+clase.pred.knn <- ifelse(prediction.knn > 0.5, "si", "no")
+
+cf <- confusionMatrix(
+  as.factor(clase.pred.knn),
+  as.factor(df.test$gol),
+  positive = "si"
+)
+
 print(cf)
 ```
 
-::: callout-caution
-# Métrica de disimilaridad
+En este ejemplo, la matriz de confusión nos permite evaluar hasta qué punto el modelo k-NN optimizado mediante *grid search* clasifica correctamente los disparos. Este tipo de análisis resulta especialmente útil cuando queremos comparar el rendimiento de distintas configuraciones del modelo o enfrentarlo a otros algoritmos de clasificación habituales en *sports analytics*, como la regresión logística, los árboles de decisión o los métodos *ensemble*.
+
+::: {.callout-caution title="Métricas de disimilaridad"} 
 
 Hasta ahora hemos empleado la distancia Euclídea, pero ¿es lo más adecuado en este caso? Averigua cómo modificar este hiperparámetro del modelo y estudia qué consecuencias tiene.
 :::
@@ -679,8 +691,7 @@ ggplot(df, aes(x = p)) +
 
 ```
 
-::: callout-caution
-# Tarea
+::: {.callout-caution title="Tarea"} 
 
 ¿Por qué crees que se utiliza la entropía o el índice de Gini y no se usa el ratio de error como medida para la construcción del árbol?
 :::
@@ -702,14 +713,13 @@ Los árboles de decisión tienden a sobreajustarse a los datos de entrenamiento,
 
 -   Poda post-pruning (posterior a la construcción del árbol completo): Se construye el árbol hasta su máxima profundidad y luego se eliminan nodos internos si su eliminación mejora la métrica de validación (por ejemplo, validación cruzada). Una técnica común es la poda por reducción de error, donde se evalúa si eliminar un nodo interno mejora el rendimiento del modelo. Esta poda se puede formalizar mediante la minimización de una función de coste regularizada: $$C(T)=C_t(T) + \alpha |T|$$ donde $T\subset T_{full}$ es cualquier árbol que se pueda lograr podando el árbol completo $T_{full}$, $|T|$ es el número de nodos terminales en $T$, $C_t(T)$ es el error en el entrenamiento del subárbol $T$ y $\alpha$ es un hiperparámetro que controla la penalización por la complejidad del modelo. Este hiperpárametro $\alpha$ rige el equilibrio entre el tamaño del árbol y su ajuste a los datos. Valores grandes, dan como resultados árboles pequeños y, por otro lado, valores pequeños de $\alpha$ dan lugar a árboles de mayor tamaño. Con $\alpha=0$, $T=T_{full}$.
 
-::: callout-important
-# Para recordar
+::: {.callout-important title="Para recordar"} 
+
 
 La salida de un DT es un conjunto de reglas que se puede representar como un árbol donde cada nodo representa una decisión binaria.
 :::
 
-::: {.callout-note collapse="true" title="Ventajas"}
-## Ejemplo: Construcción de un árbol de decisión usando entropía de Shannon
+::: {.callout-note collapse="true" title="Construcción de un árbol de decisión usando entropía de Shannon"}
 
 Supongamos que trabajamos en un banco y queremos predecir si un cliente pagará o no un préstamo. Para ello, tenemos un conjunto de datos con dos características binarias:
 
@@ -838,8 +848,7 @@ La primera variable de interés es la `duration`:
 
 -   Por contra, si el valor de `duration`es mayor que $343$ entonces la observación va hacia la rama derecha, cayendo en un nodo dónde la probabilidad de "yes" ha aumentado a $0.77$. En ese nodo aparecen el $38\%$ de todas las observaciones del conjunto de entrenamiento. Además, fíjate que se trata de un nodo terminal.
 
-::: callout-caution
-# Tarea
+::: {.callout-caution title="Tarea"} 
 
 No se están teniendo en cuenta *todas* las variables disponibles en el conjunto de datos. El objetivo de la mayoría de los ejercicios de estos apuntes es mostrar a los alumnos cómo funcionan los métodos de ML. Si tu objetivo es obtener la más alta precisión, o el menor error, entonces te animamos a que intentes construir mejores modelos con, probablemente, más y mejores variables.
 :::
@@ -893,8 +902,8 @@ cf <- confusionMatrix(prediction, as.factor(df.test$deposit),positive="yes")
 print(cf)
 ```
 
-::: {.callout-note collapse="true"}
-# Ventajas
+::: {.callout-note title="Ventajas" collapse="true"} 
+
 
 -   **Explicabilidad**: Los DT son altamente interpretables, lo que significa que sus resultados se pueden entender y comunicar de manera sencilla (ver @sec-nuevas). Esto los hace ideales para tomar decisiones basadas en modelos en entornos donde se necesita entender el razonamiento detrás de las predicciones.
 
@@ -973,8 +982,8 @@ Damos, a continuación, una explicación detallada de cómo funciona el ensambla
 
 4.  **Combinación**: Finalmente, las predicciones de todos los modelos base se combinan para obtener una predicción agregada. En problemas de clasificación, esto suele implicar votación, donde se elige la clase con más votos, y en problemas de regresión, se calcula un promedio de las predicciones.
 
-::: {.callout-note collapse="true"}
-# Ventajas
+::: {.callout-note title="Ventajas" collapse="true"} 
+
 
 -   **Reducción de la varianza**: Al crear múltiples conjuntos de entrenamiento y modelos base, el ensamblado de Bagging reduce la varianza de las predicciones, lo que hace que el modelo sea más robusto y menos propenso al sobreajuste.
 
@@ -985,9 +994,7 @@ Damos, a continuación, una explicación detallada de cómo funciona el ensambla
 -   **Mayor generalización**: Debido a su capacidad para reducir el sobreajuste, el ensamblado de Bagging es efectivo para problemas de alta dimensionalidad y datos con ruido.
 :::
 
-::: {.callout-note collapse="true"}
-# Desventajas
-
+::: {.callout-note title="Desventajas" collapse="true"} 
 -   **Mayor complejidad computacional:** Debido a la necesidad de entrenar múltiples modelos base, el Bagging puede requerir más recursos computacionales y tiempo de entrenamiento en comparación con un solo modelo. Esto es especialmente relevante cuando se trabaja con conjuntos de datos grandes o algoritmos de modelo base complejos.
 
 -   **Menos interpretabilidad:** La combinación de múltiples modelos base dificulta la interpretación del modelo global. A diferencia de modelos individuales, como DT simples, los modelos Bagging no proporcionan una descripción sencilla de cómo se llega a una decisión o predicción.
@@ -1216,8 +1223,8 @@ El proceso de Boosting funciona de la siguiente manera:
 
 Algunos algoritmos de Boosting populares incluyen AdaBoost, Gradient Boosting, y XGBoost.
 
-::: {.callout-note collapse="true"}
-# Ventajas
+::: {.callout-note title="Ventajas"} 
+
 
 -   **Mejora del rendimiento:** El Boosting es conocido por aumentar significativamente la precisión de las predicciones en comparación con modelos individuales o modelos base.
 
@@ -1234,8 +1241,8 @@ Algunos algoritmos de Boosting populares incluyen AdaBoost, Gradient Boosting, y
 -   **Robustez:** Puede manejar ruido en los datos y es menos propenso al sobreajuste en comparación con algunos otros métodos de aprendizaje automático.
 :::
 
-::: {.callout-note collapse="true"}
-# Desventajas
+::: {.callout-note title="Desventajas" collapse="true"} 
+
 
 -   **Sensibilidad al ruido:** Los modelos de Boosting pueden ser sensibles al ruido y a valores atípicos en los datos. Si el conjunto de datos contiene observaciones erróneas o extremas, el Boosting puede sobreajustarse a estos valores inusuales.
 
@@ -1423,8 +1430,8 @@ Por tanto, los pseudo-redisuos son $r_i^{(m)}=-(p_i - y_i),$ que representan cu�
 Al igual que en regresión, en cada iteración se ajusta un modelo $f_{m}(\mathbf{x}_i)$ para predecir estos errores $r_i^{(m)}$ cometidos en iteraciones previas.
 :::
 
-::: {.callout-caution collapse="false"}
-# Tarea
+::: {.callout-caution title="Tarea"} 
+
 
 Cada función de pérdida tiene sus ventajas y desventajas, y la elección de la función adecuada puede tener un impacto significativo en el rendimiento del modelo. Existen diversas funciones de pérdida tanto para regresión como para clasificación. Te animamos a hacer una búsqueda en la literatura.
 :::
@@ -1552,8 +1559,8 @@ cbind(datos$predict_01 > 0.5, datos$test$deposit) %>%
 La tarea que más tiempo consume al usar el modelo XGBoost es encontrar los mejores hiperparámetros para alcanzar la mayor precisión posible de un modelo.
 :::
 
-::: callout-caution
-# Tarea
+::: {.callout-caution title="Tarea"} 
+
 
 Queda como tarea del alumno modificar los hiperparámetros del modelo, buscando una mejora en su rendimiento
 :::
@@ -1689,8 +1696,8 @@ legend("bottom",
        lwd=2, cex =.5, xpd = TRUE, horiz = TRUE)
 ```
 
-::: callout-caution
-# Tarea
+::: {.callout-caution title="Tarea"} 
+
 
 A la vista de los resultados. ¿Qué modelo es el más adecuado? Piensa sobre ello.
 :::

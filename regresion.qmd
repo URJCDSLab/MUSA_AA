@@ -1798,7 +1798,7 @@ $$
 
 donde $f_1$ y $f_2$ son funciones suaves estimadas a partir de los datos.
 
-### Ejemplo en R
+**Ejemplo en R**
 
 ```{r gam_example}
 #| warning: false
