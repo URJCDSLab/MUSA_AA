@@ -300,11 +300,10 @@ window.Quarto = {
   <li><a href="#por-qué-son-útiles-en-analítica-deportiva" id="toc-por-qué-son-útiles-en-analítica-deportiva" class="nav-link" data-scroll-target="#por-qué-son-útiles-en-analítica-deportiva"><span class="header-section-number">7.3.1</span> ¿Por qué son útiles en analítica deportiva?</a></li>
   <li><a href="#estructura-general-de-un-gam" id="toc-estructura-general-de-un-gam" class="nav-link" data-scroll-target="#estructura-general-de-un-gam"><span class="header-section-number">7.3.2</span> Estructura general de un GAM</a></li>
   <li><a href="#ejemplo-en-deporte-probabilidad-de-gol" id="toc-ejemplo-en-deporte-probabilidad-de-gol" class="nav-link" data-scroll-target="#ejemplo-en-deporte-probabilidad-de-gol"><span class="header-section-number">7.3.3</span> Ejemplo en deporte: probabilidad de gol</a></li>
-  <li><a href="#ejemplo-en-r" id="toc-ejemplo-en-r" class="nav-link" data-scroll-target="#ejemplo-en-r"><span class="header-section-number">7.3.4</span> Ejemplo en R</a></li>
-  <li><a href="#visualización-de-los-efectos-suaves" id="toc-visualización-de-los-efectos-suaves" class="nav-link" data-scroll-target="#visualización-de-los-efectos-suaves"><span class="header-section-number">7.3.5</span> Visualización de los efectos suaves</a></li>
-  <li><a href="#interpretación-del-resumen-del-modelo" id="toc-interpretación-del-resumen-del-modelo" class="nav-link" data-scroll-target="#interpretación-del-resumen-del-modelo"><span class="header-section-number">7.3.6</span> Interpretación del resumen del modelo</a></li>
-  <li><a href="#relación-con-los-glms" id="toc-relación-con-los-glms" class="nav-link" data-scroll-target="#relación-con-los-glms"><span class="header-section-number">7.3.7</span> Relación con los GLMs</a></li>
-  <li><a href="#ventajas-y-limitaciones" id="toc-ventajas-y-limitaciones" class="nav-link" data-scroll-target="#ventajas-y-limitaciones"><span class="header-section-number">7.3.8</span> Ventajas y limitaciones</a></li>
+  <li><a href="#visualización-de-los-efectos-suaves" id="toc-visualización-de-los-efectos-suaves" class="nav-link" data-scroll-target="#visualización-de-los-efectos-suaves"><span class="header-section-number">7.3.4</span> Visualización de los efectos suaves</a></li>
+  <li><a href="#interpretación-del-resumen-del-modelo" id="toc-interpretación-del-resumen-del-modelo" class="nav-link" data-scroll-target="#interpretación-del-resumen-del-modelo"><span class="header-section-number">7.3.5</span> Interpretación del resumen del modelo</a></li>
+  <li><a href="#relación-con-los-glms" id="toc-relación-con-los-glms" class="nav-link" data-scroll-target="#relación-con-los-glms"><span class="header-section-number">7.3.6</span> Relación con los GLMs</a></li>
+  <li><a href="#ventajas-y-limitaciones" id="toc-ventajas-y-limitaciones" class="nav-link" data-scroll-target="#ventajas-y-limitaciones"><span class="header-section-number">7.3.7</span> Ventajas y limitaciones</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -542,8 +541,8 @@ R como lenguaje del modelado estadístico
 <p>A lo largo del libro, extenderemos esta funcionalidad base con paquetes especializados que sí requieren instalación y carga. Entre los más importantes que usaremos se encuentran:</p>
 <ul>
 <li><code>mgcv</code>: La implementación de referencia para GAMs, mantenida por su creador, Simon Wood, y citada en <span class="citation" data-cites="wood2017">(<a href="references.html#ref-wood2017" role="doc-biblioref">Wood 2017</a>)</span>.</li>
-<li><code>lme4</code> y <code>nlme</code>: Los dos paquetes fundamentales para el ajuste de modelos de efectos mixtos, desarrollados por los pioneros en el campo <span class="citation" data-cites="pinheiro2000 bates2015">(<a href="references.html#ref-pinheiro2000" role="doc-biblioref">Pinheiro y Bates 2000</a>; <a href="references.html#ref-bates2015" role="doc-biblioref"><strong>bates2015?</strong></a>)</span>.</li>
-<li><code>rms</code>: Un paquete y una filosofía de trabajo para implementar estrategias de modelado de regresión robustas, como se detalla en la obra de <span class="citation" data-cites="harrell2015">(<a href="references.html#ref-harrell2015" role="doc-biblioref"><strong>harrell2015?</strong></a>)</span>.</li>
+<li><code>lme4</code> y <code>nlme</code>: Los dos paquetes fundamentales para el ajuste de modelos de efectos mixtos, desarrollados por los pioneros en el campo <span class="citation" data-cites="pinheiro2000 bates2015">(<a href="references.html#ref-pinheiro2000" role="doc-biblioref">Pinheiro y Bates 2000</a>; <a href="references.html#ref-bates2015" role="doc-biblioref">Bates et&nbsp;al. 2015</a>)</span>.</li>
+<li><code>rms</code>: Un paquete y una filosofía de trabajo para implementar estrategias de modelado de regresión robustas, como se detalla en la obra de <span class="citation" data-cites="harrell2015">(<a href="references.html#ref-harrell2015" role="doc-biblioref">Harrell 2015</a>)</span>.</li>
 <li><code>gamair</code>: Contiene numerosos conjuntos de datos que acompañan al libro de <span class="citation" data-cites="wood2017">(<a href="references.html#ref-wood2017" role="doc-biblioref">Wood 2017</a>)</span>, ideales para practicar con GAMs.</li>
 </ul>
 </div>
@@ -555,7 +554,7 @@ R como lenguaje del modelado estadístico
 <h3 data-number="7.1.4" class="anchored" data-anchor-id="sec-historia"><span class="header-section-number">7.1.4</span> Historia del desarrollo de la regresión</h3>
 <section id="los-orígenes-galton-y-la-regresión-a-la-mediocridad" class="level4" data-number="7.1.4.1">
 <h4 data-number="7.1.4.1" class="anchored" data-anchor-id="los-orígenes-galton-y-la-regresión-a-la-mediocridad"><span class="header-section-number">7.1.4.1</span> Los orígenes: Galton y la “regresión a la mediocridad”</h4>
-<p>La gestación de la metodología de regresión se traza hasta las investigaciones pioneras de Sir <strong>Francis Galton</strong>, un polímata de la era victoriana. A finales del siglo XIX, estudiando la herencia de la estatura, Galton recopiló datos de padres e hijos y notó un fenómeno curioso: los padres muy altos tendían a tener hijos altos, pero, en promedio, no tan altos como ellos. Análogamente, los padres muy bajos tenían hijos bajos, pero no tan bajos como ellos. Acuñó el término <strong>“regresión a la mediocridad”</strong> (hoy diríamos “regresión a la media”) para describir esta tendencia de las características de la descendencia a “regresar” hacia la media de la población, en lugar de perpetuar los extremos de los progenitores <span class="citation" data-cites="galton1886">(<a href="references.html#ref-galton1886" role="doc-biblioref"><strong>galton1886?</strong></a>)</span>.</p>
+<p>La gestación de la metodología de regresión se traza hasta las investigaciones pioneras de Sir <strong>Francis Galton</strong>, un polímata de la era victoriana. A finales del siglo XIX, estudiando la herencia de la estatura, Galton recopiló datos de padres e hijos y notó un fenómeno curioso: los padres muy altos tendían a tener hijos altos, pero, en promedio, no tan altos como ellos. Análogamente, los padres muy bajos tenían hijos bajos, pero no tan bajos como ellos. Acuñó el término <strong>“regresión a la mediocridad”</strong> (hoy diríamos “regresión a la media”) para describir esta tendencia de las características de la descendencia a “regresar” hacia la media de la población, en lugar de perpetuar los extremos de los progenitores <span class="citation" data-cites="galton1886">(<a href="references.html#ref-galton1886" role="doc-biblioref">Galton 1886</a>)</span>.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Estudios de Galton sobre estatura">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2492,9 +2491,7 @@ g(\mu) = \beta_0 + f_1(X_1) + f_2(X_2) + \dots + f_p(X_p)
 \log\left(\frac{p_i}{1-p_i}\right) = \beta_0 + f_1(\text{distancia}_i) + f_2(\text{ángulo}_i)
 \]</span></p>
 <p>donde <span class="math inline">\(f_1\)</span> y <span class="math inline">\(f_2\)</span> son funciones suaves estimadas a partir de los datos.</p>
-</section>
-<section id="ejemplo-en-r" class="level3" data-number="7.3.4">
-<h3 data-number="7.3.4" class="anchored" data-anchor-id="ejemplo-en-r"><span class="header-section-number">7.3.4</span> Ejemplo en R</h3>
+<p><strong>Ejemplo en R</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
 <span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -2560,8 +2557,8 @@ UBRE = -0.39869  Scale est. = 1         n = 500</code></pre>
 <li><p>El modelo estima automáticamente la forma funcional más adecuada para cada predictor, controlando su complejidad mediante penalización.</p></li>
 </ul>
 </section>
-<section id="visualización-de-los-efectos-suaves" class="level3" data-number="7.3.5">
-<h3 data-number="7.3.5" class="anchored" data-anchor-id="visualización-de-los-efectos-suaves"><span class="header-section-number">7.3.5</span> Visualización de los efectos suaves</h3>
+<section id="visualización-de-los-efectos-suaves" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="visualización-de-los-efectos-suaves"><span class="header-section-number">7.3.4</span> Visualización de los efectos suaves</h3>
 <p>Una de las grandes ventajas de los GAMs es que permiten representar gráficamente el efecto estimado de cada predictor.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo_gam, <span class="at">pages =</span> <span class="dv">1</span>, <span class="at">shade =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2576,8 +2573,8 @@ UBRE = -0.39869  Scale est. = 1         n = 500</code></pre>
 </div>
 <p>Estos gráficos muestran cómo cambia el predictor lineal en función de cada variable, manteniendo constantes las demás. En un contexto deportivo, esto permite identificar regiones donde el efecto cambia con mayor intensidad, detectar umbrales y visualizar patrones imposibles de captar con un modelo lineal simple.</p>
 </section>
-<section id="interpretación-del-resumen-del-modelo" class="level3" data-number="7.3.6">
-<h3 data-number="7.3.6" class="anchored" data-anchor-id="interpretación-del-resumen-del-modelo"><span class="header-section-number">7.3.6</span> Interpretación del resumen del modelo</h3>
+<section id="interpretación-del-resumen-del-modelo" class="level3" data-number="7.3.5">
+<h3 data-number="7.3.5" class="anchored" data-anchor-id="interpretación-del-resumen-del-modelo"><span class="header-section-number">7.3.5</span> Interpretación del resumen del modelo</h3>
 <p>Al examinar <code>summary(modelo_gam)</code> suelen aparecer dos bloques principales:</p>
 <ul>
 <li><p><strong>Coeficientes paramétricos</strong>: corresponden a efectos lineales o términos introducidos de forma paramétrica.</p></li>
@@ -2591,8 +2588,8 @@ UBRE = -0.39869  Scale est. = 1         n = 500</code></pre>
 </ul>
 <p>Esto convierte a los GAMs en una herramienta excelente no solo para predecir, sino también para explorar si la hipótesis de linealidad resulta razonable.</p>
 </section>
-<section id="relación-con-los-glms" class="level3" data-number="7.3.7">
-<h3 data-number="7.3.7" class="anchored" data-anchor-id="relación-con-los-glms"><span class="header-section-number">7.3.7</span> Relación con los GLMs</h3>
+<section id="relación-con-los-glms" class="level3" data-number="7.3.6">
+<h3 data-number="7.3.6" class="anchored" data-anchor-id="relación-con-los-glms"><span class="header-section-number">7.3.6</span> Relación con los GLMs</h3>
 <p>La conexión entre GLMs y GAMs es estrecha. Ambos comparten:</p>
 <ul>
 <li><p>la posibilidad de trabajar con distribuciones de la familia exponencial,</p></li>
@@ -2628,8 +2625,8 @@ Aplicaciones
 </div>
 </div>
 </section>
-<section id="ventajas-y-limitaciones" class="level3" data-number="7.3.8">
-<h3 data-number="7.3.8" class="anchored" data-anchor-id="ventajas-y-limitaciones"><span class="header-section-number">7.3.8</span> Ventajas y limitaciones</h3>
+<section id="ventajas-y-limitaciones" class="level3" data-number="7.3.7">
+<h3 data-number="7.3.7" class="anchored" data-anchor-id="ventajas-y-limitaciones"><span class="header-section-number">7.3.7</span> Ventajas y limitaciones</h3>
 <p>Entre sus principales ventajas destacan:</p>
 <ul>
 <li><p>gran flexibilidad para capturar relaciones no lineales;</p></li>
@@ -2661,8 +2658,17 @@ Idea clave
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-bates2015" class="csl-entry" role="listitem">
+Bates, Douglas, Martin Mächler, Ben Bolker, y Steve Walker. 2015. <span>«Fitting Linear Mixed-Effects Models Using lme4»</span>. <em>Journal of Statistical Software</em> 67 (1): 1-48.
+</div>
 <div id="ref-coxe2009analysis" class="csl-entry" role="listitem">
 Coxe, Stefany, Stephen G West, y Leona S Aiken. 2009. <span>«The analysis of count data: A gentle introduction to Poisson regression and its alternatives»</span>. <em>Journal of personality assessment</em> 91 (2): 121-36.
+</div>
+<div id="ref-galton1886" class="csl-entry" role="listitem">
+Galton, Francis. 1886. <span>«Regression towards mediocrity in hereditary stature»</span>. <em>The Journal of the Anthropological Institute of Great Britain and Ireland</em> 15: 246-63.
+</div>
+<div id="ref-harrell2015" class="csl-entry" role="listitem">
+Harrell, Frank E., Jr. 2015. <em>Regression Modeling Strategies: With Applications to Linear Models, Logistic and Ordinal Regression, and Survival Analysis</em>. Second. Springer.
 </div>
 <div id="ref-hosmer2013applied" class="csl-entry" role="listitem">
 Hosmer Jr, David W, Stanley Lemeshow, y Rodney X Sturdivant. 2013. <em>Applied logistic regression</em>. John Wiley &amp; Sons.

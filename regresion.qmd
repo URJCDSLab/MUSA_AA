@@ -1,6 +1,7 @@
 # Modelos de regresión {#sec-intro}
 
 ## Introducción
+
 ### Predecir vs. explicar en analítica deportiva {#sec-proposito}
 
 El modelado de regresión constituye una de las herramientas más utilizadas en el análisis de datos deportivos. Proporciona un marco estadístico riguroso para estudiar y cuantificar las relaciones entre variables relacionadas con el rendimiento, la táctica o la salud de los deportistas. Su aplicación abarca un amplio espectro de problemas en el deporte moderno: desde el análisis del rendimiento individual y colectivo, pasando por la predicción de resultados o probabilidades de gol, hasta la evaluación del riesgo de lesión o el impacto de determinadas estrategias de juego.
@@ -11,10 +12,9 @@ Aunque en la práctica ambos objetivos suelen aparecer combinados, conceptualmen
 
 Distinguir entre estos dos objetivos es un paso clave para construir modelos estadísticos adecuados y para interpretar correctamente sus resultados en el contexto del deporte.
 
-
 1.  **Predicción**: El objetivo principal es la **precisión**. Se busca construir un modelo que pueda estimar con el menor error posible el valor de una variable de interés (la *respuesta*) basándose en la información proporcionada por otras variables (las *predictoras*). En este paradigma, el modelo puede ser tratado como una "caja negra" (*black box*). Su funcionamiento interno o la interpretabilidad de sus componentes son secundarios, siempre y cuando sus predicciones sean consistentemente fiables y robustas en datos no observados previamente.
 
-::: {.callout-tip title="Ejemplo" collapse="true"} 
+::: {.callout-tip title="Ejemplo" collapse="true"}
 Un club deportivo quiere predecir la probabilidad de que un jugador sufra una lesión muscular durante la temporada. Para ello utilizan variables como la carga de entrenamiento reciente, los minutos jugados, la edad del jugador, el historial de lesiones y métricas físicas procedentes de sensores GPS (por ejemplo, número de sprints o distancia recorrida a alta intensidad).
 
 El cuerpo técnico y el departamento médico no necesitan necesariamente identificar la causa fisiológica exacta de cada lesión. Su principal interés es disponer de un modelo que identifique a los jugadores con mayor riesgo, de modo que puedan ajustar la carga de entrenamiento, modificar las rotaciones o aplicar medidas preventivas para reducir la probabilidad de lesión y mantener a los jugadores disponibles para la competición.
@@ -22,7 +22,7 @@ El cuerpo técnico y el departamento médico no necesitan necesariamente identif
 
 2.  **Inferencia**: El foco se desplaza radicalmente hacia la **comprensión** y la **interpretación**. El objetivo no es solo predecir, sino dilucidar la naturaleza de las interdependencias entre las variables. Se busca cuantificar cómo un cambio en una variable predictora influye, ya sea de forma causal o asociativa, en la variable de respuesta. Aquí, la interpretabilidad del modelo es primordial. El interés reside en la magnitud, el signo y, crucialmente, la incertidumbre estadística (expresada mediante errores estándar, intervalos de confianza y p-valores) de los parámetros estimados.
 
-::: {.callout-tip title="Ejemplo" collapse="true"} 
+::: {.callout-tip title="Ejemplo" collapse="true"}
 Un científico del deporte investiga los factores que influyen en el riesgo de lesión muscular en futbolistas profesionales. Para ello modela la probabilidad de lesión en función de variables como la carga de entrenamiento acumulada, los minutos disputados en competición, la edad del jugador y el historial previo de lesiones.
 
 Su objetivo no es únicamente predecir si un jugador se lesionará o no, sino entender y cuantificar la relación entre estas variables y el riesgo de lesión. Por ejemplo, podría plantear una pregunta como: “¿Cuánto aumenta, en promedio, la probabilidad de lesión cuando la carga de entrenamiento semanal se incrementa en un determinado porcentaje, manteniendo constantes la edad, los minutos jugados y el historial de lesiones?”
@@ -38,26 +38,26 @@ Aunque conceptualmente distintos, ambos objetivos no son mutuamente excluyentes;
 
 Todo modelo de regresión, desde el más simple hasta el más sofisticado, se construye sobre tres pilares fundamentales. Estos componentes, definidos en textos clásicos como el de [@kutner2005applied], son los ladrillos con los que edificaremos todo nuestro conocimiento.
 
-#### La variable de respuesta 
+#### La variable de respuesta
 
-También designada como **variable dependiente**, **variable de salida**, **target**, **variable objetivo** o **variable explicada**. Representa el fenómeno o la característica principal cuyo comportamiento se busca modelar, comprender o predecir. La naturaleza de esta variable es, quizás, el factor más determinante a la hora de elegir el tipo de modelo de regresión. Puede ser: 
+También designada como **variable dependiente**, **variable de salida**, **target**, **variable objetivo** o **variable explicada**. Representa el fenómeno o la característica principal cuyo comportamiento se busca modelar, comprender o predecir. La naturaleza de esta variable es, quizás, el factor más determinante a la hora de elegir el tipo de modelo de regresión. Puede ser:
 
-- **Continua**: Una variable que puede tomar cualquier valor dentro de un rango. Ej: temperatura, altura, precio de una acción, concentración de un compuesto químico. 
-- **Discreta de Conteo**: Una variable que representa un número de eventos. Ej: número de accidentes en una intersección, número de clientes que entran en una tienda, número de mutaciones en un gen. 
-- **Binaria o Dicotómica**: Una variable con solo dos resultados posibles. Ej: éxito/fracaso, enfermo/sano, compra/no compra, spam/no spam. 
-- **Categórica**: Una variable que representa grupos o categorías. Si no tiene orden, es **nominal** (ej: tipo de sangre, partido político); si tiene un orden intrínseco, es **ordinal** (ej: nivel de satisfacción "bajo/medio/alto", estadio de una enfermedad "I/II/III/IV").
+-   **Continua**: Una variable que puede tomar cualquier valor dentro de un rango. Ej: temperatura, altura, precio de una acción, concentración de un compuesto químico.
+-   **Discreta de Conteo**: Una variable que representa un número de eventos. Ej: número de accidentes en una intersección, número de clientes que entran en una tienda, número de mutaciones en un gen.
+-   **Binaria o Dicotómica**: Una variable con solo dos resultados posibles. Ej: éxito/fracaso, enfermo/sano, compra/no compra, spam/no spam.
+-   **Categórica**: Una variable que representa grupos o categorías. Si no tiene orden, es **nominal** (ej: tipo de sangre, partido político); si tiene un orden intrínseco, es **ordinal** (ej: nivel de satisfacción "bajo/medio/alto", estadio de una enfermedad "I/II/III/IV").
 
 #### Las variables predictoras
 
 Conocidas indistintamente como **variables independientes**, **explicativas**, **regresoras**, **covariables** o **características** (*features*). Son las magnitudes, atributos o factores que se postula que influyen o están asociados con el comportamiento de la variable de respuesta. Al igual que la variable de respuesta, pueden ser de diversa naturaleza (continuas, categóricas, etc.). La selección de estas variables es una de las fases más críticas del modelado, requiriendo una combinación de conocimiento del dominio, análisis exploratorio de datos y técnicas estadísticas formales.
 
-#### El término de error aleatorio 
+#### El término de error aleatorio
 
-Este componente, a menudo subestimado, es conceptualmente crucial. Simboliza la variabilidad intrínseca de la variable de respuesta que **no es capturada o explicada** por las variables predictoras incluidas explícitamente en el modelo. El término de error $\epsilon$ no es un simple "error" en el sentido de equivocación; es un componente estocástico que amalgama múltiples fuentes de variabilidad: 
+Este componente, a menudo subestimado, es conceptualmente crucial. Simboliza la variabilidad intrínseca de la variable de respuesta que **no es capturada o explicada** por las variables predictoras incluidas explícitamente en el modelo. El término de error $\epsilon$ no es un simple "error" en el sentido de equivocación; es un componente estocástico que amalgama múltiples fuentes de variabilidad:
 
-- **Variables Omitidas**: Ningún modelo es perfecto. Siempre habrá factores que influyen en $Y$ pero que no han sido medidos o incluidos en el modelo (variables latentes). 
-- **Error de Medición**: Las mediciones de $Y$ (y también de $X$) pueden no ser perfectamente precisas. 
-- **Aleatoriedad Intrínseca**: Muchos fenómenos naturales y sociales tienen un componente de variabilidad irreducible. Dos individuos con idénticos valores en todas las variables predictoras pueden, aun así, tener valores distintos en la variable de respuesta.
+-   **Variables Omitidas**: Ningún modelo es perfecto. Siempre habrá factores que influyen en $Y$ pero que no han sido medidos o incluidos en el modelo (variables latentes).
+-   **Error de Medición**: Las mediciones de $Y$ (y también de $X$) pueden no ser perfectamente precisas.
+-   **Aleatoriedad Intrínseca**: Muchos fenómenos naturales y sociales tienen un componente de variabilidad irreducible. Dos individuos con idénticos valores en todas las variables predictoras pueden, aun así, tener valores distintos en la variable de respuesta.
 
 Formalmente, la relación fundamental de la regresión se expresa como la descomposición de la variable de respuesta en una parte sistemática y una parte aleatoria:
 
@@ -66,7 +66,6 @@ $$Y = \underbrace{f(X_1, \ldots, X_k)}_{\text{Componente Sistemática}} + \under
 donde $f(\cdot)$ denota la **componente sistemática** (o determinística) del modelo, que representa el valor esperado de $Y$ para unos valores dados de las $X$. La función $f$ es lo que intentamos estimar a partir de los datos. Por su parte, $\epsilon$ es la **componente aleatoria**, y gran parte del diagnóstico y la inferencia en regresión se basa en verificar los supuestos que hacemos sobre la distribución de este término (ej: que su media es cero, que su varianza es constante, etc.).
 
 ::: {.callout-caution title="Linealidad en los parámetros, no en las variables" collapse="true"}
-
 Una característica que define a los **modelos de regresión lineal** (y que se extiende a muchos otros tipos de modelos) es que la función $f(\cdot)$ mantiene una relación lineal con respecto a sus **parámetros desconocidos** (los coeficientes beta, $\beta_j$). Es crucial enfatizar que esta "linealidad en los parámetros" **no impone una restricción de linealidad en las variables predictoras mismas**.
 
 Por el contrario, es común y metodológicamente válido incorporar transformaciones no lineales de los predictores o interacciones complejas entre ellos para capturar relaciones más sofisticadas. Por ejemplo, el siguiente modelo es un **modelo de regresión lineal**:
@@ -74,7 +73,6 @@ Por el contrario, es común y metodológicamente válido incorporar transformaci
 $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_1^2 + \beta_3 \log(X_2) + \beta_4 (X_1 \cdot X_2) + \epsilon$$
 
 Aunque la relación entre $Y$ y las variables $X_1$ y $X_2$ es claramente no lineal (es cuadrática en $X_1$, logarítmica en $X_2$ e incluye una interacción), el modelo es **lineal en los parámetros** $\beta_0, \beta_1, \beta_2, \beta_3, \beta_4$. La función $f$ es una combinación lineal de estos coeficientes. Esta flexibilidad es una de las razones de la enorme potencia de los modelos lineales.
-
 
 El siguiente bloque de código en R genera un ejemplo visual. Simulamos datos que siguen una relación cuadrática y luego ajustamos un modelo lineal que incluye un término cuadrático ($X^2$). Como se puede observar en la figura, la línea de regresión (azul) captura perfectamente la curvatura de los datos, demostrando que un modelo lineal en sus parámetros puede modelar relaciones no lineales en sus variables.
 
@@ -110,7 +108,6 @@ ggplot(datos, aes(x = x, y = y)) +
   ) +
   theme_classic(base_size = 14)
 ```
-
 :::
 
 ### Un viaje preliminar por el universo de los modelos de regresión {#sec-tipos-modelos}
@@ -121,10 +118,10 @@ La regresión lineal ha sido estudiada en la asignatura de Análisis de Datos en
 
 Constituyen el paradigma fundamental, el alfabeto sobre el que se escribe el lenguaje del modelado estadístico. Son mucho más que una simple técnica para ajustar una recta a una nube de puntos; son el laboratorio donde se forjan y se comprenden los conceptos esenciales que nos acompañarán durante todo nuestro viaje. Es aquí donde aprenderemos a:
 
-- **Estimar parámetros** e interpretar su significado en el contexto del problema.
-- **Cuantificar la incertidumbre** de nuestras estimaciones mediante errores estándar e intervalos de confianza.
-- **Realizar contrastes de hipótesis** para evaluar si la relación entre nuestras variables es estadísticamente significativa o fruto del azar.
-- **Diagnosticar la "salud" de un modelo**, examinando si los supuestos sobre los que se construye son razonables para nuestros datos.
+-   **Estimar parámetros** e interpretar su significado en el contexto del problema.
+-   **Cuantificar la incertidumbre** de nuestras estimaciones mediante errores estándar e intervalos de confianza.
+-   **Realizar contrastes de hipótesis** para evaluar si la relación entre nuestras variables es estadísticamente significativa o fruto del azar.
+-   **Diagnosticar la "salud" de un modelo**, examinando si los supuestos sobre los que se construye son razonables para nuestros datos.
 
 En su forma más clásica, el modelo lineal asume que la variable de respuesta (y, por consecuencia, el término de error aleatorio) sigue una distribución Normal o Gaussiana. Esta asunción es la clave que desbloquea todo el elegante aparato de la inferencia estadística, permitiéndonos realizar pruebas exactas y derivar propiedades matemáticas bien conocidas. Técnicas tan ubicuas en la ciencia como el Análisis de la Varianza (ANOVA) o el Análisis de la Covarianza (ANCOVA) no son más que casos particulares de la gran familia de los modelos lineales, un hecho que unifica campos de la estadística que históricamente se estudiaban por separado. Dominar los LMs es, sencillamente, un requisito indispensable.
 
@@ -138,47 +135,38 @@ Esta flexibilidad se logra mediante la combinación de dos ingeniosos mecanismos
 
 2.  **La función de enlace (link function)**: Este es el verdadero golpe de genialidad. El predictor lineal de nuestro modelo, $\boldsymbol{X\beta}$, puede tomar cualquier valor en la recta real, desde $-\infty$ hasta $+\infty$. Sin embargo, la media de nuestra variable de respuesta, $E[Y] = \mu$, a menudo está restringida. Por ejemplo, una probabilidad ($\mu$ en un modelo binomial) debe estar entre 0 y 1; un conteo ($\mu$ en un modelo de Poisson) debe ser positivo. La función de enlace, $g(\cdot)$, actúa como un **"traductor"** o un **"puente"** que conecta estos dos mundos. Transforma la media restringida de la respuesta para que pueda ser modelada por el predictor lineal no restringido. La relación fundamental es, por tanto, $g(E[Y]) = g(\mu) = \boldsymbol{X\beta}$.
 
-- Para datos de **conteo** (Poisson), se usa un **enlace logarítmico** ($g(\mu) = \log(\mu)$). Esto garantiza que, al invertir la función para obtener la media ($\mu = \exp(\boldsymbol{X\beta})$), el resultado será siempre positivo, como debe ser un conteo.
-- Para datos **binarios** (Binomial), se usa un **enlace logit** ($g(\mu) = \log(\frac{\mu}{1-\mu})$). Esta función toma una probabilidad $\mu$ en el rango (0, 1) y la proyecta sobre toda la recta real, permitiendo que sea modelada por $\boldsymbol{X\beta}$.
+-   Para datos de **conteo** (Poisson), se usa un **enlace logarítmico** ($g(\mu) = \log(\mu)$). Esto garantiza que, al invertir la función para obtener la media ($\mu = \exp(\boldsymbol{X\beta})$), el resultado será siempre positivo, como debe ser un conteo.
+-   Para datos **binarios** (Binomial), se usa un **enlace logit** ($g(\mu) = \log(\frac{\mu}{1-\mu})$). Esta función toma una probabilidad $\mu$ en el rango (0, 1) y la proyecta sobre toda la recta real, permitiendo que sea modelada por $\boldsymbol{X\beta}$.
 
 Gracias a los GLMs, podemos usar el mismo marco conceptual de la regresión lineal para modelar una gama de fenómenos increíblemente diversa, desde predecir la cantidad de ciclistas en una ciudad (Poisson) hasta la probabilidad de que un paciente responda a un tratamiento (logística).
 
 #### Modelos de efectos mixtos (Mixed Models)
 
-Su desarrollo responde a la necesidad crítica de analizar datos que exhiben estructuras de dependencia o correlación, como agrupamientos, anidamientos o jerarquías. En datos estándar, asumimos que las observaciones son independientes, pero esta asunción se viola en casos como: 
-- **Medidas repetidas** sobre los mismos sujetos (ej: medir la presión arterial de un paciente cada mes). 
- -**Datos longitudinales** (un tipo de medida repetida a lo largo del tiempo). 
- - **Datos agrupados** (ej: estudiantes anidados dentro de clases, que a su vez están anidadas dentro de colegios). Estos modelos, detallados en obras como la de [@pinheiro2000], introducen explícitamente una estructura de correlación en el término de error mediante la incorporación de **efectos aleatorios**, que permiten capturar la variabilidad entre los diferentes grupos o individuos, además de los **efectos fijos** que representan a la población general.
+Su desarrollo responde a la necesidad crítica de analizar datos que exhiben estructuras de dependencia o correlación, como agrupamientos, anidamientos o jerarquías. En datos estándar, asumimos que las observaciones son independientes, pero esta asunción se viola en casos como: - **Medidas repetidas** sobre los mismos sujetos (ej: medir la presión arterial de un paciente cada mes). -**Datos longitudinales** (un tipo de medida repetida a lo largo del tiempo). - **Datos agrupados** (ej: estudiantes anidados dentro de clases, que a su vez están anidadas dentro de colegios). Estos modelos, detallados en obras como la de [@pinheiro2000], introducen explícitamente una estructura de correlación en el término de error mediante la incorporación de **efectos aleatorios**, que permiten capturar la variabilidad entre los diferentes grupos o individuos, además de los **efectos fijos** que representan a la población general.
 
 #### Modelos aditivos generalizados (GAMs)
 
 Representan una extensión natural y altamente flexible de los GLMs que relaja el supuesto de linealidad entre el predictor transformado y las covariables. Los GAMs, cuya implementación moderna se debe en gran parte al trabajo de [@wood2017], permiten modelar estas relaciones mediante **funciones suaves** no paramétricas (como *splines*), manteniendo al mismo tiempo la estructura aditiva del modelo. La forma general es $g(\mu) = \alpha + f_1(x_1) + f_2(x_2) + \ldots + f_p(x_p)$, donde las $f_i(\cdot)$ son funciones suaves de los predictores estimadas a partir de los datos. Esto permite capturar patrones no lineales complejos sin necesidad de especificar una forma funcional paramétrica a priori, logrando un equilibrio excepcional entre flexibilidad e interpretabilidad.
 
-
 ::: {.callout-note title="R como lenguaje del modelado estadístico" collapse="true"}
-
 Este compendio no es un texto puramente teórico. Fusiona intrínsecamente la exposición de los conceptos con su aplicación computacional directa a través del lenguaje y entorno estadístico **R**. R se ha consolidado como el estándar de facto en la investigación estadística y la ciencia de datos académica por su potencia, flexibilidad y el inmenso ecosistema de paquetes contribuidos por la comunidad científica. Se presupone en el lector una familiaridad operativa básica con R, y se fomenta activamente el desarrollo de una fluidez progresiva mediante la reproducción, modificación y experimentación con los numerosos ejemplos y fragmentos de código presentados.
 
-La capacidad de ejecutar análisis en R es fundamental para todo el ciclo de vida del modelado: 
+La capacidad de ejecutar análisis en R es fundamental para todo el ciclo de vida del modelado:
 
-- La **exploración de datos** y la visualización inicial. 
-- La **estimación de parámetros** y el ajuste de los modelos. 
-- El **diagnóstico riguroso** de la adecuación del modelo y la validación de sus supuestos. 
-- La **producción de gráficos** y tablas de alta calidad para comunicar los resultados.
-
-
+-   La **exploración de datos** y la visualización inicial.
+-   La **estimación de parámetros** y el ajuste de los modelos.
+-   El **diagnóstico riguroso** de la adecuación del modelo y la validación de sus supuestos.
+-   La **producción de gráficos** y tablas de alta calidad para comunicar los resultados.
 
 En R, las herramientas fundamentales para la regresión lineal (`lm()`) y los modelos lineales generalizados (`glm()`) están incluidas en el paquete **`stats`**, que es uno de los **paquetes base** y se carga automáticamente con cada sesión. Por lo tanto, no necesitamos instalarlo ni cargarlo.
 
 A lo largo del libro, extenderemos esta funcionalidad base con paquetes especializados que sí requieren instalación y carga. Entre los más importantes que usaremos se encuentran:
 
-* `mgcv`: La implementación de referencia para GAMs, mantenida por su creador, Simon Wood, y citada en [@wood2017].
-* `lme4` y `nlme`: Los dos paquetes fundamentales para el ajuste de modelos de efectos mixtos, desarrollados por los pioneros en el campo [@pinheiro2000; @bates2015].
-* `rms`: Un paquete y una filosofía de trabajo para implementar estrategias de modelado de regresión robustas, como se detalla en la obra de [@harrell2015].
-* `gamair`: Contiene numerosos conjuntos de datos que acompañan al libro de [@wood2017], ideales para practicar con GAMs.
-
+-   `mgcv`: La implementación de referencia para GAMs, mantenida por su creador, Simon Wood, y citada en [@wood2017].
+-   `lme4` y `nlme`: Los dos paquetes fundamentales para el ajuste de modelos de efectos mixtos, desarrollados por los pioneros en el campo [@pinheiro2000; @bates2015].
+-   `rms`: Un paquete y una filosofía de trabajo para implementar estrategias de modelado de regresión robustas, como se detalla en la obra de [@harrell2015].
+-   `gamair`: Contiene numerosos conjuntos de datos que acompañan al libro de [@wood2017], ideales para practicar con GAMs.
 :::
-
 
 ### Historia del desarrollo de la regresión {#sec-historia}
 
@@ -187,71 +175,45 @@ A lo largo del libro, extenderemos esta funcionalidad base con paquetes especial
 La gestación de la metodología de regresión se traza hasta las investigaciones pioneras de Sir **Francis Galton**, un polímata de la era victoriana. A finales del siglo XIX, estudiando la herencia de la estatura, Galton recopiló datos de padres e hijos y notó un fenómeno curioso: los padres muy altos tendían a tener hijos altos, pero, en promedio, no tan altos como ellos. Análogamente, los padres muy bajos tenían hijos bajos, pero no tan bajos como ellos. Acuñó el término **"regresión a la mediocridad"** (hoy diríamos "regresión a la media") para describir esta tendencia de las características de la descendencia a "regresar" hacia la media de la población, en lugar de perpetuar los extremos de los progenitores [@galton1886].
 
 ::: {.callout-tip title="Estudios de Galton sobre estatura" collapse="true"}
-
 **Datos recopilados**
 
--   Galton recopiló datos sobre las estaturas de **928 hijos** y sus
-    respectivos **padres**.
+-   Galton recopiló datos sobre las estaturas de **928 hijos** y sus respectivos **padres**.
 -   Las medidas fueron expresadas en pulgadas (1 pulgada = 2.54 cm).\
--   En sus análisis, utilizó el promedio de las estaturas de ambos
-    padres, conocido como **estatura media parental**, para compararlo
-    con la estatura de los hijos.
+-   En sus análisis, utilizó el promedio de las estaturas de ambos padres, conocido como **estatura media parental**, para compararlo con la estatura de los hijos.
 
 **Principales hallazgos**
 
 1.  **Relación lineal entre padres e hijos:**\
-    Galton observó que existe una relación positiva entre la estatura de
-    los padres y la de los hijos. Los padres altos tienden a tener hijos
-    altos, y los padres bajos tienden a tener hijos bajos. Esta relación
-    puede modelarse con una línea recta, lo que inspiró la formulación
-    de la regresión lineal.
+    Galton observó que existe una relación positiva entre la estatura de los padres y la de los hijos. Los padres altos tienden a tener hijos altos, y los padres bajos tienden a tener hijos bajos. Esta relación puede modelarse con una línea recta, lo que inspiró la formulación de la regresión lineal.
 
 2.  **Regresión a la media:**
 
-    -   Aunque los hijos de padres altos son, en promedio, más altos que
-        el promedio general de la población, también tienden a ser
-        **menos altos que sus padres**.\
-    -   De manera similar, los hijos de padres bajos son más bajos que
-        el promedio general, pero suelen ser **menos bajos que sus
-        padres**.\
-    -   Este fenómeno, que Galton llamó "regresión a la media", ocurre
-        porque las características extremas tienden a suavizarse en la
-        siguiente generación debido a la influencia de múltiples
-        factores genéticos y ambientales.
+    -   Aunque los hijos de padres altos son, en promedio, más altos que el promedio general de la población, también tienden a ser **menos altos que sus padres**.\
+    -   De manera similar, los hijos de padres bajos son más bajos que el promedio general, pero suelen ser **menos bajos que sus padres**.\
+    -   Este fenómeno, que Galton llamó "regresión a la media", ocurre porque las características extremas tienden a suavizarse en la siguiente generación debido a la influencia de múltiples factores genéticos y ambientales.
 
 3.  **Ecuación de la recta de regresión:**\
-    Galton ajustó una recta para describir la relación entre la estatura
-    media parental ($X$) y la estatura de los hijos ($Y$): $$
+    Galton ajustó una recta para describir la relación entre la estatura media parental ($X$) y la estatura de los hijos ($Y$): $$
     Y = \beta_0 + \beta_1 X
     $$ Donde:
 
-    -   $\beta_0$: Intercepto, representa la estatura promedio de los
-        hijos cuando la estatura parental es promedio.
-    -   $\beta_1$: Pendiente, indica cómo cambia la estatura de los
-        hijos por cada unidad de cambio en la estatura media parental.
+    -   $\beta_0$: Intercepto, representa la estatura promedio de los hijos cuando la estatura parental es promedio.
+    -   $\beta_1$: Pendiente, indica cómo cambia la estatura de los hijos por cada unidad de cambio en la estatura media parental.
 
 **Importancia en la Estadística**
 
 1.  **Regresión lineal:**\
-    Este estudio introdujo el concepto de **recta de regresión**, que
-    describe cómo varía la media de una variable dependiente en función
-    de una variable independiente.
+    Este estudio introdujo el concepto de **recta de regresión**, que describe cómo varía la media de una variable dependiente en función de una variable independiente.
 
 2.  **Correlación:**\
-    Galton también estudió el grado de relación entre variables,
-    precursor del concepto de **coeficiente de correlación**
-    desarrollado posteriormente por Karl Pearson, un discípulo suyo.
+    Galton también estudió el grado de relación entre variables, precursor del concepto de **coeficiente de correlación** desarrollado posteriormente por Karl Pearson, un discípulo suyo.
 
 3.  **Regresión a la media:**\
-    El término y la idea detrás de "regresión a la media" surgieron de
-    estos estudios y son hoy fundamentales en estadística y genética.
+    El término y la idea detrás de "regresión a la media" surgieron de estos estudios y son hoy fundamentales en estadística y genética.
 
 **Ejemplo Gráfico**
 
-Galton representó sus datos en gráficos de dispersión, mostrando cómo
-los puntos (pares de estatura media parental y estatura de los hijos) se
-agrupan alrededor de la recta de regresión, ilustrando la tendencia
-general de la relación.
+Galton representó sus datos en gráficos de dispersión, mostrando cómo los puntos (pares de estatura media parental y estatura de los hijos) se agrupan alrededor de la recta de regresión, ilustrando la tendencia general de la relación.
 
 ```{r galtonn}
 #| fig-cap: "Datos históricos del estudio sobre la 'regresión a la media'."
@@ -317,7 +279,6 @@ A lo largo del siglo XX, la regresión experimentó un desarrollo explosivo. Sin
 #### La evolución contemporánea
 
 Este legado continúa evolucionando a un ritmo vertiginoso, con la inclusión de modelos jerárquicos y bayesianos, métodos no paramétricos y de *machine learning* como los árboles de regresión, y la adaptación de la regresión al análisis de datos masivos (*big data*). La regresión ha evolucionado desde una observación sobre la herencia biológica hasta convertirse en una de las herramientas más versátiles y poderosas del arsenal analítico moderno.
-
 
 ## Modelos de regresión generalizada {#sec-tema4}
 
@@ -411,7 +372,6 @@ La **regresión de Poisson** se utiliza cuando la variable respuesta representa 
 -   **Eventos discretos en tenis:** número de aces, dobles faltas o break points generados en un encuentro.
 -   **Modelado del marcador como proceso de conteo:** base de muchos modelos probabilísticos de predicción de resultados en fútbol y hockey.
 
-
 En analítica de partidos, la regresión de Poisson ha sido muy utilizada para modelar el número de goles que cada equipo puede marcar en un encuentro. A partir de esta idea se construyen modelos predictivos del resultado, probabilidades de victoria/empate/derrota y distribuciones completas del marcador.
 
 **Regresión binomial negativa (conteos con sobredispersión)**
@@ -457,11 +417,11 @@ En fútbol es frecuente modelar simultáneamente los goles del equipo local y vi
 
 Aplicaciones:
 
-- estimación de probabilidades de marcador exacto
-- predicción de victoria, empate o derrota
-- simulación de temporadas
-- cálculo de probabilidades para mercados deportivos
-- evaluación del efecto de la localía y la fortaleza relativa de los equipos
+-   estimación de probabilidades de marcador exacto
+-   predicción de victoria, empate o derrota
+-   simulación de temporadas
+-   cálculo de probabilidades para mercados deportivos
+-   evaluación del efecto de la localía y la fortaleza relativa de los equipos
 
 Este tipo de modelos aparece con frecuencia en la literatura de predicción de resultados y en sistemas de rating competitivos.
 
@@ -471,10 +431,10 @@ Muchos modelos **plus-minus ajustados** parten de una formulación lineal o gene
 
 Aplicaciones:
 
-- estimar contribución individual más allá del box score
-- separar rendimiento propio del efecto de compañeros y rivales
-- construir métricas de impacto por posesión
-- apoyar decisiones de rotación y fichajes
+-   estimar contribución individual más allá del box score
+-   separar rendimiento propio del efecto de compañeros y rivales
+-   construir métricas de impacto por posesión
+-   apoyar decisiones de rotación y fichajes
 
 En versiones modernas, estos modelos suelen incorporar regularización, efectos aleatorios o estructuras bayesianas, pero conceptualmente están conectados con la idea de modelar una respuesta como función de covariables de contexto.
 
@@ -484,17 +444,17 @@ Aunque estrictamente van más allá del GLM clásico, en analítica de rendimien
 
 Ejemplos:
 
-- tiempo hasta la primera lesión
-- tiempo hasta recaída
-- tiempo hasta retorno a la competición
-- tiempo hasta fatiga o sustitución
+-   tiempo hasta la primera lesión
+-   tiempo hasta recaída
+-   tiempo hasta retorno a la competición
+-   tiempo hasta fatiga o sustitución
 
 Aplicaciones:
 
-- planificación de cargas
-- gestión de riesgo de lesión
-- personalización del retorno al juego
-- comparación de protocolos de recuperación
+-   planificación de cargas
+-   gestión de riesgo de lesión
+-   personalización del retorno al juego
+-   comparación de protocolos de recuperación
 
 **Modelos jerárquicos o multinivel para rendimiento deportivo**
 
@@ -502,13 +462,12 @@ En deporte es muy frecuente que las observaciones no sean independientes: tiros 
 
 Ejemplos:
 
-- xG con efectos aleatorios por jugador o equipo
-- modelos de lanzamiento en baloncesto con interceptos aleatorios por tirador
-- modelos de rendimiento físico con medidas repetidas por jugador
-- modelos longitudinales de carga y fatiga
+-   xG con efectos aleatorios por jugador o equipo
+-   modelos de lanzamiento en baloncesto con interceptos aleatorios por tirador
+-   modelos de rendimiento físico con medidas repetidas por jugador
+-   modelos longitudinales de carga y fatiga
 
 Esto permite estimar mejor la heterogeneidad individual y mejorar la generalización.
-
 :::
 
 #### Diferencias clave entre la regresión lineal y los GLM
@@ -1303,11 +1262,11 @@ El IRR es un **factor multiplicativo** que nos dice cuánto cambia la tasa de ev
 ::: {.callout-tip title="Ejemplo" collapse="true"}
 En este ejemplo modelamos el número de goles que marca un equipo en un partido usando un modelo de Poisson.
 
-- ataque_equipo representa la capacidad ofensiva del equipo.
+-   ataque_equipo representa la capacidad ofensiva del equipo.
 
-- defensa_rival representa la fortaleza defensiva del rival.
+-   defensa_rival representa la fortaleza defensiva del rival.
 
-- local indica si el equipo juega en casa.
+-   local indica si el equipo juega en casa.
 
 El modelo estima cómo estas variables afectan a la tasa esperada de goles. Debido al enlace logarítmico del modelo de Poisson, los coeficientes se interpretan como cambios multiplicativos en la tasa esperada de goles.
 
@@ -1840,11 +1799,11 @@ summary(modelo_gam)
 
 En este ejemplo:
 
-- `family = binomial` indica que estamos modelando una variable binaria.
+-   `family = binomial` indica que estamos modelando una variable binaria.
 
-- `s(distancia)` y `s(angulo)` especifican que estas variables entran en el modelo mediante funciones suaves.
+-   `s(distancia)` y `s(angulo)` especifican que estas variables entran en el modelo mediante funciones suaves.
 
-- El modelo estima automáticamente la forma funcional más adecuada para cada predictor, controlando su complejidad mediante penalización.
+-   El modelo estima automáticamente la forma funcional más adecuada para cada predictor, controlando su complejidad mediante penalización.
 
 ### Visualización de los efectos suaves
 
@@ -1859,22 +1818,21 @@ plot(modelo_gam, pages = 1, shade = TRUE)
 
 Estos gráficos muestran cómo cambia el predictor lineal en función de cada variable, manteniendo constantes las demás. En un contexto deportivo, esto permite identificar regiones donde el efecto cambia con mayor intensidad, detectar umbrales y visualizar patrones imposibles de captar con un modelo lineal simple.
 
-
 ### Interpretación del resumen del modelo
 
 Al examinar `summary(modelo_gam)` suelen aparecer dos bloques principales:
 
-- **Coeficientes paramétricos**: corresponden a efectos lineales o términos introducidos de forma paramétrica.
+-   **Coeficientes paramétricos**: corresponden a efectos lineales o términos introducidos de forma paramétrica.
 
-- **Términos suaves**: muestran, entre otros elementos, los grados de libertad efectivos (*effective degrees of freedom*, EDF).
+-   **Términos suaves**: muestran, entre otros elementos, los grados de libertad efectivos (*effective degrees of freedom*, EDF).
 
 La interpretación del EDF es especialmente útil:
 
-- Si el EDF es aproximadamente 1, el efecto es casi lineal.
+-   Si el EDF es aproximadamente 1, el efecto es casi lineal.
 
-- Si el EDF es claramente mayor que 1, existe evidencia de no linealidad.
+-   Si el EDF es claramente mayor que 1, existe evidencia de no linealidad.
 
-- Cuanto mayor sea el EDF, más compleja será la forma estimada, aunque siempre controlada por la penalización del modelo.
+-   Cuanto mayor sea el EDF, más compleja será la forma estimada, aunque siempre controlada por la penalización del modelo.
 
 Esto convierte a los GAMs en una herramienta excelente no solo para predecir, sino también para explorar si la hipótesis de linealidad resulta razonable.
 
@@ -1882,57 +1840,56 @@ Esto convierte a los GAMs en una herramienta excelente no solo para predecir, si
 
 La conexión entre GLMs y GAMs es estrecha. Ambos comparten:
 
-- la posibilidad de trabajar con distribuciones de la familia exponencial,
+-   la posibilidad de trabajar con distribuciones de la familia exponencial,
 
-- el uso de funciones de enlace,
+-   el uso de funciones de enlace,
 
-- y una lógica común de estimación basada en máxima verosimilitud penalizada.
+-   y una lógica común de estimación basada en máxima verosimilitud penalizada.
 
 La diferencia esencial es que el GAM sustituye el supuesto de linealidad estricta por una estructura aditiva flexible. En términos prácticos:
 
-- un GLM es preferible cuando la relación es aproximadamente lineal y buscamos máxima simplicidad;
+-   un GLM es preferible cuando la relación es aproximadamente lineal y buscamos máxima simplicidad;
 
-- un GAM es preferible cuando sospechamos no linealidades pero queremos conservar interpretabilidad.
+-   un GAM es preferible cuando sospechamos no linealidades pero queremos conservar interpretabilidad.
 
 ::: {.callout-note collapse="true" title="Aplicaciones"}
 En analítica deportiva, los GAMs aparecen con frecuencia en problemas como:
 
-- modelos de expected goals (xG) más flexibles;
+-   modelos de expected goals (xG) más flexibles;
 
-- análisis del efecto de la edad sobre el rendimiento;
+-   análisis del efecto de la edad sobre el rendimiento;
 
-- modelado de la relación entre carga de entrenamiento y lesión;
+-   modelado de la relación entre carga de entrenamiento y lesión;
 
-- estudio de patrones no lineales en métricas físicas como aceleraciones, sprints o distancia recorrida;
+-   estudio de patrones no lineales en métricas físicas como aceleraciones, sprints o distancia recorrida;
 
-- análisis de rendimiento en función del tiempo de juego, la fatiga acumulada o el contexto competitivo.
+-   análisis de rendimiento en función del tiempo de juego, la fatiga acumulada o el contexto competitivo.
 :::
-
 
 ### Ventajas y limitaciones
 
 Entre sus principales ventajas destacan:
 
-- gran flexibilidad para capturar relaciones no lineales;
+-   gran flexibilidad para capturar relaciones no lineales;
 
-- interpretación visual clara;
+-   interpretación visual clara;
 
-- mantenimiento del marco probabilístico de los GLMs;
+-   mantenimiento del marco probabilístico de los GLMs;
 
-- capacidad para descubrir estructuras desconocidas en los datos.
+-   capacidad para descubrir estructuras desconocidas en los datos.
 
 Sin embargo, también presentan limitaciones:
 
-- pueden resultar más difíciles de resumir con un único coeficiente;
+-   pueden resultar más difíciles de resumir con un único coeficiente;
 
-- requieren más cuidado en la validación;
+-   requieren más cuidado en la validación;
 
-- una flexibilidad excesiva puede llevar a sobreajuste si no se controla adecuadamente.
+-   una flexibilidad excesiva puede llevar a sobreajuste si no se controla adecuadamente.
 
 Por ello, en la práctica conviene comparar GAMs con modelos más simples y valorar si la mejora en ajuste justifica la mayor complejidad.
 
-::: {.callout-tip title="Idea clave"} 
+::: {.callout-tip title="Idea clave"}
 Los GAMs ocupan un lugar intermedio muy valioso entre los modelos paramétricos clásicos y enfoques más opacos de machine learning. En analítica deportiva moderna, esta combinación de flexibilidad, capacidad predictiva e interpretabilidad los convierte en una herramienta especialmente atractiva para modelar fenómenos complejos del rendimiento y la competición.
 :::
 
----
+------------------------------------------------------------------------
