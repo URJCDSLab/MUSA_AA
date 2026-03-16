@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,10 +91,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-23d6ac4f9a19bb637dc5af5d1e4747a8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -491,7 +491,7 @@ Attaching package: 'pROC'</code></pre>
 </section>
 <section id="análisis-discriminante-lineal" class="level3" data-number="8.0.2">
 <h3 data-number="8.0.2" class="anchored" data-anchor-id="análisis-discriminante-lineal"><span class="header-section-number">8.0.2</span> Análisis Discriminante Lineal</h3>
-<p>El <em>análisis discriminante lineal (Linear Discriminant Analysis, LDA)</em> <span class="citation" data-cites="hastie2009elements">(<a href="#ref-hastie2009elements" role="doc-biblioref">Hastie et&nbsp;al. 2009</a>)</span>, <span class="citation" data-cites="murphy2012machine">(<a href="#ref-murphy2012machine" role="doc-biblioref">Murphy 2012</a>)</span> es una técnica estadística de clasificación supervisada utilizada para encontrar una combinación lineal de variables que discrimine dos o más grupos. Se basa en la idea de modelar la distribución de cada clase y aplicar el criterio de Bayes para asignar nuevas observacones a una de ellas.Se trata de un algoritmo de <em>clasificación</em>, es decir, la variable objetivo <span class="math inline">\(Y\)</span> es categórica: <span class="math inline">\(Y \in \{1,\dots,C\}\)</span>.</p>
+<p>El <em>análisis discriminante lineal (Linear Discriminant Analysis, LDA)</em> <span class="citation" data-cites="hastie2009elements">(<a href="references.html#ref-hastie2009elements" role="doc-biblioref">Hastie et&nbsp;al. 2009</a>)</span>, <span class="citation" data-cites="murphy2012machine">(<a href="references.html#ref-murphy2012machine" role="doc-biblioref">Murphy 2012</a>)</span> es una técnica estadística de clasificación supervisada utilizada para encontrar una combinación lineal de variables que discrimine dos o más grupos. Se basa en la idea de modelar la distribución de cada clase y aplicar el criterio de Bayes para asignar nuevas observacones a una de ellas.Se trata de un algoritmo de <em>clasificación</em>, es decir, la variable objetivo <span class="math inline">\(Y\)</span> es categórica: <span class="math inline">\(Y \in \{1,\dots,C\}\)</span>.</p>
 <!--# El objetivo de LDA es construir una combinación lineal de las variables explicativas que mejor discrimina las clases. En base a dicho hiperplano separador se clasificarán las nuevas observaciones. -->
 <p>Supongamos que los datos de cada clase <span class="math inline">\(Y=c\)</span> siguen una distribución Normal multivariante:</p>
 <p><span class="math display">\[
@@ -699,7 +699,7 @@ Ventajas
 <li><p><strong>Sencillez y facilidad de implementación</strong>: Es uno de los algoritmos más sencillos y fáciles de entender en ML. No requiere suposiciones complejas o entrenamientos prolongados.</p></li>
 <li><p><strong>Versatilidad</strong>: Se puede aplicar tanto a problemas de clasificación como de regresión.</p></li>
 <li><p><strong>No paramétrico</strong>: A diferencia de algunos algoritmos que asumen una distribución específica de los datos, <span class="math inline">\(k-NN\)</span> no hace suposiciones sobre la forma de los datos, lo que lo hace adecuado para una amplia gama de situaciones.</p></li>
-<li><p><strong>Adaptabilidad a datos cambiantes</strong>: Puede adaptarse a cambios en los datos sin necesidad de volver a entrenar el modelo por completo, lo que lo hace útil en escenarios de datos en constante evolución. Ver <a href="#sec-nuevas" class="quarto-xref"><span class="quarto-unresolved-ref">sec-nuevas</span></a>.</p></li>
+<li><p><strong>Adaptabilidad a datos cambiantes</strong>: Puede adaptarse a cambios en los datos sin necesidad de volver a entrenar el modelo por completo, lo que lo hace útil en escenarios de datos en constante evolución. Ver <a href="nuevas.html" class="quarto-xref"><span>Capítulo 10</span></a>.</p></li>
 <li><p><strong>Interpretabilidad</strong>: Las predicciones de k-NN se basan en la observación de datos cercanos, lo que facilita la interpretación de las decisiones del modelo.</p></li>
 <li><p><strong>Robustez frente al ruido</strong>: Puede manejar datos con ruido, que no se adaptan a la distribución de la mayoría de los datos, sin un gran impacto en su rendimiento.</p></li>
 <li><p><strong>Facilidad para multiclases</strong>: Es aplicable a problemas de clasificación con múltiples clases sin necesidad de modificaciones significativas.</p></li>
@@ -766,9 +766,9 @@ Attaching package: 'dplyr'</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ lubridate 1.9.4     ✔ tibble    3.2.1
-✔ purrr     1.0.4     ✔ tidyr     1.3.1
-✔ readr     2.1.5     </code></pre>
+✔ lubridate 1.9.4     ✔ tibble    3.3.0
+✔ purrr     1.2.0     ✔ tidyr     1.3.1
+✔ readr     2.1.6     </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -1168,7 +1168,7 @@ Métricas de disimilaridad
 </section>
 <section id="árboles-de-decisión" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="árboles-de-decisión"><span class="header-section-number">9.3</span> Árboles de decisión</h2>
-<p>Los Árboles de Decisión (DT, de <em>Decision</em> <em>Tree</em> en inglés) son algoritmos de ML basados en la <strong>información</strong>. Este tipo de algoritmos determinan qué variables explicativas proporcionan la mayor parte de la información (<strong>ganancia de información</strong>) para medir la variable objetivo y hacen predicciones probando secuencialmente las características en orden a su información <span class="citation" data-cites="kelleher2018data">(<a href="#ref-kelleher2018data" role="doc-biblioref">Kelleher y Tierney 2018</a>)</span>.</p>
+<p>Los Árboles de Decisión (DT, de <em>Decision</em> <em>Tree</em> en inglés) son algoritmos de ML basados en la <strong>información</strong>. Este tipo de algoritmos determinan qué variables explicativas proporcionan la mayor parte de la información (<strong>ganancia de información</strong>) para medir la variable objetivo y hacen predicciones probando secuencialmente las características en orden a su información <span class="citation" data-cites="kelleher2018data">(<a href="references.html#ref-kelleher2018data" role="doc-biblioref">Kelleher y Tierney 2018</a>)</span>.</p>
 <p>Un DT se crea mediante un proceso de particionamiento recursivo del espacio de las variables explicativas y asignando una predicción en cada una de las regiones (hojas) resultantes. Es decir, va seleccionando variables y cortes en sus valores y con ello crea una rama del árbol con dos nodos hijos. Para una mejor comprensión de la estructura de un árbol, necesitamos definir los siguientes conceptos:</p>
 <ul>
 <li><strong>Nodo raíz</strong>: es el nodo origen, inicialmente todas las observaciones forman parte de este nodo.</li>
@@ -1455,7 +1455,7 @@ H_{\text{Historial}} = \frac{2}{4} 0 + \frac{2}{4} 1 = 0.5
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-hastie2009elements" class="csl-entry" role="listitem">
 Hastie, Trevor, Robert Tibshirani, Jerome H Friedman, y Jerome H Friedman. 2009. <em>The elements of statistical learning: data mining, inference, and prediction</em>. Vol. 2. Springer.
 </div>
@@ -1551,8 +1551,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1663,7 +1661,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
