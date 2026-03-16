@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,10 +91,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-23d6ac4f9a19bb637dc5af5d1e4747a8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -233,26 +233,32 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./regresion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Modelos de regresión</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./aprsup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reglas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reglas de asociación</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reglas de asociación</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./nuevas.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nuevas tendencias</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nuevas tendencias</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./conclusiones.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conclusiones</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusiones</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -361,7 +367,7 @@ Atención
 <p>En muchos proyectos de analítica deportiva es recomendable comenzar con técnicas de agrupamiento, incluso cuando posteriormente se disponga de etiquetas y el problema pueda abordarse mediante aprendizaje supervisado.</p>
 </div>
 </div>
-<p>Desde el punto de vista metodológico, existe una amplia variedad de algoritmos de agrupamiento. Una revisión detallada puede encontrarse en <span class="citation" data-cites="xu2015comprehensive">(<a href="references.html#ref-xu2015comprehensive" role="doc-biblioref">Xu y Tian 2015</a>)</span>. Entre los más utilizados destacan:</p>
+<p>Desde el punto de vista metodológico, existe una amplia variedad de algoritmos de agrupamiento. Una revisión detallada puede encontrarse en <span class="citation" data-cites="xu2015comprehensive">(<a href="#ref-xu2015comprehensive" role="doc-biblioref">Xu y Tian 2015</a>)</span>. Entre los más utilizados destacan:</p>
 <ul>
 <li>los métodos basados en <strong>centroides</strong>, como el algoritmo de las <em>k-medias</em>, habituales en la segmentación de jugadores;</li>
 <li>los métodos basados en <strong>conectividad</strong>, como el <em>agrupamiento jerárquico</em>, útiles para explorar relaciones anidadas entre perfiles;</li>
@@ -404,7 +410,7 @@ Agrupamiento no jerárquico
 <section id="aprendizaje-basado-en-semejanza" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="aprendizaje-basado-en-semejanza"><span class="header-section-number">5.1</span> Aprendizaje basado en semejanza</h2>
 <p>El aprendizaje basado en similitud es una estrategia en la que la relación entre observaciones se fundamenta en la semejanza de sus características. Para ello, es fundamental definir un espacio de características adecuado y establecer una métrica que permita cuantificar la semejanza o desemejanza entre observaciones.</p>
-<p>Cada variable descriptiva de un conjunto de datos representa una dimensión en un espacio <span class="math inline">\(m\)</span>-dimensional. Como explica <span class="citation" data-cites="kelleher2020fundamentals">(<a href="references.html#ref-kelleher2020fundamentals" role="doc-biblioref">Kelleher, Mac Namee, y D’arcy 2020</a>)</span> “<em>A feature space is an abstract</em> <span class="math inline">\(m\)</span><em>-dimensional space that is created by making each descriptive feature in the dataset an axis of an</em> <span class="math inline">\(m\)</span><em>-dimensional coordinate system and mapping each observation in the dataset to a point in this coordinate system based on the values of its descriptive features.</em>” Es decir, un <strong>espacio de características</strong> es un espacio abstracto en el que cada característica del conjunto de datos define un eje en un sistema de coordenadas de <span class="math inline">\(m\)</span> dimensiones. Así, cada observación se mapea a un punto en este espacio de acuerdo con los valores de sus características descriptivas.</p>
+<p>Cada variable descriptiva de un conjunto de datos representa una dimensión en un espacio <span class="math inline">\(m\)</span>-dimensional. Como explica <span class="citation" data-cites="kelleher2020fundamentals">(<a href="#ref-kelleher2020fundamentals" role="doc-biblioref">Kelleher, Mac Namee, y D’arcy 2020</a>)</span> “<em>A feature space is an abstract</em> <span class="math inline">\(m\)</span><em>-dimensional space that is created by making each descriptive feature in the dataset an axis of an</em> <span class="math inline">\(m\)</span><em>-dimensional coordinate system and mapping each observation in the dataset to a point in this coordinate system based on the values of its descriptive features.</em>” Es decir, un <strong>espacio de características</strong> es un espacio abstracto en el que cada característica del conjunto de datos define un eje en un sistema de coordenadas de <span class="math inline">\(m\)</span> dimensiones. Así, cada observación se mapea a un punto en este espacio de acuerdo con los valores de sus características descriptivas.</p>
 <p>Algunas consideraciones clave sobre este espacio de características:</p>
 <ul>
 <li><p>Si dos observaciones tienen exactamente los mismos valores en sus variables descriptivas, estarán representadas por el mismo punto en el espacio de características.</p></li>
@@ -629,10 +635,10 @@ Intersección: 2, unión: 4 –&gt; <span class="math inline">\(J=2/4=0.5\)</spa
 </div>
 </div>
 <p><strong>Distancias para datos categóricos</strong></p>
-<p>Cuando se tienen datos categóricos nominales, es común medir la similitud entre las observaciones en términos de las frecuencias observadas en las distintas categorías (tablas de contingencia). Un ejemplo sería la <strong>distancia de Goodall</strong> <span class="citation" data-cites="goodall1966new">(<a href="references.html#ref-goodall1966new" role="doc-biblioref">Goodall 1966</a>)</span>. Otra opción para este tipo de datos es utilizar la distancia de Hamming.</p>
+<p>Cuando se tienen datos categóricos nominales, es común medir la similitud entre las observaciones en términos de las frecuencias observadas en las distintas categorías (tablas de contingencia). Un ejemplo sería la <strong>distancia de Goodall</strong> <span class="citation" data-cites="goodall1966new">(<a href="#ref-goodall1966new" role="doc-biblioref">Goodall 1966</a>)</span>. Otra opción para este tipo de datos es utilizar la distancia de Hamming.</p>
 <p>Si las variables son ordinales, hay que tener en cuenta el orden de los datos. En estos casos hay distintas alternativas: utilizar la correlación de Spearman, pasar los datos a rangos y normalizarlos al intervalo <span class="math inline">\([0,1]\)</span> y usar distancias para datos de intervalo. <!--# Para datos ordinales: estandarizar (poner en escala [0,1] haciendo: replace an ordinal variable value by its rank r_{ij} \in \{1,2,...,M_f\}, la transformación sería z_{ij}=\frac{r_{ij}-1}{M_{f}-1}) y usar una distancia para datos continuos. Correlación de spearman. También se puedent tratar directamente como continuas. --></p>
 <p><strong>Distancias para datos mixtos</strong></p>
-<p>Cuando el conjunto de datos incluye variables continuas y categóricas, una posibilidad es utilizar la distancia de Gower <span class="citation" data-cites="gower1971general">(<a href="references.html#ref-gower1971general" role="doc-biblioref">Gower 1971</a>)</span> que combina diferencias normalizadas en numéricos con coincidencia/no-coincidencia en categóricos. La distancia de Gower entre dos observaciones <span class="math inline">\(\mathbf{x}\)</span> y <span class="math inline">\(\mathbf{z}\)</span> se define como</p>
+<p>Cuando el conjunto de datos incluye variables continuas y categóricas, una posibilidad es utilizar la distancia de Gower <span class="citation" data-cites="gower1971general">(<a href="#ref-gower1971general" role="doc-biblioref">Gower 1971</a>)</span> que combina diferencias normalizadas en numéricos con coincidencia/no-coincidencia en categóricos. La distancia de Gower entre dos observaciones <span class="math inline">\(\mathbf{x}\)</span> y <span class="math inline">\(\mathbf{z}\)</span> se define como</p>
 <p><span class="math display">\[
 d_{Gower}(\mathbf{x},\mathbf{z}) = 1-\frac{\sum_{t=1}^{m_1}(1-|x_{t}-z_{t}|/R_t) + a + a'}{m_1 + (m_2 - d) + m_3}
 \]</span></p>
@@ -904,7 +910,7 @@ W(S) = \sum_{k=1}^{K} W(S_k) = \sum_{k=1}^{K}\sum_{\mathbf{x}_i \in S_k} \sum_{j
 <p>e igualar a 0: <span class="math inline">\(\frac{\partial W(S_k, \textbf{c}_{\textbf{k}}) }{\partial c_{kj}}=0 \Longleftrightarrow c_{kj}= \frac{1}{|S_k|}\sum_{\textbf{x}_{\textbf{i}} \in S_k}x_{ij}\)</span></p>
 <p>siendo <span class="math inline">\(|S_k|\)</span> el cardinal de <span class="math inline">\(S_k\)</span>.</p>
 <p>Los centroides óptimos para minimizar la función <span class="math inline">\(W(S)\)</span> es la media de cada cluster.</p>
-<p>Existen varios algoritmos para entrenar un modelo de <span class="math inline">\(k\)</span>-medias. El algoritmo original puede encontrarse en <span class="citation" data-cites="hartigan1979algorithm">(<a href="references.html#ref-hartigan1979algorithm" role="doc-biblioref">Hartigan y Wong 1979</a>)</span>, y define la variabilidad total dentro del clúster como la suma de distancias Euclídeas al cuadrado entre las observaciones y el correspondiente centroide.</p>
+<p>Existen varios algoritmos para entrenar un modelo de <span class="math inline">\(k\)</span>-medias. El algoritmo original puede encontrarse en <span class="citation" data-cites="hartigan1979algorithm">(<a href="#ref-hartigan1979algorithm" role="doc-biblioref">Hartigan y Wong 1979</a>)</span>, y define la variabilidad total dentro del clúster como la suma de distancias Euclídeas al cuadrado entre las observaciones y el correspondiente centroide.</p>
 <ol type="1">
 <li>El algoritmo comienza con <span class="math inline">\(k\)</span> medias seleccionadas aleatoriamente del conjunto original de observaciones. Es decir, se escogen al azar <span class="math inline">\(k\)</span> centroides del conjunto de datos.</li>
 </ol>
@@ -1097,11 +1103,11 @@ Desventajas
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)   <span class="co"># manipulación de datos</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.6
+✔ dplyr     1.1.4     ✔ readr     2.1.5
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   4.0.1     ✔ tibble    3.3.0
+✔ ggplot2   4.0.0     ✔ tibble    3.2.1
 ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.2.0     
+✔ purrr     1.0.4     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -1188,16 +1194,16 @@ Desventajas
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(k2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 9
- $ cluster     : int [1:300] 1 2 2 1 1 1 1 1 2 2 ...
- $ centers     : num [1:2, 1:8] -0.0753 0.0806 0.1854 -0.2064 0.1146 ...
+ $ cluster     : int [1:300] 2 1 2 2 1 1 2 2 2 2 ...
+ $ centers     : num [1:2, 1:8] -0.62 0.125 -0.484 0.144 -0.302 ...
   ..- attr(*, "dimnames")=List of 2
   .. ..$ : chr [1:2] "1" "2"
   .. ..$ : chr [1:8] "winner_rank" "loser_rank" "winner_age" "loser_age" ...
- $ totss       : num 2365
- $ withinss    : num [1:2] 1054 965
- $ tot.withinss: num 2019
- $ betweenss   : num 345
- $ size        : int [1:2] 188 112
+ $ totss       : num 2512
+ $ withinss    : num [1:2] 571 1563
+ $ tot.withinss: num 2134
+ $ betweenss   : num 378
+ $ size        : int [1:2] 63 237
  $ iter        : int 1
  $ ifault      : int 0
  - attr(*, "class")= chr "kmeans"</code></pre>
@@ -1220,30 +1226,30 @@ Tarea
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>k2 </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>K-means clustering with 2 clusters of sizes 188, 112
+<pre><code>K-means clustering with 2 clusters of sizes 63, 237
 
 Cluster means:
-  winner_rank loser_rank winner_age   loser_age winner_rank_points
-1 -0.07527240  0.1853750  0.1145639  0.01461946        -0.07090178
-2  0.08062929 -0.2064212 -0.2214102 -0.02364142        -0.12792859
-  loser_rank_points   w_1stWon   l_1stWon
-1        -0.2248362 -0.6171748 -0.5901439
-2         0.3656409  0.7925224  0.9234481
+  winner_rank loser_rank  winner_age    loser_age winner_rank_points
+1  -0.6202469 -0.4841786 -0.30212780 -0.036982736          1.6698030
+2   0.1247174  0.1439777 -0.02171229 -0.001815508         -0.3300984
+  loser_rank_points    w_1stWon    l_1stWon
+1         1.2946348 -0.10442090 -0.19171026
+2        -0.2846702  0.03766263  0.03325402
 
 Clustering vector:
-  [1] 1 2 2 1 1 1 1 1 2 2 1 1 1 2 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 2 1 2 1 2 1
- [38] 2 2 2 1 1 1 1 1 2 2 2 1 2 2 1 2 1 1 1 2 1 1 1 1 1 2 1 1 2 1 2 2 1 1 2 1 2
- [75] 1 2 2 1 1 1 1 2 1 1 2 1 2 1 2 2 1 1 2 2 2 1 1 1 1 2 1 1 1 1 2 2 1 1 1 1 1
-[112] 1 2 1 1 2 1 2 2 1 1 2 2 1 2 2 1 2 1 1 1 1 1 2 1 2 1 2 1 2 2 1 1 2 2 1 2 1
-[149] 2 1 1 1 2 2 1 1 1 2 2 1 1 1 1 2 1 1 2 2 1 2 2 1 2 1 1 1 1 2 1 1 1 1 2 2 1
-[186] 2 1 2 1 2 2 1 1 2 2 1 1 1 2 1 1 2 2 1 1 2 2 2 2 2 1 1 2 2 1 1 1 2 2 1 1 2
-[223] 2 1 2 1 1 1 1 1 1 2 1 1 2 2 1 1 1 1 2 2 1 2 1 1 1 1 2 1 1 1 1 1 2 1 1 2 1
-[260] 2 1 1 1 2 1 1 2 1 1 2 2 1 1 2 2 1 1 1 1 1 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 2
-[297] 1 1 1 2
+  [1] 2 1 2 2 1 1 2 2 2 2 2 2 2 2 2 2 1 2 2 2 1 2 1 2 2 2 2 1 2 2 1 1 2 2 2 2 2
+ [38] 2 1 1 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 1 2 2 2 2 2 2 2 2
+ [75] 2 2 2 2 2 1 2 1 2 1 2 2 2 1 2 2 1 1 2 2 2 2 2 1 2 2 2 2 2 1 2 1 2 2 2 2 2
+[112] 2 2 1 1 1 2 1 2 1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 2 2 2 2 1 2 2 1 2
+[149] 1 2 2 1 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 1 2 2 2 2 1 2 2 2 2 2 2 2 1
+[186] 1 1 2 2 2 2 2 2 2 2 1 1 2 2 1 2 2 2 2 2 1 2 2 2 2 1 2 2 2 2 1 2 2 2 2 1 1
+[223] 2 2 2 1 2 2 2 2 1 2 2 2 2 2 2 1 2 2 2 2 1 1 2 2 2 2 2 2 2 2 1 2 1 1 2 2 2
+[260] 2 1 2 2 2 2 2 2 2 2 2 2 1 2 2 2 2 2 2 1 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+[297] 2 2 2 2
 
 Within cluster sum of squares by cluster:
-[1] 1053.7236  965.3706
- (between_SS / total_SS =  14.6 %)
+[1]  570.8797 1562.8747
+ (between_SS / total_SS =  15.0 %)
 
 Available components:
 
@@ -1251,7 +1257,7 @@ Available components:
 [6] "betweenss"    "size"         "iter"         "ifault"      </code></pre>
 </div>
 </div>
-<p>Podemos representar gráficamente los resultados utilizando fviz_cluster. Dado que el conjunto de datos tiene más de dos variables, la función realiza internamente un PCA y proyecta los datos sobre las dos primeras componentes principales (ver <a href="reddim.html" class="quarto-xref"><span>Capítulo 4</span></a>).</p>
+<p>Podemos representar gráficamente los resultados utilizando fviz_cluster. Dado que el conjunto de datos tiene más de dos variables, la función realiza internamente un PCA y proyecta los datos sobre las dos primeras componentes principales (ver <a href="#sec-reddim" class="quarto-xref"><span class="quarto-unresolved-ref">sec-reddim</span></a>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(k2, <span class="at">data =</span> df_scaled2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1272,7 +1278,7 @@ Tarea
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿Qué información estamos perdiendo al representar únicamente dos dimensiones del conjunto de datos? (Repasa el capítulo <a href="reddim.html" class="quarto-xref"><span>Capítulo 4</span></a> sobre reducción de la dimensionalidad).</p>
+<p>¿Qué información estamos perdiendo al representar únicamente dos dimensiones del conjunto de datos? (Repasa el capítulo <a href="#sec-reddim" class="quarto-xref"><span class="quarto-unresolved-ref">sec-reddim</span></a> sobre reducción de la dimensionalidad).</p>
 </div>
 </div>
 <p><strong>Interpretación en el dominio deportivo</strong></p>
@@ -1377,9 +1383,9 @@ Nombrar los grupos
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_silhouette</span>(sil)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  cluster size ave.sil.width
-1       1    5          0.55
-2       2  189          0.19
-3       3  106          0.17</code></pre>
+1       1   38          0.11
+2       2  172          0.16
+3       3   90          0.23</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1413,16 +1419,16 @@ clusGap(x = df_scaled2, FUNcluster = kmeans, K.max = 10, B = 50, nstart = 25)
 B=50 simulated reference sets, k = 1..10; spaceH0="scaledPCA"
  --&gt; Number of clusters (method 'firstmax'): 1
           logW   E.logW       gap      SE.sim
- [1,] 5.591418 6.555875 0.9644576 0.011641009
- [2,] 5.495589 6.433921 0.9383321 0.009627411
- [3,] 5.443081 6.367550 0.9244680 0.009691221
- [4,] 5.388027 6.318442 0.9304148 0.009940455
- [5,] 5.331474 6.282282 0.9508079 0.009979505
- [6,] 5.305130 6.251370 0.9462401 0.010096128
- [7,] 5.263452 6.224794 0.9613421 0.010383161
- [8,] 5.213403 6.200506 0.9871034 0.010823619
- [9,] 5.183701 6.178109 0.9944074 0.010416762
-[10,] 5.153044 6.158023 1.0049792 0.010708376</code></pre>
+ [1,] 5.638202 6.339603 0.7014014 0.010801437
+ [2,] 5.555014 6.232883 0.6778687 0.009588996
+ [3,] 5.464492 6.174784 0.7102916 0.009397222
+ [4,] 5.408494 6.128880 0.7203859 0.009473711
+ [5,] 5.353534 6.093552 0.7400176 0.009872400
+ [6,] 5.312829 6.062559 0.7497293 0.009783909
+ [7,] 5.257578 6.035514 0.7779363 0.009780583
+ [8,] 5.222868 6.010351 0.7874822 0.009999301
+ [9,] 5.188387 5.987754 0.7993676 0.010192603
+[10,] 5.169416 5.966572 0.7971558 0.009957392</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_gap_stat</span>(gap_stat)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1492,15 +1498,17 @@ Tarea
  
 ******************************************************************* 
 * Among all indices:                                                
-* 9 proposed 2 as the best number of clusters 
-* 8 proposed 3 as the best number of clusters 
-* 1 proposed 4 as the best number of clusters 
-* 3 proposed 6 as the best number of clusters 
-* 3 proposed 10 as the best number of clusters 
+* 4 proposed 2 as the best number of clusters 
+* 5 proposed 3 as the best number of clusters 
+* 8 proposed 5 as the best number of clusters 
+* 2 proposed 7 as the best number of clusters 
+* 1 proposed 8 as the best number of clusters 
+* 2 proposed 9 as the best number of clusters 
+* 1 proposed 10 as the best number of clusters 
 
                    ***** Conclusion *****                            
  
-* According to the majority rule, the best number of clusters is  2 
+* According to the majority rule, the best number of clusters is  5 
  
  
 ******************************************************************* </code></pre>
@@ -1516,7 +1524,7 @@ Tarea
 <div class="cell-output cell-output-stdout">
 <pre><code># Method Agreement Procedure:
 
-The choice of 2 clusters is supported by 10 (33.33%) methods out of 30 (Elbow, DB, Silhouette, Duda, Pseudot2, Beale, PtBiserial, Mcclain, Dunn, SDindex).</code></pre>
+The choice of 5 clusters is supported by 10 (33.33%) methods out of 30 (Silhouette, Scott, Marriot, Friedman, Rubin, Cindex, PtBiserial, SDindex, Mixture (EVV), Mixture (EEV)).</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(n_clust)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1539,9 +1547,9 @@ The choice of 2 clusters is supported by 10 (33.33%) methods out of 30 (Elbow, D
 <pre><code># A tibble: 3 × 9
   Cluster winner_rank loser_rank winner_age loser_age winner_rank_points
     &lt;int&gt;       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;              &lt;dbl&gt;
-1       1     -0.635      -0.774      0.137   -1.15               1.28  
-2       2     -0.0759      0.168      0.101    0.0588            -0.0564
-3       3      0.117      -0.152     -0.216   -0.0497            -0.221 
+1       1     -0.700      -0.426   -0.364     -0.107               2.45 
+2       2      0.0661      0.206   -0.0624     0.0685             -0.245
+3       3      0.0632     -0.173    0.00439   -0.116              -0.267
 # ℹ 3 more variables: loser_rank_points &lt;dbl&gt;, w_1stWon &lt;dbl&gt;, l_1stWon &lt;dbl&gt;</code></pre>
 </div>
 </div>
@@ -1719,7 +1727,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>hc2<span class="sc">$</span>ac</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9158891</code></pre>
+<pre><code>[1] 0.9020661</code></pre>
 </div>
 </div>
 <p>El <strong>coeficiente aglomerativo</strong> mide la cantidad de estructura de agrupamiento encontrada (los valores más cercanos a <span class="math inline">\(1\)</span> sugieren una fuerte estructura de agrupamiento).</p>
@@ -1737,7 +1745,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dbl</span>(m, ac)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  average    single  complete      ward 
-0.8951215 0.8668709 0.9158891 0.9474537 </code></pre>
+0.8591011 0.7636421 0.9020661 0.9535476 </code></pre>
 </div>
 </div>
 <p>En ocasiones se emplea una representación gráfica en forma de árbol llamada <strong>dendrograma</strong> que ilustra las agrupaciones derivadas de la aplicación de una técnica de agrupamiento jerárquico. En el eje de ordenadas se presenta la distancia a la que se unen los diferentes clústeres. Las observaciones aparecen en el eje de abscisas.</p>
@@ -1781,7 +1789,7 @@ S_j = argmax_{S_j \in S} \ d_{i,i'}, \forall i,i' \in S_j
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Coeficiente de división; cantidad de estructura de agrupación encontrada</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>hc4<span class="sc">$</span>dc</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9027232</code></pre>
+<pre><code>[1] 0.8913095</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8514345</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1833,7 +1841,7 @@ Atención
 <div class="cell-output cell-output-stdout">
 <pre><code>sub_grp
   1   2   3   4 
- 23 105 168   4 </code></pre>
+ 68 194  19  19 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualización</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(<span class="fu">list</span>(<span class="at">data=</span>df_scaled2,<span class="at">cluster=</span>sub_grp))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1961,7 +1969,7 @@ Desventajas del clustering jerárquico
 <li><p><strong>Requiere definir un criterio de corte</strong>: Para convertir la jerarquía en clusters finales, es necesario definir un criterio de corte en el dendrograma. Esta elección puede ser subjetiva y afectar los resultados. Así mismo hay que definir el tipo de enlace a emplear (y la medida de disimilitud) Cada una de estas decisiones puede influir mucho en los resultados obtenidos. En la práctica, probamos varias opciones diferentes y buscamos la que ofrece la solución más útil o interpretable.</p></li>
 <li><p>Con estos métodos, <strong>no hay una única respuesta correcta</strong>: debe considerarse cualquier solución que exponga algunos aspectos interesantes de los datos.</p></li>
 <li><p><strong>No es óptimo para todos los tipos de datos</strong>: El clustering jerárquico funciona mejor cuando los clusters tienen una estructura jerárquica natural. En algunos casos, donde no existe una jerarquía clara, otros métodos de clustering pueden ser más apropiados.</p></li>
-<li><p><strong>No es adecuado para datos de alta dimensión</strong>: El rendimiento del clustering jerárquico puede disminuir en conjuntos de datos de alta dimensión debido a la maldición de la dimensionalidad. Este fenómeno significa que al aumentar el número de dimensiones de un problema se pueden agravar muchos de los problemas que aparecen en dimensiones bajas (curse of dimensionality, <span class="citation" data-cites="bellman1961reduction">Bellman y Kalaba (<a href="references.html#ref-bellman1961reduction" role="doc-biblioref">1961</a>)</span>).</p></li>
+<li><p><strong>No es adecuado para datos de alta dimensión</strong>: El rendimiento del clustering jerárquico puede disminuir en conjuntos de datos de alta dimensión debido a la maldición de la dimensionalidad. Este fenómeno significa que al aumentar el número de dimensiones de un problema se pueden agravar muchos de los problemas que aparecen en dimensiones bajas (curse of dimensionality, <span class="citation" data-cites="bellman1961reduction">Bellman y Kalaba (<a href="#ref-bellman1961reduction" role="doc-biblioref">1961</a>)</span>).</p></li>
 <li><p><strong>No siempre produce resultados reproducibles</strong>: La estructura jerárquica resultante puede variar según la métrica de distancia y el enfoque de enlace utilizado, lo que puede dar lugar a resultados no siempre reproducibles.</p></li>
 <li><p><strong>Sin capacidad de predicción</strong>: Las técnicas de agrupamiento jerárquicas no son útiles a la hora de predecir el clúster al que pertenecen nuevas observaciones.</p></li>
 </ul>
@@ -2279,51 +2287,51 @@ Attaching package: 'kohonen'</code></pre>
 The number of data layers is 1.
 Distance measure(s) used: sumofsquares.
 Training data included: 300 objects.
-Mean distance to the closest unit in the map: 2.654.</code></pre>
+Mean distance to the closest unit in the map: 2.78.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clustering</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df.som<span class="sc">$</span>unit.classif)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  3  9  9  2  3 15</code></pre>
+<pre><code>[1]  3  7 15  9 13  2</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nombrar los clusters</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>df.som<span class="sc">$</span>codes</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-    winner_rank   loser_rank  winner_age  loser_age winner_rank_points
-V1   3.95885518 -0.222196024  0.84846612 -1.1741859        -0.82757539
-V2  -0.16094697  0.020261835  0.47312051 -0.8958331        -0.23444449
-V3   0.16854950  1.883085198 -0.06158909 -0.1178312        -0.47103730
-V4   0.47765297  4.856557987 -0.06861047  1.7083945        -0.34192999
-V5   0.16633511 -0.038965089 -0.90357471 -1.2695914        -0.38367031
-V6   0.19977721 -0.326145302 -1.05069213  0.4625374        -0.51328027
-V7  -0.13707140 -0.222128824  1.49958018  0.4265011        -0.22592537
-V8  -0.36259416  0.009617423  0.08488408  0.5604075         0.06863232
-V9   0.24264290 -0.136452941 -1.02263940 -0.0850800        -0.48250987
-V10  0.31720623  0.248627991  0.03263556  1.6010639        -0.48691593
-V11 -0.65657780 -0.440391554 -0.19855397  0.3376994         0.83286721
-V12 -0.75166959 -0.052020845 -0.67716592  0.1792283         3.61361345
-V13 -0.08883467 -0.134959535  0.58525768 -0.8528070        -0.31688175
-V14 -0.46522121 -0.309414880  0.10450109  1.1551958         0.42290939
-V15 -0.11167117 -0.683324688  0.19615996  0.3816504        -0.39867109
-V16 -0.60629214 -0.771034332  0.21302820 -1.0632842         1.01100954
+    winner_rank  loser_rank  winner_age    loser_age winner_rank_points
+V1  -0.74333652 -0.27361531 -0.45976458  0.236900896         2.97161265
+V2  -0.41530947 -0.75359145 -0.03452865  0.026541283         0.21373243
+V3   0.55227463 -0.07593914 -1.07685035 -0.657010193        -0.60143562
+V4  -0.10176627 -0.09107266  0.85393482 -0.095738217        -0.28140276
+V5  -0.75584063 -0.31349284 -0.83275624 -0.013864237         4.08532924
+V6  -0.63386146 -0.49878448  0.13630602 -0.069895099         0.77995347
+V7  -0.30574396 -0.43920287 -0.13376735 -0.665987906        -0.19820976
+V8   0.23833119  0.07770074 -0.25296188  0.422150309        -0.53930561
+V9  -0.65670800 -0.19301663 -0.19363125  0.028197297         0.80667044
+V10 -0.03209308 -0.27942697  0.49903082  0.001844807        -0.39694868
+V11 -0.31822474  0.89293602  0.88162553 -0.521169614        -0.13125117
+V12  0.18439947  4.54532799 -0.02314922 -0.005358215        -0.35417997
+V13 -0.43698217 -0.09379628  0.52241874  1.544495290         0.06030702
+V14  0.04728083 -0.29919472 -1.10046967  0.809725340        -0.41953918
+V15  0.52647310  0.14697071 -0.94611885 -1.129178046        -0.60701804
+V16  4.91057302  0.23201405  0.07327634 -0.438747730        -0.88678911
     loser_rank_points    w_1stWon    l_1stWon
-V1        -0.14430073  0.00306484 -0.08520192
-V2        -0.40395331 -0.39918008 -0.52235728
-V3        -0.83418752 -0.41779236 -0.42486736
-V4        -0.94021227 -0.37100022 -0.38509122
-V5        -0.37269019  0.04402649 -0.10406848
-V6        -0.08408822 -0.48603574 -0.35882444
-V7        -0.10846448 -0.37727658 -0.51177493
-V8        -0.33375958 -1.52975797 -1.42289835
-V9        -0.16824083  0.89661030  1.09620828
-V10       -0.44017489 -0.01902908  0.53518651
-V11        0.31528166 -0.79336539 -0.39599833
-V12        0.12373687 -0.46727624 -0.16067091
-V13       -0.20478157  1.71996782  1.78295839
-V14       -0.16447630  0.82967833  1.21707609
-V15        1.37834551  0.32322087  0.31792162
-V16        6.87977632 -0.22221586 -0.29949143</code></pre>
+V1         0.43781463  0.08456067  0.74538121
+V2         3.66611552  0.09366441 -0.05797617
+V3        -0.20499637  0.85307885  1.38807234
+V4        -0.29710897  1.83064484  1.52510619
+V5         0.49132321 -0.74224718 -0.87754496
+V6         0.26132127  0.72127337  0.45936738
+V7         0.24963721 -0.03271083  0.01002767
+V8        -0.38901896  0.41510196  0.49303669
+V9        -0.15396696 -0.75892562 -0.57585779
+V10       -0.12852196 -1.00977656 -0.93489563
+V11       -0.69229296 -0.27322660 -0.63675947
+V12       -0.92949401  0.08939219 -0.31979319
+V13       -0.23322123 -0.34916178 -0.18127388
+V14        0.06206391 -0.70408013 -0.95429745
+V15       -0.38219242 -0.70483964 -0.67282543
+V16       -0.45342787 -0.79870730 -0.71630156</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df.som, <span class="at">type=</span><span class="st">"codes"</span>)</span>
@@ -2347,7 +2355,7 @@ V16        6.87977632 -0.22221586 -0.29949143</code></pre>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-bellman1961reduction" class="csl-entry" role="listitem">
 Bellman, Richard, y Robert Kalaba. 1961. <span>«Reduction of dimensionality, dynamic programming, and control processes»</span>.
 </div>
@@ -2452,6 +2460,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -2562,6 +2572,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
